@@ -1,0 +1,14 @@
+.split-screen-div{
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+    /* The 100vh is for the parent component to have the total size of the window */
+}
+.left-side{
+    width: 50%;
+    height: 100%;
+}
+.right-side{
+    width: 50%;
+    height: 100%;
+}
