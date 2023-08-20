@@ -1,0 +1,25 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+}
+
+.left-content {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    margin-right: 10px;
+}
+
+.text {
+    display: flex;
+    flex-direction: column;
+}
+
+.buttons {
+    display: flex;
+    align-items: center;
+}

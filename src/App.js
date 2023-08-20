@@ -1,10 +1,17 @@
 import { BrowserRouter as Router, Routes } from "react-router-dom"
 import "./App.css"
+import CreateForum from "./screens/createForum/createForum"
+import Notifications from "./screens/notifications/notifications"
+import Profile from "./screens/profile/profile"
 
 function App() {
     return (
         <Router>
-            <Routes></Routes>
+            <Routes>
+                <Route path="/createForum" element={<CreateForum />} />
+                <Route path="/notifications" element={<Notifications />} />
+                <Route path="/profile" element={<Profile />} />
+            </Routes>
         </Router>
     )
 }
