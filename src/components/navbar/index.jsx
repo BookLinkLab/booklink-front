@@ -23,7 +23,7 @@ export const NavBar = () => {
                     <NotificationBell width={"18"} height={"18"} color={"#94313E"} />
                 </button>
                 <img
-                    src={require('../../assets/images/image 2.png')}
+                    src={require('../../assets/images/profile.png')}
                     alt="Profile"
                     onClick={() => navigate("/profile")}
                 />
