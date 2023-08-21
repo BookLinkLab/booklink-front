@@ -1,0 +1,17 @@
+.container {
+    width: 507px;
+    height: auto;
+}
+
+.gaps {
+    margin-bottom: 32px;
+}
+
+.gaps2 {
+    margin-top: 24px;
+    margin-bottom: 32px;
+}
+
+.gaps3 {
+    margin: 62px 0px;
+}
