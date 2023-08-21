@@ -3,21 +3,21 @@ button {
     justify-content: center;
     align-items: center;
     gap: 4px;
-    font-size: 16px;
     padding: 12px 16px;
     flex-direction: row;
     border-radius: 8px;
     cursor: pointer;
 }
 .large {
-    height: 43px;
+    height: 16px;
 }
 
 .medium {
-    height: 41px;
+    height: 14px;
 }
 .small {
-    height: 32px;
+    height: 12px;
+    padding: 8px 16px;
 }
 .fulfilled {
     background: var(--primary-500);

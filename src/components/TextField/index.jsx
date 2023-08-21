@@ -6,13 +6,12 @@ const TextField = (props) => {
     const { variant = "default", label, helpText, ...otherProps } = props
 
     const [field, meta] = useField(props)
+    const helperTextFinal = meta.error ?? helpText
     return (
         <div className="textfield-style">
             <label className="body2 labelTextField">{label}</label>
             <input className={variant} {...field} {...otherProps}></input>
-            {(meta.error ?? helpText) && (
-                <small className="body3 smallTextField">{meta.error}</small>
-            )}
+            {helperTextFinal && <small className="body3 smallTextField">{helperTextFinal}</small>}
         </div>
     )
 }

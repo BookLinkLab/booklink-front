@@ -6,13 +6,22 @@ const Button = ({
     leftIcon: LeftIcon,
     rightIcon: RightIcon,
     disabled = false,
-    OnClick,
+    onClick,
     children,
     size = "large",
 }) => {
+    const fontSize = {
+        large: "body1",
+        medium: "body2",
+        small: "body3",
+    }
     return (
         <>
-            <button className={variant + " " + size} disabled={disabled} onClick={OnClick}>
+            <button
+                className={variant + " " + size + " " + fontSize[size]}
+                disabled={disabled}
+                onClick={onClick}
+            >
                 {!!LeftIcon && (
                     <LeftIcon
                         color={variant === "fulfilled" ? "white" : "#94313E"}
