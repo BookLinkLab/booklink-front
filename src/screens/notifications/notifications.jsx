@@ -1,11 +1,7 @@
 import Navbar from "../../components/navbar"
 
 const Notifications = () => {
-    return (
-        <>
-            <Navbar />
-        </>
-    )
+    return <></>
 }
 
 export default Notifications

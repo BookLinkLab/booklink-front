@@ -1,11 +1,7 @@
 import Navbar from "../../components/navbar"
 
 const CreateForum = () => {
-    return (
-        <>
-            <Navbar />
-        </>
-    )
+    return <></>
 }
 
 export default CreateForum

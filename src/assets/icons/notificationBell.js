@@ -1,4 +1,4 @@
-export const notificationBell = ({ height, width, color }) => {
+export const NotificationBell = ({ height, width, color }) => {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -15,4 +15,4 @@ export const notificationBell = ({ height, width, color }) => {
     )
 }
 
-export default notificationBell
+export default NotificationBell

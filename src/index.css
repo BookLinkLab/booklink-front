@@ -1,13 +1,80 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/*Color Palette*/
+:root {
+    --black: #0c1012;
+    --white: #ffffff;
+    --primary-900: #38000e;
+    --primary-700: #57101e;
+    --primary-500: #94313e;
+    --primary-300: #ecb9bd;
+    --primary-100: #f8e8e8;
+    --grey-900: #1c2d38;
+    --grey-700: #747f86;
+    --grey-500: #b8bcc1;
+    --grey-300: #cbcfd3;
+    --grey-100: #f4f4f4;
+    --error-400: #da786b;
+    --error-100: #f6e1df;
+    --success-400: #70be7c;
+    --success-100: #ddf3e2;
 }
 
+/*Typography*/
+
+* {
+    font-family: Inter, sans-serif;
+}
+h1 {
+    font-size: 56px;
+    font-weight: 400;
+}
+h2 {
+    font-size: 38px;
+    font-weight: 400;
+}
+h3 {
+    font-size: 32px;
+    font-weight: 400;
+}
+h4 {
+    font-size: 28px;
+    font-weight: 400;
+}
+h5 {
+    font-size: 24px;
+    font-weight: 500;
+}
+h6 {
+    font-size: 18px;
+    font-weight: 700;
+}
+.body1 {
+    font-size: 16px;
+}
+.body1bold {
+    font-size: 16px;
+    font-weight: 600;
+}
+.body2 {
+    font-size: 14px;
+}
+.body2bold {
+    font-size: 14px;
+    font-weight: 600;
+}
+.body3 {
+    font-size: 12px;
+}
+.body3bold {
+    font-size: 12px;
+    font-weight: 600;
+}
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu",
+        "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }

@@ -3,6 +3,7 @@ import Navbar from "../../components/navbar"
 import NotFoundSVG from "../../assets/icons/notFoundSVG"
 import { useNavigate } from "react-router-dom"
 import "./styles.css"
+import Button from "../../components/Button"
 
 const NotFound = ({ isLogged }) => {
     const navigate = useNavigate()
@@ -13,18 +14,24 @@ const NotFound = ({ isLogged }) => {
 
     return (
         <>
-            <div>
-                <Navbar />
-            </div>
-            <div style={{ textAlign: "center" }} className="notFoundContainer">
+            <div className="notFoundContainer">
                 <NotFoundSVG />
                 <p style={{ marginTop: 30 }}>
                     <div style={{ fontWeight: "bold" }}>Oops!</div>
                     <div style={{ marginTop: 7 }}>Esa pagina no existe</div>
                 </p>
-                <button onClick={handleClick} style={{ marginTop: 34 }}>
-                    Ir a inicio
-                </button>
+                <div
+                    style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        marginTop: 30,
+                    }}
+                >
+                    <Button variant={"outlined"} size={"large"} onClick={handleClick}>
+                        Ir a inicio
+                    </Button>
+                </div>
             </div>
         </>
     )
