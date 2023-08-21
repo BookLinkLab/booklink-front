@@ -3,20 +3,16 @@ button {
     justify-content: center;
     align-items: center;
     gap: 4px;
-    padding: 12px 16px;
     flex-direction: row;
     border-radius: 8px;
     cursor: pointer;
 }
-.large {
-    height: 16px;
+.large,
+.medium {
+    padding: 12px 16px;
 }
 
-.medium {
-    height: 14px;
-}
 .small {
-    height: 12px;
     padding: 8px 16px;
 }
 .fulfilled {
