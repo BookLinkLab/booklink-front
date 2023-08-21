@@ -1,0 +1,14 @@
+.logo-div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.logo-name-inline-container {
+    display: flex;
+    align-items: center;
+}
+
+.bold {
+    font-weight: 700;
+}
