@@ -5,12 +5,13 @@
     width: 320px;
     gap: 105px;
 }
+
 .login-div-2 {
     display: flex;
     flex-direction: column;
-    width: 100%;
     gap: 32px;
 }
+
 .login-logo-div {
     display: flex;
     justify-content: center;
@@ -25,10 +26,10 @@
 .buttons-login-div {
     display: flex;
     flex-direction: column;
-    height: 94px;
     gap: 8px;
 }
 
+/*This is due to the fact that the TextField has a defined width so I need to override it*/
 .inputs-login-div div {
     width: 100%;
 }

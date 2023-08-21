@@ -3,15 +3,13 @@ import PropTypes from "prop-types"
 import { useField } from "formik"
 
 const TextField = (props) => {
-    const { variant = "default", label, helpText, height, inputHeight, ...otherProps } = props
+    const { variant = "default", label, helpText, ...otherProps } = props
 
     const [field, meta] = useField(props)
     const helperTextFinal = meta.error ?? helpText
     return (
-        <div className="textfield-style" style={{ height: height }}>
-            <label className="body2 labelTextField" style={{ height: inputHeight }}>
-                {label}
-            </label>
+        <div className="textfield-style">
+            <label className="body2 labelTextField">{label}</label>
             <input className={variant} {...field} {...otherProps}></input>
             <small className="body3 smallTextField">{helperTextFinal}</small>
         </div>
