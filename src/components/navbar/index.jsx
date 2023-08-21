@@ -3,29 +3,37 @@ import { useNavigate } from "react-router-dom"
 import NotificationBell from "../../assets/icons/notificationBell"
 import Logo from "../../assets/icons/logo"
 import "./styles.css"
+import Button from "../Button"
 
 export const NavBar = () => {
-
     const navigate = useNavigate()
 
     return (
         <div className="navbar">
             <div className="left-content">
                 <div className="logo">
-                    <Logo height="29" width="28" />
+                    <Logo height="29" width="28" onClick={() => navigate("/home")} />
                 </div>
                 <text style={{ fontWeight: "bold" }}>Book</text>
                 <text>Link</text>
             </div>
             <div className="buttons">
-                <button style={{color: "#94313E"}} onClick={() => navigate("/createForum")}>Crear foro</button>
-                <button style={{ marginLeft: 16, marginRight: 24 }} onClick={() => navigate("/notifications")}>
-                    <NotificationBell width={"18"} height={"18"} color={"#94313E"} />
-                </button>
+                <Button size="medium" variant="ghost" onClick={() => navigate("/createForum")}>
+                    Crear foro
+                </Button>
+                <Button
+                    size="medium"
+                    variant="ghost"
+                    style={{ marginLeft: 16, marginRight: 24 }}
+                    onClick={() => navigate("/notifications")}
+                >
+                    <NotificationBell height="18" width="18" color="#94313E" />
+                </Button>
                 <img
-                    src={require('../../assets/images/profile.png')}
+                    src={require("../../assets/images/profile.png")}
                     alt="Profile"
                     onClick={() => navigate("/profile")}
+                    style={{ marginLeft: 24 }}
                 />
             </div>
         </div>

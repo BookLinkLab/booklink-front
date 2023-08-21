@@ -1,13 +1,7 @@
 import Navbar from "../../components/navbar"
 
 const Profile = () => {
-
-    return(
-        <>
-            <Navbar/>
-        </>
-    )
-
+    return <></>
 }
 
-export default Profile;
+export default Profile
