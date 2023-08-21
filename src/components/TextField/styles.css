@@ -1,0 +1,28 @@
+.textfield-style {
+    width: 249px;
+    height: 87px;
+    display: flex;
+    flex-direction: column;
+}
+
+input {
+    padding: 12px 16px;
+    border: 1px solid var(--grey-300);
+    border-radius: 8px;
+}
+input:focus-visible {
+    outline: 1px solid var(--grey-700);
+}
+
+.error {
+    border: 1px solid var(--error-400);
+}
+
+.labelTextField {
+    margin-bottom: 8px;
+}
+
+.smallTextField {
+    margin-top: 4px;
+    color: var(--error-400);
+}
