@@ -1,3 +1,74 @@
+
+/*Color Palette*/
+:root {
+  --black: #0C1012;
+  --white: #FFFFFF;
+  --primary-900: #38000E;
+  --primary-700: #57101E;
+  --primary-500: #94313E;
+  --primary-300: #ECB9BD;
+  --primary-100: #F8E8E8;
+  --grey-900: #1C2D38;
+  --grey-700: #747F86;
+  --grey-500: #B8BCC1;
+  --grey-300: #CBCFD3;
+  --grey-100: #F4F4F4;
+  --error-400: #DA786B;
+  --error-100: #F6E1DF;
+  --success-400: #70BE7C;
+  --success-100: #DDF3E2;
+}
+
+/*Typography*/
+
+* {
+  font-family: Inter, sans-serif;
+}
+h1 {
+    font-size: 56px;
+    font-weight: 400;
+}
+h2 {
+    font-size: 38px;
+    font-weight: 400;
+}
+h3 {
+    font-size: 32px;
+    font-weight: 400;
+}
+h4 {
+    font-size: 28px;
+    font-weight: 400;
+}
+h5 {
+    font-size: 24px;
+    font-weight: 500;
+}
+h6 {
+    font-size: 18px;
+    font-weight: 700;
+}
+.body1 {
+    font-size: 16px;
+}
+.body1bold{
+    font-size: 16px;
+    font-weight: 600;
+}
+.body2 {
+    font-size: 14px;
+}
+.body2bold {
+    font-size:14px;
+    font-weight: 600;
+}
+.body3 {
+    font-size: 12px;
+}
+.body3bold {
+  font-size: 12px;
+  font-weight: 600;
+}
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -6,7 +77,6 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
