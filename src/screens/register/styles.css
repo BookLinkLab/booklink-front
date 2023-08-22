@@ -1,0 +1,39 @@
+.form-container {
+    width: 403px;
+    height: 654px;
+    display: flex;
+    flex-direction: column;
+}
+.logo-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 46px;
+}
+.title {
+    align-items: start;
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 32px;
+}
+.register {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 32px;
+    align-self: stretch;
+}
+.input-container {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+}
+.input-container div {
+    width: 100%;
+}
+.button-container {
+    margin-top: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}

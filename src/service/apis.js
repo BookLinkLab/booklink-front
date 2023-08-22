@@ -14,3 +14,13 @@ export const loginUser = async (email, password) => {
     //This is an example of what the api call would be.
     return null
 }
+
+export const registerUser = async (username, email, password) => {
+    // try {
+    //     const resp = await bookLinkAxios.post("api/register", {username, email, password})
+    //     return response.data.token
+    // } catch (error) {
+    //     return null
+    // }
+    return null
+}
