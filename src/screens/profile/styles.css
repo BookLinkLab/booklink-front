@@ -1,17 +1,24 @@
 .container {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
     width: 507px;
     height: auto;
 }
 
-.gaps {
-    margin-bottom: 32px;
+.textfield-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
 
-.gaps2 {
-    margin-top: 24px;
-    margin-bottom: 32px;
+.items-aligned {
+    margin-left: 115px;
 }
 
-.gaps3 {
-    margin: 62px 0;
+.log-out-button-margin {
+    margin-top: 37px;
+}
+.update-button-spacing {
+    margin-top: 10px;
 }

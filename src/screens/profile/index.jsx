@@ -18,9 +18,9 @@ const ProfileScreen = () => {
     const mockInitialValues = { username: "IceWolf", email: "fabrizio.serial@hotmail.com" }
 
     return (
-        <>
+        <div className="items-aligned">
             <div className="container">
-                <h4 className="bold gaps">Perfil</h4>
+                <h4 className="bold">Perfil</h4>
                 <Formik
                     initialValues={mockInitialValues}
                     validationSchema={Yup.object().shape({
@@ -44,19 +44,25 @@ const ProfileScreen = () => {
                 >
                     {({ values, errors }) => (
                         <Form>
-                            <TextField label={"Nombre de usuario"} name={"username"} />
-                            <TextField className="gaps2" label={"Email"} name={"email"} />
-                            <Button disabled={isValid(values, errors)} size="medium">
+                            <div className="textfield-container">
+                                <TextField label={"Nombre de usuario"} name={"username"} />
+                                <TextField label={"Email"} name={"email"} />
+                            </div>
+                            <Button
+                                disabled={isValid(values, errors)}
+                                size="medium"
+                                className="update-button-spacing"
+                            >
                                 Actualizar
                             </Button>
                         </Form>
                     )}
                 </Formik>
             </div>
-            <Button variant="outlined" className="gaps3">
+            <Button variant="outlined" className="log-out-button-margin">
                 Cerrar sesión
             </Button>
-        </>
+        </div>
     )
 }
 export default ProfileScreen
