@@ -16,8 +16,6 @@ function App() {
                 <Route path="/createForum" element={<CreateForum />} />
                 <Route path="/notifications" element={<Notifications />} />
                 <Route path="/profile" element={<Profile />} />
-            </Routes>
-            <Routes>
                 <Route path="/login" element={<Login />} />
             </Routes>
         </Router>
