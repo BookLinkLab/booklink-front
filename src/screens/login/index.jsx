@@ -17,18 +17,18 @@ const Login = () => {
         <SplitScreen>
             <Formik
                 initialValues={{
-                    Email: "",
-                    Password: "",
+                    email: "",
+                    password: "",
                 }}
                 validationSchema={Yup.object({
-                    Email: Yup.string().required("El email es requerido"),
-                    Password: Yup.string().required("La contraseña es requerida"),
+                    email: Yup.string().required("El email es requerido"),
+                    password: Yup.string().required("La contraseña es requerida"),
                 })}
                 onSubmit={async (values, { resetForm }) => {
-                    const { Email, Password } = values
+                    const { email, password } = values
                     setLoading(true)
 
-                    loginUser(Email, Password)
+                    loginUser(email, password)
                         .then((response) => {
                             //This part can be better, it depends on the Response status
                             !!response && response ? navigate("/home") : resetForm()
@@ -38,36 +38,37 @@ const Login = () => {
                         })
                 }}
             >
-                <Form>
-                    <div className="login-div-1">
-                        <div className="login-logo-div">
-                            <Logo size="large" />
+                <Form className="login-form-container">
+                    <Logo size="large" />
+                    <div className="login-div-2">
+                        <div className="inputs-login-div">
+                            <TextField
+                                label="Email"
+                                name="email"
+                                placeholder="janedoe@gmail.com"
+                                variant="placeholder"
+                                helpText=""
+                            />
+                            <TextField
+                                label="Contraseña"
+                                name="password"
+                                type="Password"
+                                placeholder="Password123"
+                                helpText=""
+                            />
                         </div>
-                        <div className="login-div-2">
-                            <div className="inputs-login-div">
-                                <TextField
-                                    label="Email"
-                                    name="Email"
-                                    placeholder="janedoe@gmail.com"
-                                    variant="placeholder"
-                                    helpText=""
-                                />
-                                <TextField
-                                    label="Contraseña"
-                                    name="Password"
-                                    type="Password"
-                                    placeholder="Password123"
-                                    helpText=""
-                                />
-                            </div>
-                            <div className="buttons-login-div">
-                                <Button size="large" disabled={loading}>
-                                    Iniciar sesion
-                                </Button>
-                                <Button size="large" disabled={loading} variant="ghost">
-                                    Registrarse
-                                </Button>
-                            </div>
+                        <div className="buttons-login-div">
+                            <Button size="large" disabled={loading}>
+                                Iniciar sesion
+                            </Button>
+                            <Button
+                                size="large"
+                                disabled={loading}
+                                variant="ghost"
+                                onClick={() => navigate("/register")}
+                            >
+                                Registrarse
+                            </Button>
                         </div>
                     </div>
                 </Form>
