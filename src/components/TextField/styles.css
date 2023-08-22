@@ -9,6 +9,7 @@ input {
     padding: 12px 16px;
     border: 1px solid var(--grey-300);
     border-radius: 8px;
+    font-size: 16px;
 }
 input:focus-visible {
     outline: 1px solid var(--grey-700);
@@ -25,4 +26,5 @@ input:focus-visible {
 .smallTextField {
     margin-top: 4px;
     color: var(--error-400);
+    height: 15px;
 }
