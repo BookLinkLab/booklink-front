@@ -17,17 +17,12 @@ const Logo = ({ size, name = true }) => {
 
     return (
         <div className={"logo-div"} style={{ gap: size === "small" ? 4 : 8 }}>
-            <div>
-                <LogoSVG width={logoSizes[size]} height={logoSizes[size]} />
-            </div>
-            <div>
-                {name ? (
-                    <div className="logo-name-inline-container">
-                        <Header className={sizes[size] + " bold"}>Book</Header>
-                        <Header className={sizes[size]}>Link</Header>
-                    </div>
-                ) : null}
-            </div>
+            <LogoSVG width={logoSizes[size]} height={logoSizes[size]} />
+            {name && (
+                <Header className={sizes[size]}>
+                    <b>Book</b>Link
+                </Header>
+            )}
         </div>
     )
 }

@@ -1,20 +1,16 @@
-.login-div-1 {
+.login-form-container {
     display: flex;
     flex-direction: column;
     height: 500px;
     width: 320px;
     gap: 105px;
+    justify-content: center;
 }
 
 .login-div-2 {
     display: flex;
     flex-direction: column;
     gap: 32px;
-}
-
-.login-logo-div {
-    display: flex;
-    justify-content: center;
 }
 
 .inputs-login-div {
