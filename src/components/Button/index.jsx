@@ -3,9 +3,11 @@ import PropTypes from "prop-types"
 
 const Button = ({
     variant = "fulfilled",
+    type = "submit",
     leftIcon: LeftIcon,
     rightIcon: RightIcon,
     disabled = false,
+    className,
     onClick,
     children,
     size = "large",
@@ -16,32 +18,33 @@ const Button = ({
         small: "body3",
     }
     return (
-        <>
-            <button
-                className={variant + " " + size + " " + fontSize[size]}
-                disabled={disabled}
-                onClick={onClick}
-            >
-                {!!LeftIcon && (
-                    <LeftIcon
-                        color={variant === "fulfilled" ? "white" : "#94313E"}
-                        size={size === "large" ? 18 : 16}
-                    />
-                )}
-                {children}
-                {!!RightIcon && (
-                    <RightIcon
-                        color={variant === "fulfilled" ? "white" : "#94313E"}
-                        size={size === "large" ? 18 : 16}
-                    />
-                )}
-            </button>
-        </>
+        <button
+            className={variant + " " + size + " " + fontSize[size] + " " + className}
+            disabled={disabled}
+            onClick={onClick}
+            type={type}
+        >
+            {!!LeftIcon && (
+                <LeftIcon
+                    color={variant === "fulfilled" ? "white" : "#94313E"}
+                    size={size === "large" ? 18 : 16}
+                />
+            )}
+            {children}
+            {!!RightIcon && (
+                <RightIcon
+                    color={variant === "fulfilled" ? "white" : "#94313E"}
+                    size={size === "large" ? 18 : 16}
+                />
+            )}
+        </button>
     )
 }
 
 Button.propTypes = {
     variant: PropTypes.oneOf(["fulfilled", "ghost", "outlined"]),
+    type: PropTypes.string,
+    className: PropTypes.string,
     leftIcon: PropTypes.node,
     rightIcon: PropTypes.node,
     disabled: PropTypes.bool,
