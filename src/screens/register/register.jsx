@@ -48,46 +48,44 @@ const RegisterScreen = () => {
                     })
                 }}
             >
-                <Form>
-                    <div className="form-container">
-                        <div className="logo-container">
-                            <Logo size="large"></Logo>
-                        </div>
-                        <div className="title">Registro</div>
-                        <div className="input-container">
-                            <TextField
-                                label="Nombre de Usuario"
-                                placeholder="IceWolf"
-                                name="username"
-                                variant="placeholder"
-                                helpText=""
-                            />
-                            <TextField
-                                label="Email"
-                                placeholder="fabrizio.serial@hotmail.com"
-                                name="email"
-                            />
-                            <TextField
-                                label="Contraseña"
-                                placeholder="Password123"
-                                name="password"
-                                type="password"
-                            />
-                            <TextField
-                                label="Repetir Contraseña"
-                                placeholder="Password123"
-                                name="confirmPassword"
-                                type="password"
-                            />
-                        </div>
-                        <div className="button-container">
-                            <Button size="large" type={"submit"}>
-                                Registrar
-                            </Button>
-                            <Button variant={"ghost"} onClick={() => navigate("/login")}>
-                                Tengo una cuenta
-                            </Button>
-                        </div>
+                <Form className="form-container">
+                    <div className="logo-container">
+                        <Logo size="large"></Logo>
+                    </div>
+                    <div className="title">Registro</div>
+                    <div className="input-container">
+                        <TextField
+                            label="Nombre de Usuario"
+                            placeholder="IceWolf"
+                            name="username"
+                            variant="placeholder"
+                            helpText=""
+                        />
+                        <TextField
+                            label="Email"
+                            placeholder="fabrizio.serial@hotmail.com"
+                            name="email"
+                        />
+                        <TextField
+                            label="Contraseña"
+                            placeholder="Password123"
+                            name="password"
+                            type="password"
+                        />
+                        <TextField
+                            label="Repetir Contraseña"
+                            placeholder="Password123"
+                            name="confirmPassword"
+                            type="password"
+                        />
+                    </div>
+                    <div className="button-container">
+                        <Button size="large" type={"submit"}>
+                            Registrar
+                        </Button>
+                        <Button variant={"ghost"} onClick={() => navigate("/login")}>
+                            Tengo una cuenta
+                        </Button>
                     </div>
                 </Form>
             </Formik>

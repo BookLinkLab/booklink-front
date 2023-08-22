@@ -1,6 +1,5 @@
 .form-container {
     width: 403px;
-    height: 654px;
     display: flex;
     flex-direction: column;
 }

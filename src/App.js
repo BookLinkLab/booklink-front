@@ -10,11 +10,10 @@ import Navbar from "./components/navbar"
 
 function App() {
     const isLogged = true
-
     return (
         <Router>
+            {isLogged ? <Navbar /> : null}
             <Routes>
-                {isLogged ? <Navbar /> : null}
                 <Route path="/register" element={<Register />} />
                 <Route path="/createForum" element={<CreateForum />} />
                 <Route path="/notifications" element={<Notifications />} />
