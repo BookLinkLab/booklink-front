@@ -11,7 +11,7 @@ const TextField = (props) => {
         <div className={"textfield-style " + className}>
             <label className="body2 labelTextField">{label}</label>
             <input className={variant} {...field} {...otherProps}></input>
-            {helperTextFinal && <small className="body3 smallTextField">{helperTextFinal}</small>}
+            <small className="body3 smallTextField">{helperTextFinal}</small>
         </div>
     )
 }
