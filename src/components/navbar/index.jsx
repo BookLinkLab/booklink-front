@@ -10,9 +10,9 @@ export const NavBar = () => {
 
     return (
         <div className="navbar">
-            <div className="left-content">
+            <div className="left-content" onClick={() => navigate("/home")}>
                 <div className="logo">
-                    <Logo height="29" width="28" onClick={() => navigate("/home")} />
+                    <Logo height="29" width="28" />
                 </div>
                 <text style={{ fontWeight: "bold" }}>Book</text>
                 <text>Link</text>
