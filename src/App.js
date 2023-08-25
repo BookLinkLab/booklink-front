@@ -1,24 +1,27 @@
-import logo from "./logo.svg"
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom"
 import "./App.css"
+import Login from "./screens/login/index.jsx"
+import Register from "./screens/register/register"
+import CreateForum from "./screens/createForum/createForum"
+import Notifications from "./screens/notifications/notifications"
+import NotFound from "./screens/notFound/notFound"
+import Navbar from "./components/Navbar"
+import ProfileScreen from "./screens/profile"
 
 function App() {
+    const isLogged = true
     return (
-        <div className="App">
-            <header className="App-header">
-                <img src={logo} className="App-logo" alt="logo" />
-                <p>
-                    Edit <code>src/App.js</code> and save to reload.
-                </p>
-                <a
-                    className="App-link"
-                    href="https://reactjs.org"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Learn React
-                </a>
-            </header>
-        </div>
+        <Router>
+            {isLogged ? <Navbar /> : null}
+            <Routes>
+                <Route path="/register" element={<Register />} />
+                <Route path="/createForum" element={<CreateForum />} />
+                <Route path="/notifications" element={<Notifications />} />
+                <Route path="/profile" element={<ProfileScreen />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/notFound" element={<NotFound isLogged={isLogged} />} />
+            </Routes>
+        </Router>
     )
 }
 
