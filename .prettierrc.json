@@ -3,6 +3,5 @@
     "printWidth": 100,
     "semi": false,
     "singleQuote": false,
-    "bracketSpacing": true,
-    "noUnusedLocals": false
+    "bracketSpacing": true
 }
