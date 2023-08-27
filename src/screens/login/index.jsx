@@ -8,10 +8,13 @@ import Button from "../../components/Button"
 import Logo from "../../components/Logo"
 import { useState } from "react"
 import SplitScreen from "../../components/SplitScreen"
+import { useCurrentUser } from "../../hooks/useCurrentUser"
 
 const Login = () => {
     const navigate = useNavigate()
+    //The disabled loading is from another ticket.
     const [loading, setLoading] = useState(false)
+    const { currentUser, changeCurrentUser } = useCurrentUser()
 
     return (
         <SplitScreen>
@@ -21,7 +24,9 @@ const Login = () => {
                     password: "",
                 }}
                 validationSchema={Yup.object({
-                    email: Yup.string().required("El email es requerido"),
+                    email: Yup.string()
+                        .required("El email es requerido")
+                        .email("El email no es valido"),
                     password: Yup.string().required("La contraseña es requerida"),
                 })}
                 onSubmit={async (values, { resetForm }) => {
@@ -31,7 +36,10 @@ const Login = () => {
                     loginUser(email, password)
                         .then((response) => {
                             //This part can be better, it depends on the Response status
-                            !!response && response ? navigate("/home") : resetForm()
+                            if (response) {
+                                changeCurrentUser("token", 1)
+                                navigate("/home")
+                            } else resetForm()
                         })
                         .finally(() => {
                             setLoading(false)

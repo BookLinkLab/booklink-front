@@ -6,13 +6,15 @@ const bookLinkAxios = axios.create({
 
 export const loginUser = async (email, password) => {
     // try {
-    //     const response = await bookLinkAxios.post("/api/login", { email: email, password: password })
-    //     return response.data.token
+    //     const response = await bookLinkAxios.post("/auth", { email: email, password: password })
+    //     return response.data
+    //
     // } catch (error) {
     //     return null
     // }
-    //This is an example of what the api call would be.
-    return null
+    //
+    // return null
+    return "18"
 }
 
 export const registerUser = async (username, email, password) => {
