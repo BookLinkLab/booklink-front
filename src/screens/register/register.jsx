@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import SplitScreen from "../../components/SplitScreen"
 import "./styles.css"
 import { useNavigate } from "react-router-dom"
@@ -11,6 +11,7 @@ import { registerUser } from "../../service/apis"
 
 const RegisterScreen = () => {
     const navigate = useNavigate()
+    const [loading, setLoading] = useState(false)
 
     const validateSchema = Yup.object().shape({
         username: Yup.string().required("Este campo es requerido"),
@@ -34,6 +35,7 @@ const RegisterScreen = () => {
 
     return (
         <SplitScreen>
+            {loading && <p>Loader Component</p>}
             <Formik
                 initialValues={{
                     username: "",
@@ -42,52 +44,62 @@ const RegisterScreen = () => {
                     confirmPassword: "",
                 }}
                 validationSchema={validateSchema}
-                onSubmit={async (values, { resetForm }) => {
-                    registerUser(values).then((response) => {
-                        !!response && response ? navigate("/login") : resetForm()
-                    })
+                onSubmit={async ({ username, email, password }, { resetForm }) => {
+                    try {
+                        setLoading(true)
+                        const response = await registerUser(username, email, password)
+                        if (response.code === 201) {
+                            navigate("/home")
+                        } else {
+                            resetForm()
+                        }
+                    } catch (error) {
+                    } finally {
+                        setLoading(false)
+                    }
                 }}
             >
-                <Form className="form-container">
-                    <div className="logo-container">
-                        <Logo size="large"></Logo>
-                    </div>
-                    <div className="title">Registro</div>
-                    <div className="input-container">
-                        <TextField
-                            label="Nombre de Usuario"
-                            placeholder="IceWolf"
-                            name="username"
-                            variant="placeholder"
-                            helpText=""
-                        />
-                        <TextField
-                            label="Email"
-                            placeholder="fabrizio.serial@hotmail.com"
-                            name="email"
-                        />
-                        <TextField
-                            label="Contraseña"
-                            placeholder="Password123"
-                            name="password"
-                            type="password"
-                        />
-                        <TextField
-                            label="Repetir Contraseña"
-                            placeholder="Password123"
-                            name="confirmPassword"
-                            type="password"
-                        />
-                    </div>
-                    <div className="button-container">
-                        <Button size="large" type={"submit"}>
-                            Registrar
-                        </Button>
-                        <Button variant={"ghost"} onClick={() => navigate("/login")}>
-                            Tengo una cuenta
-                        </Button>
-                    </div>
-                </Form>
+                {({ isValid }) => (
+                    <Form className="form-container">
+                        <div className="logo-container">
+                            <Logo size="large"></Logo>
+                        </div>
+                        <div className="title">Registro</div>
+                        <div className="input-container">
+                            <TextField
+                                label="Nombre de Usuario"
+                                placeholder="IceWolf"
+                                name="username"
+                                variant="placeholder"
+                            />
+                            <TextField
+                                label="Email"
+                                placeholder="fabrizio.serial@hotmail.com"
+                                name="email"
+                            />
+                            <TextField
+                                label="Contraseña"
+                                placeholder="Password123"
+                                name="password"
+                                type="password"
+                            />
+                            <TextField
+                                label="Repetir Contraseña"
+                                placeholder="Password123"
+                                name="confirmPassword"
+                                type="password"
+                            />
+                        </div>
+                        <div className="button-container">
+                            <Button size="large" type={"submit"} disabled={!isValid}>
+                                Registrar
+                            </Button>
+                            <Button variant={"ghost"} onClick={() => navigate("/login")}>
+                                Tengo una cuenta
+                            </Button>
+                        </div>
+                    </Form>
+                )}
             </Formik>
         </SplitScreen>
     )
