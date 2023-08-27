@@ -14,7 +14,7 @@ const Login = () => {
     const navigate = useNavigate()
     //The disabled loading is from another ticket.
     const [loading, setLoading] = useState(false)
-    const { currentUser, changeCurrentUser } = useCurrentUser()
+    const { changeCurrentUser } = useCurrentUser()
 
     return (
         <SplitScreen>
