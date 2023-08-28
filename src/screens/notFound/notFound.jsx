@@ -1,5 +1,5 @@
 import React from "react"
-import Navbar from "../../components/navbar"
+import Navbar from "../../components/Navbar"
 import NotFoundSVG from "../../assets/icons/notFoundSVG"
 import { useNavigate } from "react-router-dom"
 import "./styles.css"
@@ -16,9 +16,9 @@ const NotFound = ({ isLogged }) => {
         <>
             <div className="notFoundContainer">
                 <NotFoundSVG />
-                <p style={{ marginTop: 30 }}>
-                    <div style={{ fontWeight: "bold" }}>Oops!</div>
-                    <div style={{ marginTop: 7 }}>Esa pagina no existe</div>
+                <p className="custom-heading-container">
+                    <h4 className="bold custom-heading">Oops!</h4>
+                    <h6 className="custom-heading">Esa página no existe</h6>
                 </p>
                 <div
                     style={{

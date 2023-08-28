@@ -6,7 +6,7 @@ import Register from "./screens/register/register"
 import CreateForum from "./screens/createForum/createForum"
 import Notifications from "./screens/notifications/notifications"
 import NotFound from "./screens/notFound/notFound"
-import Navbar from "./components/navbar"
+import Navbar from "./components/Navbar"
 import ProfileScreen from "./screens/profile"
 import PrivateRoute from "./components/PrivateRoute"
 
