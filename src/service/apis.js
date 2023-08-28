@@ -11,11 +11,16 @@ const bookLinkAuthenticatedAxios = (token) =>
     })
 
 export const loginUser = async (email, password) => {
+    const error_status = { 400: "Ha ocurrido un error, ", 500: "Error del servidor, " }
     try {
         const response = await bookLinkAxios.post("/auth", { email: email, password: password })
         return { status: response.status, token: response.data.token, id: response.data.user.id }
     } catch (error) {
-        return { data: error.response.data }
+        return {
+            data: error_status[error.response.status]
+                ? error_status[error.response.status]
+                : "" + error.response.data,
+        }
     }
 }
 
