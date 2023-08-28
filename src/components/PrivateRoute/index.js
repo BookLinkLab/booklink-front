@@ -1,8 +1,11 @@
 import React from "react"
 import { Navigate } from "react-router-dom"
+import { useCurrentUser } from "../../hooks/useCurrentUser"
 
-const PrivateRoute = ({ children, auth }) => {
-    if (!auth.user) {
+const PrivateRoute = ({ children }) => {
+    const { isAuthenticated } = useCurrentUser()
+
+    if (!isAuthenticated) {
         return <Navigate to="/login" />
     }
 

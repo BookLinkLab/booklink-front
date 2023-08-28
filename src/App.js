@@ -9,23 +9,23 @@ import NotFound from "./screens/notFound/notFound"
 import Navbar from "./components/Navbar"
 import ProfileScreen from "./screens/profile"
 import PrivateRoute from "./components/PrivateRoute"
+import { useCurrentUser } from "./hooks/useCurrentUser"
 
 function App() {
-    const isLogged = false
-    const auth = { user: isLogged }
+    const { isAuthenticated } = useCurrentUser()
 
     return (
         <Router>
-            {isLogged ? <Navbar /> : null}
+            {isAuthenticated ? <Navbar /> : null}
             <Routes>
-                // public routes
+                {/* Public routes */}
                 <Route path="/register" element={<Register />} />
                 <Route path="/login" element={<Login />} />
-                // private routes
+                {/* Private routes */}
                 <Route
                     path="/createForum"
                     element={
-                        <PrivateRoute auth={auth}>
+                        <PrivateRoute>
                             <CreateForum />
                         </PrivateRoute>
                     }
@@ -33,7 +33,7 @@ function App() {
                 <Route
                     path="/notifications"
                     element={
-                        <PrivateRoute auth={auth}>
+                        <PrivateRoute>
                             <Notifications />
                         </PrivateRoute>
                     }
@@ -41,13 +41,13 @@ function App() {
                 <Route
                     path="/profile"
                     element={
-                        <PrivateRoute auth={auth}>
+                        <PrivateRoute>
                             <ProfileScreen />
                         </PrivateRoute>
                     }
                 />
-                // not found
-                <Route path="*" element={<NotFound isLogged={isLogged} />} />
+                {/* Not Found */}
+                <Route path="*" element={<NotFound isLogged={isAuthenticated} />} />
             </Routes>
         </Router>
     )
