@@ -11,16 +11,12 @@ const bookLinkAuthenticatedAxios = (token) =>
     })
 
 export const loginUser = async (email, password) => {
-    // try {
-    //     const response = await bookLinkAxios.post("/auth", { email: email, password: password })
-    //     return response.data
-    //
-    // } catch (error) {
-    //     return null
-    // }
-    //
-    // return null
-    return "18"
+    try {
+        const response = await bookLinkAxios.post("/auth", { email: email, password: password })
+        return { status: response.status, token: response.data.token, id: response.data.user.id }
+    } catch (error) {
+        return { data: error.response.data }
+    }
 }
 
 export const registerUser = async (username, email, password) => {

@@ -9,10 +9,11 @@ import Logo from "../../components/Logo"
 import { useState } from "react"
 import SplitScreen from "../../components/SplitScreen"
 import { useCurrentUser } from "../../hooks/useCurrentUser"
+import withToast from "../../hoc/withToast"
+import Loader from "../../components/Loader"
 
-const Login = () => {
+const Login = ({ showToast }) => {
     const navigate = useNavigate()
-    //The disabled loading is from another ticket.
     const [loading, setLoading] = useState(false)
     const { changeCurrentUser } = useCurrentUser()
 
@@ -32,14 +33,15 @@ const Login = () => {
                 onSubmit={async (values, { resetForm }) => {
                     const { email, password } = values
                     setLoading(true)
-
                     loginUser(email, password)
                         .then((response) => {
-                            //This part can be better, it depends on the Response status
-                            if (response) {
-                                changeCurrentUser("token", 1)
+                            if (response.status) {
+                                changeCurrentUser(response.token, response.id)
                                 navigate("/home")
-                            } else resetForm()
+                            } else {
+                                resetForm()
+                                showToast(response.data, "error")
+                            }
                         })
                         .finally(() => {
                             setLoading(false)
@@ -47,6 +49,7 @@ const Login = () => {
                 }}
             >
                 <Form className="login-form-container">
+                    <Loader open={loading} />
                     <Logo size="large" />
                     <div className="login-div-2">
                         <div className="inputs-login-div">
@@ -66,12 +69,9 @@ const Login = () => {
                             />
                         </div>
                         <div className="buttons-login-div">
-                            <Button size="large" disabled={loading}>
-                                Iniciar sesion
-                            </Button>
+                            <Button size="large">Iniciar sesion</Button>
                             <Button
                                 size="large"
-                                disabled={loading}
                                 variant="ghost"
                                 onClick={() => navigate("/register")}
                             >
@@ -84,4 +84,4 @@ const Login = () => {
         </SplitScreen>
     )
 }
-export default Login
+export default withToast(Login)
