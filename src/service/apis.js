@@ -1,5 +1,7 @@
 import axios from "axios"
 
+const error_status = { 400: "Ha ocurrido un error, ", 500: "Error del servidor, " }
+
 const bookLinkAxios = axios.create({
     baseURL: "http://localhost:8080",
 })
@@ -11,7 +13,6 @@ const bookLinkAuthenticatedAxios = (token) =>
     })
 
 export const loginUser = async (email, password) => {
-    const error_status = { 400: "Ha ocurrido un error, ", 500: "Error del servidor, " }
     try {
         const response = await bookLinkAxios.post("/auth", { email: email, password: password })
         return { status: response.status, token: response.data.token, id: response.data.user.id }
