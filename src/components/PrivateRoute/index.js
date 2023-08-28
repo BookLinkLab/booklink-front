@@ -5,7 +5,7 @@ import { useCurrentUser } from "../../hooks/useCurrentUser"
 const PrivateRoute = ({ children }) => {
     const { isAuthenticated } = useCurrentUser()
 
-    if (!isAuthenticated) {
+    if (!isAuthenticated()) {
         return <Navigate to="/login" />
     }
 

@@ -16,7 +16,7 @@ function App() {
 
     return (
         <Router>
-            {isAuthenticated ? <Navbar /> : null}
+            {isAuthenticated() ? <Navbar /> : null}
             <Routes>
                 {/* Public routes */}
                 <Route path="/register" element={<Register />} />
@@ -47,7 +47,7 @@ function App() {
                     }
                 />
                 {/* Not Found */}
-                <Route path="*" element={<NotFound isLogged={isAuthenticated} />} />
+                <Route path="*" element={<NotFound />} />
             </Routes>
         </Router>
     )
