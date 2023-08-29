@@ -1,7 +1,6 @@
 import axios from "axios"
 
 const bookLinkAxios = axios.create({
-    headers: { "Access-Control-Allow-Origin": "*" },
     baseURL: "http://localhost:8080",
 })
 
@@ -26,14 +25,15 @@ export const loginUser = async (email, password) => {
 }
 
 export const registerUser = async (username, email, password) => {
+    const user = {
+        username: username,
+        email: email,
+        password: password,
+    }
     try {
-        const resp = await bookLinkAxios.post("/user", {
-            username: username,
-            email: email,
-            password: password,
-        })
-        return resp.data.token
+        const resp = await bookLinkAxios.post("/user", user)
+        return resp.data
     } catch (error) {
-        return error.status
+        return error.response
     }
 }

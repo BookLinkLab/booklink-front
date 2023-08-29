@@ -8,10 +8,14 @@ import TextField from "../../components/TextField"
 import Button from "../../components/Button"
 import Logo from "../../components/Logo"
 import { registerUser } from "../../service/apis"
+import withToast from "../../hoc/withToast"
+import Loader from "../../components/Loader"
+import { useCurrentUser } from "../../hooks/useCurrentUser"
 
-const RegisterScreen = () => {
+const RegisterScreen = ({ showToast }) => {
     const navigate = useNavigate()
     const [loading, setLoading] = useState(false)
+    const { changeCurrentUser } = useCurrentUser()
 
     const validateSchema = Yup.object().shape({
         username: Yup.string().required("Este campo es requerido"),
@@ -35,7 +39,7 @@ const RegisterScreen = () => {
 
     return (
         <SplitScreen>
-            {loading && <p>Loader Component</p>}
+            <Loader open={loading} />
             <Formik
                 initialValues={{
                     username: "",
@@ -48,12 +52,19 @@ const RegisterScreen = () => {
                     try {
                         setLoading(true)
                         const response = await registerUser(username, email, password)
-                        if (response.code === 201) {
+                        if (response.email === email) {
+                            changeCurrentUser(response.token, response.id)
                             navigate("/home")
-                        } else {
+                        } else if (response.status === 400) {
+                            showToast("Tipo de dato incorrecto. " + response.data, "error")
+                            resetForm()
+                        } else if (response.status === 409) {
+                            showToast("Usuario con mail ya existente. " + response.data, "error")
+                            resetForm()
+                        } else if (response.status === 500) {
+                            showToast("Error del servidor. " + response.message, "error")
                             resetForm()
                         }
-                    } catch (error) {
                     } finally {
                         setLoading(false)
                     }
@@ -104,4 +115,4 @@ const RegisterScreen = () => {
         </SplitScreen>
     )
 }
-export default RegisterScreen
+export default withToast(RegisterScreen)
