@@ -1,15 +1,16 @@
 import React from "react"
-import Navbar from "../../components/Navbar"
 import NotFoundSVG from "../../assets/icons/notFoundSVG"
 import { useNavigate } from "react-router-dom"
 import "./styles.css"
 import Button from "../../components/Button"
+import { useCurrentUser } from "../../hooks/useCurrentUser"
 
-const NotFound = ({ isLogged }) => {
+const NotFound = () => {
     const navigate = useNavigate()
+    const { isAuthenticated } = useCurrentUser()
 
     const handleClick = () => {
-        isLogged ? navigate("/home") : navigate("/login")
+        isAuthenticated() ? navigate("/home") : navigate("/login")
     }
 
     return (
