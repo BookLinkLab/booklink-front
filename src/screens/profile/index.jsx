@@ -42,7 +42,6 @@ const ProfileScreen = ({ showToast }) => {
         )
     }
     async function handleUpdate(values) {
-        console.log(values)
         setLoading(true)
         updateUser(id, token, values)
             .then((response) => {
@@ -50,18 +49,13 @@ const ProfileScreen = ({ showToast }) => {
                     setUser(response.data)
                     showToast("Perfil de usuario actualizado", "success")
                 } else if (response.status === 400) {
-                    throw new Error(`Ha ocurrido un error, ${response.data.message}, 'error'`)
-                } else if (response.status >= 500) {
-                    throw new Error(`Ha ocurrido un error, ${response.data.message}, 'error`)
+                    showToast(`Ha ocurrido un error, ${response.data.message}, 'error'`)
+                } else if (response.status === 500) {
+                    showToast(`Ha ocurrido un error, ${response.data.message}, 'error`)
                 }
-            })
-            .catch((error) => {
-                showToast(error.message, "error")
             })
             .finally(() => setLoading(false))
     }
-
-    //const mockInitialValues = { username: "IceWolf", email: "fabrizio.serial@hotmail.com" }
 
     return (
         <div className="items-aligned">
