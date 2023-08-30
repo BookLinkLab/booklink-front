@@ -11,7 +11,7 @@ import { useCurrentUser } from "../../hooks/useCurrentUser"
 
 const ProfileScreen = ({ showToast }) => {
     const { id, token } = useCurrentUser()
-    const [user, setUser] = useState({ id: "", username: "", email: "" })
+    const [user, setUser] = useState({ username: "", email: "", id: "" })
     const [loading, setLoading] = useState(false)
 
     useEffect(() => {
@@ -32,7 +32,7 @@ const ProfileScreen = ({ showToast }) => {
                 showToast(error.message, "error")
             })
             .finally(() => setLoading(false))
-    }, [])
+    }, [id, showToast, token])
 
     function isValid(values, errors) {
         return (
