@@ -52,17 +52,17 @@ const RegisterScreen = ({ showToast }) => {
                     try {
                         setLoading(true)
                         const response = await registerUser(username, email, password)
-                        if (response.email === email) {
-                            changeCurrentUser(response.token, response.id)
+                        if (response.token) {
+                            changeCurrentUser(response.token, response.user.id)
                             navigate("/home")
                         } else if (response.status === 400) {
-                            showToast("Tipo de dato incorrecto. " + response.data, "error")
+                            showToast("Tipo de dato incorrecto.", "error")
                             resetForm()
                         } else if (response.status === 409) {
-                            showToast("Usuario con mail ya existente. " + response.data, "error")
+                            showToast("Usuario con mail ya existente.", "error")
                             resetForm()
                         } else if (response.status === 500) {
-                            showToast("Error del servidor. " + response.message, "error")
+                            showToast("Error del servidor", "error")
                             resetForm()
                         }
                     } finally {
