@@ -3,26 +3,56 @@ import TextField from "../../components/TextField"
 import Button from "../../components/Button"
 import { Form, Formik } from "formik"
 import * as Yup from "yup"
+import { useEffect, useState } from "react"
+import { getUser } from "../../service/apis"
+import withToast from "../../hoc/withToast"
+import Loader from "../../components/Loader"
+import { useCurrentUser } from "../../hooks/useCurrentUser"
 
-const ProfileScreen = () => {
+const ProfileScreen = ({ showToast }) => {
+    const { id, token } = useCurrentUser()
+    const [user, setUser] = useState({ username: "", email: "", id: "" })
+    const [loading, setLoading] = useState(false)
+
+    useEffect(() => {
+        setLoading(true)
+        getUser(id, token)
+            .then((response) => {
+                if (response.status === 200) {
+                    setUser(response.data)
+                } else if (response.status === 400) {
+                    throw new Error("Tipo de dato incorrecto.")
+                } else if (response.status === 404) {
+                    throw new Error("Usuario no encontrado.")
+                } else if (response.status === 500) {
+                    throw new Error(`Ha ocurrido un error, ${response.data.message}`)
+                }
+            })
+            .catch((error) => {
+                showToast(error.message, "error")
+            })
+            .finally(() => setLoading(false))
+    }, [id, showToast, token])
+
     function isValid(values, errors) {
         return (
-            (values.username === mockInitialValues.username &&
-                values.email === mockInitialValues.email) ||
+            (values.username === user.username && values.email === user.email) ||
             errors.username ||
             errors.email
         )
     }
     async function handleUpdate(values) {}
 
-    const mockInitialValues = { username: "IceWolf", email: "fabrizio.serial@hotmail.com" }
+    //const mockInitialValues = { username: "IceWolf", email: "fabrizio.serial@hotmail.com" }
 
     return (
         <div className="items-aligned">
+            <Loader open={loading} />
             <div className="container">
                 <h4 className="bold">Perfil</h4>
                 <Formik
-                    initialValues={mockInitialValues}
+                    enableReinitialize
+                    initialValues={user}
                     validationSchema={Yup.object().shape({
                         username: Yup.string().required("Este campo es obligatorio"),
                         email: Yup.string()
@@ -30,10 +60,7 @@ const ProfileScreen = () => {
                             .email("Ingrese una dirección de correo válida."),
                     })}
                     onSubmit={async (values, { setSubmitting, resetForm }) => {
-                        if (
-                            values.username === mockInitialValues.username &&
-                            values.email === mockInitialValues.email
-                        ) {
+                        if (values.username === user.username && values.email === user.email) {
                             setSubmitting(false)
                             return
                         }
@@ -65,4 +92,4 @@ const ProfileScreen = () => {
         </div>
     )
 }
-export default ProfileScreen
+export default withToast(ProfileScreen)

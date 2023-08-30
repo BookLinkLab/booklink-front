@@ -9,7 +9,7 @@ const bookLinkAxios = axios.create({
 const bookLinkAuthenticatedAxios = (token) =>
     axios.create({
         baseURL: "http://localhost:8080",
-        headers: { Authorization: +token },
+        headers: { Authorization: "Bearer " + token },
     })
 
 export const loginUser = async (email, password) => {
@@ -37,4 +37,7 @@ export const registerUser = async (username, email, password) => {
     } catch (error) {
         return error.response
     }
+}
+export const getUser = async (id, token) => {
+    return await bookLinkAuthenticatedAxios(token).get(`/user/${id}`)
 }
