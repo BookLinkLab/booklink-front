@@ -3,17 +3,17 @@ import TextField from "../../components/TextField"
 import Button from "../../components/Button"
 import { Form, Formik } from "formik"
 import * as Yup from "yup"
+import { updateUser } from "../../service/apis"
+import { useCurrentUser } from "../../hooks/useCurrentUser"
 import { useEffect, useState } from "react"
 import { getUser } from "../../service/apis"
 import withToast from "../../hoc/withToast"
 import Loader from "../../components/Loader"
-import { useCurrentUser } from "../../hooks/useCurrentUser"
 
 const ProfileScreen = ({ showToast }) => {
     const { id, token } = useCurrentUser()
     const [user, setUser] = useState({ username: "", email: "", id: "" })
     const [loading, setLoading] = useState(false)
-
     useEffect(() => {
         setLoading(true)
         getUser(id, token)
@@ -41,7 +41,25 @@ const ProfileScreen = ({ showToast }) => {
             errors.email
         )
     }
-    async function handleUpdate(values) {}
+    async function handleUpdate(values) {
+        console.log(values)
+        setLoading(true)
+        updateUser(id, token, values)
+            .then((response) => {
+                if (response.status === 200) {
+                    setUser(response.data)
+                    showToast("Perfil de usuario actualizado", "success")
+                } else if (response.status === 400) {
+                    throw new Error(`Ha ocurrido un error, ${response.data.message}, 'error'`)
+                } else if (response.status >= 500) {
+                    throw new Error(`Ha ocurrido un error, ${response.data.message}, 'error`)
+                }
+            })
+            .catch((error) => {
+                showToast(error.message, "error")
+            })
+            .finally(() => setLoading(false))
+    }
 
     //const mockInitialValues = { username: "IceWolf", email: "fabrizio.serial@hotmail.com" }
 
