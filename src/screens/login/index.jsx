@@ -27,7 +27,7 @@ const Login = ({ showToast }) => {
                 validationSchema={Yup.object({
                     email: Yup.string()
                         .required("El email es requerido")
-                        .email("El email no es valido"),
+                        .email("El email no es válido"),
                     password: Yup.string().required("La contraseña es requerida"),
                 })}
                 onSubmit={async (values, { resetForm }) => {
@@ -69,7 +69,7 @@ const Login = ({ showToast }) => {
                             />
                         </div>
                         <div className="buttons-login-div">
-                            <Button size="large">Iniciar sesion</Button>
+                            <Button size="large">Iniciar sesión</Button>
                             <Button
                                 size="large"
                                 variant="ghost"

@@ -24,6 +24,11 @@ export const useCurrentUser = () => {
         localStorage.setItem("user_id", id)
     }
 
+    const logOutCurrentUser = () => {
+        localStorage.removeItem("access_token")
+        localStorage.removeItem("user_id")
+    }
+
     useEffect(() => {
         window.addEventListener("storage", updateState)
         return () => {
@@ -31,5 +36,11 @@ export const useCurrentUser = () => {
         }
     }, [])
 
-    return { id: currentUser.id, token: currentUser.token, changeCurrentUser, isAuthenticated }
+    return {
+        id: currentUser.id,
+        token: currentUser.token,
+        changeCurrentUser,
+        isAuthenticated,
+        logOutCurrentUser,
+    }
 }

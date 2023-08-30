@@ -9,11 +9,13 @@ import { useEffect, useState } from "react"
 import { getUser } from "../../service/apis"
 import withToast from "../../hoc/withToast"
 import Loader from "../../components/Loader"
+import { useNavigate } from "react-router-dom"
 
 const ProfileScreen = ({ showToast }) => {
-    const { id, token } = useCurrentUser()
+    const { id, token, logOutCurrentUser } = useCurrentUser()
     const [user, setUser] = useState({ username: "", email: "", id: "" })
     const [loading, setLoading] = useState(false)
+    const navigate = useNavigate()
     useEffect(() => {
         setLoading(true)
         getUser(id, token)
@@ -57,6 +59,11 @@ const ProfileScreen = ({ showToast }) => {
             .finally(() => setLoading(false))
     }
 
+    function logOut() {
+        logOutCurrentUser()
+        navigate("/login")
+    }
+
     return (
         <div className="items-aligned">
             <Loader open={loading} />
@@ -98,7 +105,7 @@ const ProfileScreen = ({ showToast }) => {
                     )}
                 </Formik>
             </div>
-            <Button variant="outlined" className="log-out-button-margin">
+            <Button variant="outlined" className="log-out-button-margin" onClick={logOut}>
                 Cerrar sesión
             </Button>
         </div>
