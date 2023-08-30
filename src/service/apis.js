@@ -34,3 +34,7 @@ export const registerUser = async (username, email, password) => {
     // }
     return null
 }
+export const getUser = async (id) => {
+    const response = await bookLinkAxios.get(`/user/${id}`)
+    return response.data
+}

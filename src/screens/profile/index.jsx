@@ -3,8 +3,36 @@ import TextField from "../../components/TextField"
 import Button from "../../components/Button"
 import { Form, Formik } from "formik"
 import * as Yup from "yup"
+import { useEffect, useState } from "react"
+import { getUser } from "../../service/apis"
+import withToast from "../../hoc/withToast"
+import Loader from "../../components/Loader"
+import { useCurrentUser } from "../../hooks/useCurrentUser"
 
-const ProfileScreen = () => {
+const ProfileScreen = ({ showToast }) => {
+    const { id } = useCurrentUser()
+    const [user, setUser] = useState({})
+    const [loading, setLoading] = useState(false)
+
+    useEffect(() => {
+        setLoading(true)
+        getUser(id)
+            .then((response) => {
+                if (response.ok) setUser(response)
+                else if (response.status === 400) {
+                    throw new Error("Tipo de dato incorrecto.")
+                } else if (response.status === 404) {
+                    throw new Error("Usuario no encontrado.")
+                } else if (response.status === 500) {
+                    throw new Error(`Ha ocurrido un error, ${response.message}`)
+                }
+            })
+            .catch((error) => {
+                showToast.error(error.message)
+            })
+            .finally(() => setLoading(false))
+    }, [id, showToast])
+
     function isValid(values, errors) {
         return (
             (values.username === mockInitialValues.username &&
@@ -19,6 +47,7 @@ const ProfileScreen = () => {
 
     return (
         <div className="items-aligned">
+            <Loader open={loading} />
             <div className="container">
                 <h4 className="bold">Perfil</h4>
                 <Formik
@@ -65,4 +94,4 @@ const ProfileScreen = () => {
         </div>
     )
 }
-export default ProfileScreen
+export default withToast(ProfileScreen)
