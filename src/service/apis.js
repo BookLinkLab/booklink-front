@@ -26,11 +26,15 @@ export const loginUser = async (email, password) => {
 }
 
 export const registerUser = async (username, email, password) => {
-    // try {
-    //     const resp = await bookLinkAxios.post("api/register", {username, email, password})
-    //     return response.data.token
-    // } catch (error) {
-    //     return null
-    // }
-    return null
+    const user = {
+        username: username,
+        email: email,
+        password: password,
+    }
+    try {
+        const resp = await bookLinkAxios.post("/user", user)
+        return resp.data
+    } catch (error) {
+        return error.response
+    }
 }
