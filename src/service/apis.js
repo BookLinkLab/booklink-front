@@ -35,6 +35,5 @@ export const registerUser = async (username, email, password) => {
     return null
 }
 export const getUser = async (id, token) => {
-    const response = await bookLinkAuthenticatedAxios(token).get(`/user/${id}`)
-    return response
+    return await bookLinkAuthenticatedAxios(token).get(`/user/${id}`)
 }
