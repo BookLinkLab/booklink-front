@@ -51,6 +51,7 @@ const ProfileScreen = ({ showToast }) => {
             <div className="container">
                 <h4 className="bold">Perfil</h4>
                 <Formik
+                    enableReinitialize
                     initialValues={user}
                     validationSchema={Yup.object().shape({
                         username: Yup.string().required("Este campo es obligatorio"),
