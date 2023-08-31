@@ -3,17 +3,19 @@ import TextField from "../../components/TextField"
 import Button from "../../components/Button"
 import { Form, Formik } from "formik"
 import * as Yup from "yup"
+import { updateUser } from "../../service/apis"
+import { useCurrentUser } from "../../hooks/useCurrentUser"
 import { useEffect, useState } from "react"
 import { getUser } from "../../service/apis"
 import withToast from "../../hoc/withToast"
 import Loader from "../../components/Loader"
-import { useCurrentUser } from "../../hooks/useCurrentUser"
+import { useNavigate } from "react-router-dom"
 
 const ProfileScreen = ({ showToast }) => {
-    const { id, token } = useCurrentUser()
+    const { id, token, logOutCurrentUser } = useCurrentUser()
     const [user, setUser] = useState({ username: "", email: "", id: "" })
     const [loading, setLoading] = useState(false)
-
+    const navigate = useNavigate()
     useEffect(() => {
         setLoading(true)
         getUser(id, token)
@@ -41,9 +43,32 @@ const ProfileScreen = ({ showToast }) => {
             errors.email
         )
     }
-    async function handleUpdate(values) {}
+    async function handleUpdate(values) {
+        setLoading(true)
+        updateUser(id, token, values)
+            .then((response) => {
+                if (response.status === 200) {
+                    setUser(response.data)
+                    showToast("Perfil de usuario actualizado", "success")
+                } else if (response.status === 400) {
+                    showToast("Tipo de dato incorrecto.", "error")
+                } else if (response.status === 401) {
+                    showToast("Credenciales inválidas.", "error")
+                } else if (response.status === 404) {
+                    showToast("Hubo un error al actualizar el usuario.", "error")
+                } else if (response.status === 409) {
+                    showToast("Usuario con mail ya existente.", "error")
+                } else if (response.status === 500) {
+                    showToast("Error del servidor", "error")
+                }
+            })
+            .finally(() => setLoading(false))
+    }
 
-    //const mockInitialValues = { username: "IceWolf", email: "fabrizio.serial@hotmail.com" }
+    function logOut() {
+        logOutCurrentUser()
+        navigate("/login")
+    }
 
     return (
         <div className="items-aligned">
@@ -86,7 +111,7 @@ const ProfileScreen = ({ showToast }) => {
                     )}
                 </Formik>
             </div>
-            <Button variant="outlined" className="log-out-button-margin">
+            <Button variant="outlined" className="log-out-button-margin" onClick={logOut}>
                 Cerrar sesión
             </Button>
         </div>

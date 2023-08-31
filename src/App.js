@@ -46,6 +46,14 @@ function App() {
                         </PrivateRoute>
                     }
                 />
+                <Route
+                    path="/home"
+                    element={
+                        <PrivateRoute>
+                            <div></div>
+                        </PrivateRoute>
+                    }
+                />
                 {/* Not Found */}
                 <Route path="*" element={<NotFound />} />
             </Routes>
