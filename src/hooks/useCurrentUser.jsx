@@ -30,9 +30,9 @@ export const useCurrentUser = () => {
     }
 
     useEffect(() => {
-        window.addEventListener("storage", updateState)
+        window.addEventListener("storage", updateState())
         return () => {
-            window.removeEventListener("storage", updateState)
+            window.removeEventListener("storage", updateState())
         }
     }, [])
 
