@@ -30,7 +30,7 @@ const Login = ({ showToast }) => {
                         .email("El email no es válido"),
                     password: Yup.string().required("La contraseña es requerida"),
                 })}
-                onSubmit={async (values, { resetForm }) => {
+                onSubmit={async (values) => {
                     const { email, password } = values
                     setLoading(true)
                     loginUser(email, password)
@@ -39,8 +39,7 @@ const Login = ({ showToast }) => {
                                 changeCurrentUser(response.token, response.id)
                                 navigate("/home")
                             } else {
-                                resetForm()
-                                showToast(response.data, "error")
+                                showToast("Credenciales incorrectas", "error")
                             }
                         })
                         .finally(() => {

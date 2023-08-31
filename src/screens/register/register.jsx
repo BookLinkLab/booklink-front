@@ -57,10 +57,8 @@ const RegisterScreen = ({ showToast }) => {
                             navigate("/home")
                         } else if (response.status === 400) {
                             showToast("Tipo de dato incorrecto.", "error")
-                            resetForm()
                         } else if (response.status === 409) {
                             showToast("Usuario con mail ya existente.", "error")
-                            resetForm()
                         } else if (response.status === 500) {
                             showToast("Error del servidor", "error")
                             resetForm()
