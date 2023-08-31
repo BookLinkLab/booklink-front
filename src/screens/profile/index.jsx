@@ -47,6 +47,7 @@ const ProfileScreen = ({ showToast }) => {
         setLoading(true)
         updateUser(id, token, values)
             .then((response) => {
+                console.log(response.status)
                 if (response.status === 200) {
                     setUser(response.data)
                     showToast("Perfil de usuario actualizado", "success")
@@ -61,6 +62,9 @@ const ProfileScreen = ({ showToast }) => {
                 } else if (response.status === 500) {
                     showToast("Error del servidor", "error")
                 }
+            })
+            .catch((error) => {
+                showToast(error.message)
             })
             .finally(() => setLoading(false))
     }
