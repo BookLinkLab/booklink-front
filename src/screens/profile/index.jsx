@@ -50,14 +50,17 @@ const ProfileScreen = ({ showToast }) => {
                 if (response.status === 200) {
                     setUser(response.data)
                     showToast("Perfil de usuario actualizado", "success")
-                } else if (response.status === 400) {
+                }
+            })
+            .catch(({ response }) => {
+                if (response.status === 400) {
                     showToast("Tipo de dato incorrecto.", "error")
                 } else if (response.status === 401) {
                     showToast("Credenciales inválidas.", "error")
                 } else if (response.status === 404) {
                     showToast("Hubo un error al actualizar el usuario.", "error")
                 } else if (response.status === 409) {
-                    showToast("Usuario con mail ya existente.", "error")
+                    showToast("Usuario con credenciales ya existente.", "error")
                 } else if (response.status === 500) {
                     showToast("Error del servidor", "error")
                 }
