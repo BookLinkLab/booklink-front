@@ -1,15 +1,18 @@
 import React from "react"
-import { Navigate } from "react-router-dom"
+import { Navigate, Outlet } from "react-router-dom"
 import { useCurrentUser } from "../../hooks/useCurrentUser"
+import Navbar from "../Navbar"
 
-const PrivateRoute = ({ children }) => {
-    const { isAuthenticated } = useCurrentUser()
+const PrivateRoute = ({ component: Component, isAuthenticated, ...rest }) => {
+    const { token } = useCurrentUser()
 
-    if (!isAuthenticated()) {
-        return <Navigate to="/login" />
-    }
-
-    return children
+    return token ? (
+        <>
+            <Navbar />
+            <Outlet />
+        </>
+    ) : (
+        <Navigate to="/login" />
+    )
 }
-
 export default PrivateRoute
