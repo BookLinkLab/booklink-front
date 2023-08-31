@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import SplitScreen from "../../components/SplitScreen"
 import "./styles.css"
 import { useNavigate } from "react-router-dom"
@@ -8,9 +8,14 @@ import TextField from "../../components/TextField"
 import Button from "../../components/Button"
 import Logo from "../../components/Logo"
 import { registerUser } from "../../service/apis"
+import withToast from "../../hoc/withToast"
+import Loader from "../../components/Loader"
+import { useCurrentUser } from "../../hooks/useCurrentUser"
 
-const RegisterScreen = () => {
+const RegisterScreen = ({ showToast }) => {
     const navigate = useNavigate()
+    const [loading, setLoading] = useState(false)
+    const { changeCurrentUser } = useCurrentUser()
 
     const validateSchema = Yup.object().shape({
         username: Yup.string().required("Este campo es requerido"),
@@ -34,6 +39,7 @@ const RegisterScreen = () => {
 
     return (
         <SplitScreen>
+            <Loader open={loading} />
             <Formik
                 initialValues={{
                     username: "",
@@ -42,54 +48,71 @@ const RegisterScreen = () => {
                     confirmPassword: "",
                 }}
                 validationSchema={validateSchema}
-                onSubmit={async (values, { resetForm }) => {
-                    registerUser(values).then((response) => {
-                        !!response && response ? navigate("/login") : resetForm()
-                    })
+                onSubmit={async ({ username, email, password }, { resetForm }) => {
+                    try {
+                        setLoading(true)
+                        const response = await registerUser(username, email, password)
+                        if (response.token) {
+                            changeCurrentUser(response.token, response.user.id)
+                            navigate("/home")
+                        } else if (response.status === 400) {
+                            showToast("Tipo de dato incorrecto.", "error")
+                            resetForm()
+                        } else if (response.status === 409) {
+                            showToast("Usuario con mail ya existente.", "error")
+                            resetForm()
+                        } else if (response.status === 500) {
+                            showToast("Error del servidor", "error")
+                            resetForm()
+                        }
+                    } finally {
+                        setLoading(false)
+                    }
                 }}
             >
-                <Form className="form-container">
-                    <div className="logo-container">
-                        <Logo size="large"></Logo>
-                    </div>
-                    <div className="title">Registro</div>
-                    <div className="input-container">
-                        <TextField
-                            label="Nombre de Usuario"
-                            placeholder="IceWolf"
-                            name="username"
-                            variant="placeholder"
-                            helpText=""
-                        />
-                        <TextField
-                            label="Email"
-                            placeholder="fabrizio.serial@hotmail.com"
-                            name="email"
-                        />
-                        <TextField
-                            label="Contraseña"
-                            placeholder="Password123"
-                            name="password"
-                            type="password"
-                        />
-                        <TextField
-                            label="Repetir Contraseña"
-                            placeholder="Password123"
-                            name="confirmPassword"
-                            type="password"
-                        />
-                    </div>
-                    <div className="button-container">
-                        <Button size="large" type={"submit"}>
-                            Registrar
-                        </Button>
-                        <Button variant={"ghost"} onClick={() => navigate("/login")}>
-                            Tengo una cuenta
-                        </Button>
-                    </div>
-                </Form>
+                {({ isValid }) => (
+                    <Form className="form-container">
+                        <div className="logo-container">
+                            <Logo size="large"></Logo>
+                        </div>
+                        <div className="title">Registro</div>
+                        <div className="input-container">
+                            <TextField
+                                label="Nombre de Usuario"
+                                placeholder="IceWolf"
+                                name="username"
+                                variant="placeholder"
+                            />
+                            <TextField
+                                label="Email"
+                                placeholder="fabrizio.serial@hotmail.com"
+                                name="email"
+                            />
+                            <TextField
+                                label="Contraseña"
+                                placeholder="Password123"
+                                name="password"
+                                type="password"
+                            />
+                            <TextField
+                                label="Repetir Contraseña"
+                                placeholder="Password123"
+                                name="confirmPassword"
+                                type="password"
+                            />
+                        </div>
+                        <div className="button-container">
+                            <Button size="large" type={"submit"} disabled={!isValid}>
+                                Registrar
+                            </Button>
+                            <Button variant={"ghost"} onClick={() => navigate("/login")}>
+                                Tengo una cuenta
+                            </Button>
+                        </div>
+                    </Form>
+                )}
             </Formik>
         </SplitScreen>
     )
 }
-export default RegisterScreen
+export default withToast(RegisterScreen)
