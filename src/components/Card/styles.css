@@ -1,0 +1,63 @@
+.card-main-div {
+    display: flex;
+    width: 250px;
+    height: 334px;
+    padding: 16px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+    border-radius: 12px;
+    border: 1px solid var(--grey-300, #cbcfd3);
+}
+
+.card-image {
+    height: 149px;
+    align-self: stretch;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+.card-sub-div {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex: 1 0 0;
+    align-self: stretch;
+}
+
+.text-card-div {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    align-self: stretch;
+}
+
+.text-card {
+    margin: 0;
+}
+.chips-card-div {
+    display: flex;
+    align-items: flex-start;
+    align-content: flex-start;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+.members-card-div {
+    height: 16px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+.button-card-div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    align-self: stretch;
+}
+
+.button-card-div button {
+    width: 108px;
+}
