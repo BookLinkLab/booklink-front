@@ -2,7 +2,7 @@ import "./styles.css"
 import Button from "../Button"
 import { useNavigate } from "react-router-dom"
 
-const Card = ({ image, text, chips, members, joined = true }) => {
+const Card = ({ image, text, chips, members, joined }) => {
     const navigate = useNavigate()
 
     return (
