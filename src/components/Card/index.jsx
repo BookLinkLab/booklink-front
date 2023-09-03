@@ -2,11 +2,11 @@ import "./styles.css"
 import Button from "../Button"
 import { useNavigate } from "react-router-dom"
 
-const Card = ({ image, text, chips, members }) => {
+const Card = ({ image, text, chips, members, joined = true }) => {
     const navigate = useNavigate()
 
     return (
-        <div className="card-main-div" onClick={() => navigate("/forum")}>
+        <div className="card-main-div" onClick={() => (joined ? navigate("/forum") : "not joined")}>
             <img src={image} className="card-image" alt="card-image"></img>
             <div className="card-sub-div">
                 <div className="text-card-div">
@@ -19,12 +19,14 @@ const Card = ({ image, text, chips, members }) => {
                     <div className="members-card-div">{members}</div>
                     <Button
                         size="small"
+                        disabled={joined}
                         onClick={(event) => {
                             event.stopPropagation()
+
                             navigate("/home")
                         }}
                     >
-                        Unirse
+                        {joined ? "Unido" : "Unirse"}
                     </Button>
                 </div>
             </div>
