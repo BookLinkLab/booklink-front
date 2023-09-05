@@ -22,6 +22,7 @@
 .notFound {
     text-align: center;
     margin-top: 150px;
+    color: var(--grey-700);
 }
 
 .itemsInGrid {
