@@ -9,16 +9,19 @@ import { useEffect, useState } from "react"
 import { getUser } from "../../service/apis"
 import withToast from "../../hoc/withToast"
 import Loader from "../../components/Loader"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 
 const ProfileScreen = ({ showToast }) => {
     const { id, token, logOutCurrentUser } = useCurrentUser()
+    const { id: profileId } = useParams()
     const [user, setUser] = useState({ username: "", email: "", id: "" })
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
+    const cardInfo = [1, 1, 1]
     useEffect(() => {
         setLoading(true)
-        getUser(id, token)
+        console.log(id)
+        getUser(profileId, token)
             .then((response) => {
                 if (response.status === 200) {
                     setUser(response.data)
@@ -103,20 +106,46 @@ const ProfileScreen = ({ showToast }) => {
                                 <TextField label={"Nombre de usuario"} name={"username"} />
                                 <TextField label={"Email"} name={"email"} />
                             </div>
-                            <Button
-                                disabled={isValid(values, errors)}
-                                size="medium"
-                                className="update-button-spacing"
-                            >
-                                Actualizar
-                            </Button>
+                            {profileId === id && (
+                                <Button
+                                    disabled={isValid(values, errors)}
+                                    size="medium"
+                                    className="update-button-spacing"
+                                >
+                                    Actualizar
+                                </Button>
+                            )}
                         </Form>
                     )}
                 </Formik>
             </div>
-            <Button variant="outlined" className="log-out-button-margin" onClick={logOut}>
-                Cerrar sesión
-            </Button>
+            {profileId === id && (
+                <Button variant="outlined" className="log-out-button-margin" onClick={logOut}>
+                    Cerrar sesión
+                </Button>
+            )}
+            <section>
+                {profileId === id ? (
+                    <h5 className="bold">Foros a los que pertenezco</h5>
+                ) : (
+                    <h5 className="bold">Foros a los que pertenece</h5>
+                )}
+                <div className="cardsGrid">
+                    {cardInfo.map((info) => (
+                        <div className="itemsInGrid">hola</div>
+                    ))}
+                </div>
+                {profileId === id ? (
+                    <h5 className="bold">Mis foros</h5>
+                ) : (
+                    <h5 className="bold">Sus foros</h5>
+                )}
+                <div className="cardsGrid">
+                    {cardInfo.map((info) => (
+                        <div className="itemsInGrid">hola</div>
+                    ))}
+                </div>
+            </section>
         </div>
     )
 }

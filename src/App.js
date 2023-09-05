@@ -45,7 +45,7 @@ function App() {
                     <Route path={"/notifications"} element={<Notifications />} />
                 </Route>
                 <Route path={"/profile"} element={<PrivateRoute />}>
-                    <Route path={"/profile"} element={<ProfileScreen />} />
+                    <Route path={"/profile/:id"} element={<ProfileScreen />} />
                 </Route>
                 <Route path={"/home"} element={<PrivateRoute />}>
                     <Route path={"/home"} element={<div>PROXIMAMENTE</div>} />

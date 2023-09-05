@@ -22,3 +22,15 @@
 .update-button-spacing {
     margin-top: 10px;
 }
+
+.cardsGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    padding: 150px;
+    align-content: center;
+}
+.itemsInGrid {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
