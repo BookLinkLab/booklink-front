@@ -37,7 +37,7 @@ const ProfileScreen = ({ showToast }) => {
                 showToast(error.message, "error")
             })
             .finally(() => setLoading(false))
-    }, [id, showToast, token])
+    }, [id, showToast, token, profileId])
 
     function isValid(values, errors) {
         return (
