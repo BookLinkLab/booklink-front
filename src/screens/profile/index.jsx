@@ -17,7 +17,7 @@ const ProfileScreen = ({ showToast }) => {
     const [user, setUser] = useState({ username: "", email: "", id: "" })
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
-    const cardInfo = [1, 1, 1]
+    const cardInfo = [] //para mostrar text de que no tiene vaciar el array
     useEffect(() => {
         setLoading(true)
         console.log(id)
@@ -103,8 +103,16 @@ const ProfileScreen = ({ showToast }) => {
                     {({ values, errors }) => (
                         <Form>
                             <div className="textfield-container">
-                                <TextField label={"Nombre de usuario"} name={"username"} />
-                                <TextField label={"Email"} name={"email"} />
+                                <TextField
+                                    label={"Nombre de usuario"}
+                                    name={"username"}
+                                    disabled={profileId !== id}
+                                />
+                                <TextField
+                                    label={"Email"}
+                                    name={"email"}
+                                    disabled={profileId !== id}
+                                />
                             </div>
                             {profileId === id && (
                                 <Button
@@ -130,21 +138,38 @@ const ProfileScreen = ({ showToast }) => {
                 ) : (
                     <h5 className="bold">Foros a los que pertenece</h5>
                 )}
-                <div className="cardsGrid">
-                    {cardInfo.map((info) => (
-                        <div className="itemsInGrid">hola</div>
-                    ))}
-                </div>
+
+                {cardInfo.length !== 0 ? (
+                    <div className="cardsGrid">
+                        {cardInfo.map((info) => (
+                            <div className="itemsInGrid">hola</div>
+                        ))}
+                    </div>
+                ) : (
+                    <h6 className="aligned">
+                        {profileId === id
+                            ? "No perteneces a ninguna comunidad"
+                            : "No pertenece a ninguna comunidad"}
+                    </h6>
+                )}
+
                 {profileId === id ? (
                     <h5 className="bold">Mis foros</h5>
                 ) : (
                     <h5 className="bold">Sus foros</h5>
                 )}
-                <div className="cardsGrid">
-                    {cardInfo.map((info) => (
-                        <div className="itemsInGrid">hola</div>
-                    ))}
-                </div>
+
+                {cardInfo.length !== 0 ? (
+                    <div className="cardsGrid">
+                        {cardInfo.map((info) => (
+                            <div className="itemsInGrid">hola</div>
+                        ))}
+                    </div>
+                ) : (
+                    <h6 className="aligned">
+                        {profileId === id ? "No tienes foros creados" : "No tiene foros creados"}
+                    </h6>
+                )}
             </section>
         </div>
     )
