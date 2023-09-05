@@ -4,7 +4,7 @@ import "./styles.css"
 import { useNavigate } from "react-router-dom"
 import * as Yup from "yup"
 import { Form, Formik } from "formik"
-import TextField from "../../components/TextField"
+import CustomTextField from "../../components/TextField"
 import Button from "../../components/Button"
 import Logo from "../../components/Logo"
 import { registerUser } from "../../service/apis"
@@ -19,7 +19,10 @@ const RegisterScreen = ({ showToast }) => {
 
     const validateSchema = Yup.object().shape({
         username: Yup.string().required("Este campo es requerido"),
-        email: Yup.string().email("Ingrese un email válido").required("Este campo es requerido"),
+        email: Yup.string()
+            .email("Ingrese un email válido")
+            .required("Este campo es requerido")
+            .matches(/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/),
         password: Yup.string()
             .required("Este campo es requerido")
             .min(8, "Mínimo 8 caracteres")
@@ -48,20 +51,15 @@ const RegisterScreen = ({ showToast }) => {
                     confirmPassword: "",
                 }}
                 validationSchema={validateSchema}
-                onSubmit={async ({ username, email, password }, { resetForm }) => {
+                onSubmit={async ({ username, email, password }) => {
                     try {
                         setLoading(true)
                         const response = await registerUser(username, email, password)
                         if (response.token) {
                             changeCurrentUser(response.token, response.user.id)
                             navigate("/home")
-                        } else if (response.status === 400) {
-                            showToast("Tipo de dato incorrecto.", "error")
-                        } else if (response.status === 409) {
-                            showToast("Usuario con mail ya existente.", "error")
-                        } else if (response.status === 500) {
-                            showToast("Error del servidor", "error")
-                            resetForm()
+                        } else {
+                            showToast(response.body, "error")
                         }
                     } finally {
                         setLoading(false)
@@ -69,30 +67,30 @@ const RegisterScreen = ({ showToast }) => {
                 }}
             >
                 {({ isValid }) => (
-                    <Form className="form-container">
+                    <Form className="register-form-container">
                         <div className="logo-container">
                             <Logo size="large"></Logo>
                         </div>
                         <div className="title">Registro</div>
                         <div className="input-container">
-                            <TextField
+                            <CustomTextField
                                 label="Nombre de Usuario"
                                 placeholder="IceWolf"
                                 name="username"
                                 variant="placeholder"
                             />
-                            <TextField
+                            <CustomTextField
                                 label="Email"
                                 placeholder="fabrizio.serial@hotmail.com"
                                 name="email"
                             />
-                            <TextField
+                            <CustomTextField
                                 label="Contraseña"
                                 placeholder="Password123"
                                 name="password"
                                 type="password"
                             />
-                            <TextField
+                            <CustomTextField
                                 label="Repetir Contraseña"
                                 placeholder="Password123"
                                 name="confirmPassword"

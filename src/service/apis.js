@@ -51,5 +51,9 @@ export const createForum = async (name, description, img) => {
         description: description,
         img: img,
     }
-    return await bookLinkAxios.post("/forum", forum)
+    try {
+        return (await bookLinkAuthenticatedAxios.post("/forum", forum)).data
+    } catch (error) {
+        return error.response
+    }
 }

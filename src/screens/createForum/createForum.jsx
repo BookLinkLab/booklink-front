@@ -1,5 +1,5 @@
 import "./styles.css"
-import TextField from "../../components/TextField"
+import CustomTextField from "../../components/TextField"
 import { Form, Formik } from "formik"
 import { useState } from "react"
 import Loader from "../../components/Loader"
@@ -8,17 +8,12 @@ import { createForum } from "../../service/apis"
 import { useNavigate } from "react-router-dom"
 import withToast from "../../hoc/withToast"
 import Button from "../../components/Button"
-import Autocomplete from "@mui/material/Autocomplete"
-
-/* TODO
-        fontSize h3 not working in div CREATE-FORUM
-        perfeccionar button
- */
+import { TextField, Autocomplete } from "@mui/material"
 
 const CreateForum = ({ showToast }) => {
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
-    // const [input, setInput] = useState([])
+
     const chipSet = [{ name: "Comedia" }, { name: "Horror" }, { name: "Terror" }, { name: "Drama" }]
 
     const validateSchema = Yup.object().shape({
@@ -28,10 +23,9 @@ const CreateForum = ({ showToast }) => {
         tags: Yup.string().required("Este campo es requerido"),
     })
 
-    // const onTagsChange = (values) => {
-    //     debugger;
-    //     setInput(values)
-    // }
+    const onTagsChange = (values) => {
+        // console.log(values)
+    }
 
     return (
         <>
@@ -44,61 +38,75 @@ const CreateForum = ({ showToast }) => {
                     tags: "",
                 }}
                 validationSchema={validateSchema}
-                onSubmit={async ({ name, description, img }, { resetForm }) => {
+                onSubmit={async ({ name, description, img }) => {
                     try {
+                        console.log("holaaaaaa")
                         setLoading(true)
                         const resp = await createForum(name, description, img)
+                        console.log(resp)
                         if (resp.status === 200) {
                             navigate(`/forum/:${resp.data.id}`)
                         } else {
-                            console.log(resp.data)
-                            showToast(resp.error, "error")
-                            resetForm()
+                            showToast(resp, "error")
                         }
                     } finally {
                         setLoading(false)
                     }
                 }}
             >
-                {({ handleChange }) => (
-                    <Form className="form-container">
-                        <p className="bold" style={{ fontSize: 32, marginBottom: 60 }}>
-                            Crear Foro
-                        </p>
-                        <TextField
+                {({ values }) => (
+                    <Form className="create-forum-container">
+                        <h3 className="bold">Crear Foro</h3>
+                        <CustomTextField
                             label="Nombre"
                             placeholder="Nombre de la comunidad"
                             name="name"
                         />
-                        <TextField
+                        <CustomTextField
                             label="Link de la foto"
                             placeholder="https://www.bookpedia.com/coomunity"
                             name="img"
                         />
-                        <TextField
+                        <CustomTextField
                             label="Descripción"
                             placeholder="Lorem ipsum dolor sit amet consectetur..."
                             name="description"
                         />
                         <Autocomplete
-                            multiple
-                            freeSolo
-                            name="tags"
-                            options={chipSet.map((option) => option.name)}
-                            getOptionLabel={(option) => option.name}
                             style={{ width: 507 }}
-                            onChange={handleChange}
+                            multiple
+                            id="tags-filled"
+                            freeSolo
+                            options={chipSet}
+                            onChange={(event, newValue) => onTagsChange(newValue)}
+                            getOptionLabel={(option) => option.name || option}
                             renderInput={(params) => (
                                 <TextField
                                     {...params}
                                     label="Etiquetas"
                                     placeholder="Comedia, Romántica"
                                     name="tags"
-                                    ref={params.InputProps.ref}
+                                    InputProps={{
+                                        style: {
+                                            borderRadius: "8px",
+                                            padding: "0",
+                                            fontSize: "16px",
+                                            border: "1px solid var(--grey-300)",
+                                            marginBottom: "4px",
+                                        },
+                                    }}
+                                    InputLabelProps={{
+                                        style: {
+                                            textAlign: "center",
+                                            height: "87px",
+                                            display: "flex",
+                                            flexDirection: "column",
+                                        },
+                                    }}
                                 />
                             )}
                         />
-                        <Button type="submit" size="medium" style={{ marginTop: 32 }}>
+                        <Button className="create-button" type="submit" size="medium">
                             Crear
                         </Button>
                     </Form>
