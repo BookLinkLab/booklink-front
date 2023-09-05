@@ -33,7 +33,7 @@ const Forum = () => {
                 title={mock.title}
                 description={mock.description}
                 image={mock.image}
-                owner={false}
+                owner={true}
                 membersQuantity={mock.membersQuantity}
                 tags={mock.tags.map((tag) => tag.name)}
             />
