@@ -1,0 +1,18 @@
+.headerForum {
+    display: flex;
+    justify-content: center;
+    margin-top: 122px;
+}
+
+.forumImage {
+    width: 200px;
+    height: 200px;
+    border-radius: 8px;
+}
+
+.headerForumButtonContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: flex-end;
+}
