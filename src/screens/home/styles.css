@@ -1,0 +1,31 @@
+.homeStyle {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.cardsGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    padding: 150px;
+    align-content: center;
+}
+
+.aligned {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+    width: 40vw;
+}
+
+.notFound {
+    text-align: center;
+    margin-top: 150px;
+}
+
+.itemsInGrid {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

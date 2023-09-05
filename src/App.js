@@ -11,6 +11,7 @@ import ProfileScreen from "./screens/profile"
 import PrivateRoute from "./components/PrivateRoute"
 import { useCurrentUser } from "./hooks/useCurrentUser"
 import PublicRoute from "./components/PublicRoute"
+import Home from "./screens/home"
 
 function App() {
     const { token } = useCurrentUser()
@@ -48,7 +49,7 @@ function App() {
                     <Route path={"/profile"} element={<ProfileScreen />} />
                 </Route>
                 <Route path={"/home"} element={<PrivateRoute />}>
-                    <Route path={"/home"} element={<div>PROXIMAMENTE</div>} />
+                    <Route path={"/home"} element={<Home />} />
                 </Route>
 
                 {/* Not Found */}
