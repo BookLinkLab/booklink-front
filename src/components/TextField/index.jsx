@@ -2,7 +2,7 @@ import "./styles.css"
 import PropTypes from "prop-types"
 import { useField } from "formik"
 
-const TextField = (props) => {
+const CustomTextField = (props) => {
     const { variant = "default", label, helpText, className, ...otherProps } = props
 
     const [field, meta] = useField(props)
@@ -16,11 +16,11 @@ const TextField = (props) => {
     )
 }
 
-TextField.propTypes = {
+CustomTextField.propTypes = {
     variant: PropTypes.oneOf(["default", "error", "placeholder"]),
     label: PropTypes.string,
     className: PropTypes.string,
     helpText: PropTypes.string,
     placeholder: PropTypes.string,
 }
-export default TextField
+export default CustomTextField

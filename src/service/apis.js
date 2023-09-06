@@ -48,3 +48,17 @@ export const updateUser = async (id, token, updatedUserInfo) => {
 export const getForum = async (id, token) => {
     return await bookLinkAuthenticatedAxios(token).get(`/forum/${id}`)
 }
+
+export const createForum = async (token, name, description, img) => {
+    const forum = {
+        name: name,
+        description: description,
+        img: img,
+    }
+    try {
+        const response = await bookLinkAuthenticatedAxios(token).post("/forum", forum)
+        return response.data
+    } catch (error) {
+        return error.response
+    }
+}
