@@ -1,14 +1,24 @@
 import React from "react"
 import Button from "../Button"
 import "./styles.css"
+import Chip from "../Chip"
+import Members from "../Members"
 
-const HeaderForum = ({ title, description, image, owner, membersQuantity, tags }) => {
+const HeaderForum = ({ title, description, image, owner, amtOfUsers, tags }) => {
     return (
         <div className="headerForum">
             <img className="forumImage" src={image} alt="header-forum" />
             <div className="forumHeaders">
-                <h5 className="header">{title}</h5>
-                <text>{description}</text>
+                <h4 className="header">{title}</h4>
+                <div className="description">
+                    <text>{description}</text>
+                </div>
+                <Members amtOfUsers={amtOfUsers} />
+                <div className="tags">
+                    {tags.map((tag, index) => (
+                        <Chip key={index} tag={tag} />
+                    ))}
+                </div>
             </div>
             {owner ? (
                 <div className="headerForumButtonContainer">
@@ -26,7 +36,6 @@ const HeaderForum = ({ title, description, image, owner, membersQuantity, tags }
                     </Button>
                 </div>
             )}
-            {/* tags and members missing*/}
         </div>
     )
 }

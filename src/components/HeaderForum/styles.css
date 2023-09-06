@@ -32,3 +32,21 @@
     margin-bottom: 15px;
     font-weight: bold;
 }
+
+.headerForumChips {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.tags {
+    display: flex;
+    gap: 8px;
+    margin-top: 16px;
+}
+
+.description {
+    margin-top: 16px;
+    margin-bottom: 16px;
+}
