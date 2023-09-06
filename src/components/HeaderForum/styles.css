@@ -1,0 +1,52 @@
+.headerForum {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+.forumImage {
+    width: 200px;
+    height: 200px;
+    border-radius: 8px;
+}
+
+.headerForumButtonContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
+.forumHeaders {
+    width: 581px;
+    margin-left: 32px;
+    margin-right: 40px;
+}
+
+.headerForumButton {
+    padding: 8px 32px;
+}
+
+.header {
+    margin-top: 5px;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+.headerForumChips {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.tags {
+    display: flex;
+    gap: 8px;
+    margin-top: 16px;
+}
+
+.description {
+    margin-top: 16px;
+    margin-bottom: 16px;
+}

@@ -1,8 +1,8 @@
 import "./styles.css"
-const Chip = ({ children }) => {
+const Chip = ({ tag }) => {
     return (
         <div className="chip-style">
-            <p className="chip-text-style body3bold">{children}</p>
+            <p className="chip-text-style body3bold">{tag}</p>
         </div>
     )
 }
