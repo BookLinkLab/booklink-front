@@ -37,7 +37,13 @@
 
 .text-card {
     margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* la cantidad de lineas que queres mostrar como max */
+    -webkit-box-orient: vertical;
 }
+
 .chips-card-div {
     display: flex;
     align-items: flex-start;
