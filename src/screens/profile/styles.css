@@ -25,14 +25,10 @@
 
 .cardsGrid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    padding: 150px;
+    grid-template-columns: repeat(3, fit-content(100%));
+    gap: 20px;
     align-content: center;
-}
-.itemsInGrid {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-items: center;
 }
 
 .aligned {

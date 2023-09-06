@@ -10,6 +10,7 @@ import { getUser } from "../../service/apis"
 import withToast from "../../hoc/withToast"
 import Loader from "../../components/Loader"
 import { useNavigate, useParams } from "react-router-dom"
+import Card from "../../components/Card"
 
 const ProfileScreen = ({ showToast }) => {
     const { id, token, logOutCurrentUser } = useCurrentUser()
@@ -17,7 +18,7 @@ const ProfileScreen = ({ showToast }) => {
     const [user, setUser] = useState({ username: "", email: "", id: "" })
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
-    const cardInfo = [] //para mostrar text de que no tiene vaciar el array
+    const cardInfo = [1, 1, 1, 1, 1, 1, 1, 1]
     useEffect(() => {
         setLoading(true)
         console.log(id)
@@ -142,7 +143,15 @@ const ProfileScreen = ({ showToast }) => {
                 {cardInfo.length !== 0 ? (
                     <div className="cardsGrid">
                         {cardInfo.map((info) => (
-                            <div className="itemsInGrid">hola</div>
+                            <Card
+                                text={"snowboarders"}
+                                image={
+                                    "https://asomammoth.com/wp-content/uploads/2023/05/Snowboarders-scaled.jpeg"
+                                }
+                                chips={["sick", "powder"]}
+                                members={"90"}
+                                joined={true}
+                            />
                         ))}
                     </div>
                 ) : (
@@ -162,7 +171,15 @@ const ProfileScreen = ({ showToast }) => {
                 {cardInfo.length !== 0 ? (
                     <div className="cardsGrid">
                         {cardInfo.map((info) => (
-                            <div className="itemsInGrid">hola</div>
+                            <Card
+                                text={"dumpling"}
+                                joined={false}
+                                chips={["tasty"]}
+                                members={"13"}
+                                image={
+                                    "https://imagenes.elpais.com/resizer/yArg87ddp-I6ZMyqJE_rHe-Kuqg=/1960x1103/cloudfront-eu-central-1.images.arcpublishing.com/prisa/LV6UCWRCIVGE4DA4IQ5GEMKRKY.jpg"
+                                }
+                            />
                         ))}
                     </div>
                 ) : (
