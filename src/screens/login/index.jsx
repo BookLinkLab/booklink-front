@@ -39,7 +39,7 @@ const Login = ({ showToast }) => {
                                 changeCurrentUser(response.token, response.id)
                                 navigate("/home")
                             } else {
-                                showToast("Credenciales incorrectas", "error")
+                                showToast(response.body, "error")
                             }
                         })
                         .finally(() => {
