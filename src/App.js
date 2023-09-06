@@ -6,11 +6,11 @@ import Register from "./screens/register/register"
 import CreateForum from "./screens/createForum/createForum"
 import Notifications from "./screens/notifications/notifications"
 import NotFound from "./screens/notFound/notFound"
-import Navbar from "./components/Navbar"
 import ProfileScreen from "./screens/profile"
 import PrivateRoute from "./components/PrivateRoute"
 import { useCurrentUser } from "./hooks/useCurrentUser"
 import PublicRoute from "./components/PublicRoute"
+import Forum from "./screens/forum/forum"
 
 function App() {
     const { token } = useCurrentUser()
@@ -26,6 +26,7 @@ function App() {
             window.removeEventListener("storage", updateState())
         }
     }, [])
+
     return (
         <Router>
             <Routes>
@@ -49,6 +50,9 @@ function App() {
                 </Route>
                 <Route path={"/home"} element={<PrivateRoute />}>
                     <Route path={"/home"} element={<div>PROXIMAMENTE</div>} />
+                </Route>
+                <Route path={"/forum/:id"} element={<PrivateRoute />}>
+                    <Route path={"/forum/:id"} element={<Forum />} />
                 </Route>
 
                 {/* Not Found */}
