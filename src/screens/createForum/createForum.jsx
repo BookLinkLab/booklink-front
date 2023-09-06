@@ -45,12 +45,11 @@ const CreateForum = ({ showToast }) => {
                 onSubmit={async ({ name, description, img }) => {
                     try {
                         setLoading(true)
-                        const resp = await createForum(token, name, description, img)
-                        console.log(resp)
-                        if (resp.status === 200) {
-                            navigate(`/forum/:${resp.data.id}`)
+                        const response = await createForum(token, name, description, img)
+                        if (response.status === 200) {
+                            navigate(`/forum/:${response.data.id}`)
                         } else {
-                            showToast(resp, "error")
+                            showToast(response.body, "error")
                         }
                     } finally {
                         setLoading(false)
