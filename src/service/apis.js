@@ -45,14 +45,15 @@ export const updateUser = async (id, token, updatedUserInfo) => {
     return await bookLinkAuthenticatedAxios(token).patch(`/user/${id}`, updatedUserInfo)
 }
 
-export const createForum = async (name, description, img) => {
+export const createForum = async (token, name, description, img) => {
     const forum = {
         name: name,
         description: description,
         img: img,
     }
     try {
-        return (await bookLinkAuthenticatedAxios.post("/forum", forum)).data
+        const response = await bookLinkAuthenticatedAxios(token).post("/forum", forum)
+        return response.data
     } catch (error) {
         return error.response
     }

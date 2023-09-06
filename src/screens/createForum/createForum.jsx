@@ -8,9 +8,11 @@ import { createForum } from "../../service/apis"
 import { useNavigate } from "react-router-dom"
 import withToast from "../../hoc/withToast"
 import Button from "../../components/Button"
-import { TextField, Autocomplete } from "@mui/material"
+import Autocomplete from "../../components/Autocomplete"
+import { useCurrentUser } from "../../hooks/useCurrentUser"
 
 const CreateForum = ({ showToast }) => {
+    const token = useCurrentUser()
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
 
@@ -18,13 +20,15 @@ const CreateForum = ({ showToast }) => {
 
     const validateSchema = Yup.object().shape({
         name: Yup.string().required("Este campo es requerido"),
-        img: Yup.string().url("Este campo es requerido"),
+        img: Yup.string().url().required("Este campo es requerido"),
         description: Yup.string().required("Este campo es requerido"),
-        tags: Yup.string().required("Este campo es requerido"),
+        tags: Yup.array()
+            .required("Este campo es requerido")
+            .min(1, "Selecciona al menos una etiqueta"),
     })
 
-    const onTagsChange = (values) => {
-        // console.log(values)
+    const onTagsChange = (event, values) => {
+        console.log(values)
     }
 
     return (
@@ -40,9 +44,8 @@ const CreateForum = ({ showToast }) => {
                 validationSchema={validateSchema}
                 onSubmit={async ({ name, description, img }) => {
                     try {
-                        console.log("holaaaaaa")
                         setLoading(true)
-                        const resp = await createForum(name, description, img)
+                        const resp = await createForum(token, name, description, img)
                         console.log(resp)
                         if (resp.status === 200) {
                             navigate(`/forum/:${resp.data.id}`)
@@ -73,38 +76,11 @@ const CreateForum = ({ showToast }) => {
                             name="description"
                         />
                         <Autocomplete
-                            style={{ width: 507 }}
-                            multiple
-                            id="tags-filled"
-                            freeSolo
+                            label="Etiquetas"
+                            name="tags"
+                            placeholder="Accion, Harry Potter, Romance..."
                             options={chipSet}
-                            onChange={(event, newValue) => onTagsChange(newValue)}
-                            getOptionLabel={(option) => option.name || option}
-                            renderInput={(params) => (
-                                <TextField
-                                    {...params}
-                                    label="Etiquetas"
-                                    placeholder="Comedia, Romántica"
-                                    name="tags"
-                                    InputProps={{
-                                        style: {
-                                            borderRadius: "8px",
-                                            padding: "0",
-                                            fontSize: "16px",
-                                            border: "1px solid var(--grey-300)",
-                                            marginBottom: "4px",
-                                        },
-                                    }}
-                                    InputLabelProps={{
-                                        style: {
-                                            textAlign: "center",
-                                            height: "87px",
-                                            display: "flex",
-                                            flexDirection: "column",
-                                        },
-                                    }}
-                                />
-                            )}
+                            handleChange={onTagsChange}
                         />
                         <Button className="create-button" type="submit" size="medium">
                             Crear

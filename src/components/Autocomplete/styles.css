@@ -1,0 +1,22 @@
+.autocomplete-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.MuiInputBase-root {
+    border-radius: 8px !important;
+    padding: 12px 16px !important;
+}
+.MuiOutlinedInput-root .MuiAutocomplete-input {
+    padding: 0 !important;
+}
+
+.MuiChip-root {
+    background-color: var(--primary-300) !important;
+}
+.MuiChip-deleteIcon {
+    & path {
+        fill: var(--primary-500);
+    }
+}
