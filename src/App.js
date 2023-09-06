@@ -11,6 +11,7 @@ import PrivateRoute from "./components/PrivateRoute"
 import { useCurrentUser } from "./hooks/useCurrentUser"
 import PublicRoute from "./components/PublicRoute"
 import Home from "./screens/home"
+import Forum from "./screens/forum/forum"
 
 function App() {
     const { token } = useCurrentUser()
@@ -26,6 +27,7 @@ function App() {
             window.removeEventListener("storage", updateState())
         }
     }, [])
+
     return (
         <Router>
             <Routes>
@@ -49,6 +51,9 @@ function App() {
                 </Route>
                 <Route path={"/home"} element={<PrivateRoute />}>
                     <Route path={"/home"} element={<Home />} />
+                </Route>
+                <Route path={"/forum/:id"} element={<PrivateRoute />}>
+                    <Route path={"/forum/:id"} element={<Forum />} />
                 </Route>
 
                 {/* Not Found */}
