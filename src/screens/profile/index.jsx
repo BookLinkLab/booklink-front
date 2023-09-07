@@ -25,12 +25,8 @@ const ProfileScreen = ({ showToast }) => {
             .then((response) => {
                 if (response.status === 200) {
                     setUser(response.data)
-                } else if (response.status === 400) {
-                    throw new Error("Tipo de dato incorrecto.")
-                } else if (response.status === 404) {
-                    throw new Error("Usuario no encontrado.")
-                } else if (response.status === 500) {
-                    throw new Error(`Ha ocurrido un error, ${response.data.message}`)
+                } else {
+                    showToast(response.data.message, "error")
                 }
             })
             .catch((error) => {
