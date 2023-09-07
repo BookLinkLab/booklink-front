@@ -21,7 +21,6 @@ const ProfileScreen = ({ showToast }) => {
     const cardInfo = [1, 1, 1, 1, 1, 1, 1, 1]
     useEffect(() => {
         setLoading(true)
-        console.log(id)
         getUser(profileId, token)
             .then((response) => {
                 if (response.status === 200) {
