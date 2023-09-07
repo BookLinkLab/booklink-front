@@ -16,8 +16,8 @@ const Card = ({ image, text, chips, members, joined }) => {
                         <b>{text}</b>
                     </h6>
                     <div className="chips-card-div">
-                        {chips.map((chip) => (
-                            <Chip key={index} tag={tag}></Chip>
+                        {chips.map((chip, index) => (
+                            <Chip key={index} tag={chip}></Chip>
                         ))}
                     </div>
                 </div>
