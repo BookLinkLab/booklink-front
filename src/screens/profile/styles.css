@@ -22,3 +22,18 @@
 .update-button-spacing {
     margin-top: 10px;
 }
+
+.cardsGrid {
+    display: grid;
+    grid-template-columns: repeat(3, fit-content(100%));
+    gap: 20px;
+    align-content: center;
+    justify-items: center;
+}
+
+.aligned {
+    color: var(--grey-700);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

@@ -9,16 +9,19 @@ import { useEffect, useState } from "react"
 import { getUser } from "../../service/apis"
 import withToast from "../../hoc/withToast"
 import Loader from "../../components/Loader"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
+import Card from "../../components/Card"
 
 const ProfileScreen = ({ showToast }) => {
     const { id, token, logOutCurrentUser } = useCurrentUser()
+    const { id: profileId } = useParams()
     const [user, setUser] = useState({ username: "", email: "", id: "" })
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
+    const cardInfo = [1, 1, 1, 1, 1, 1, 1, 1]
     useEffect(() => {
         setLoading(true)
-        getUser(id, token)
+        getUser(profileId, token)
             .then((response) => {
                 if (response.status === 200) {
                     setUser(response.data)
@@ -34,7 +37,7 @@ const ProfileScreen = ({ showToast }) => {
                 showToast(error.message, "error")
             })
             .finally(() => setLoading(false))
-    }, [id, showToast, token])
+    }, [id, showToast, token, profileId])
 
     function isValid(values, errors) {
         return (
@@ -100,23 +103,90 @@ const ProfileScreen = ({ showToast }) => {
                     {({ values, errors }) => (
                         <Form>
                             <div className="textfield-container">
-                                <CustomTextField label={"Nombre de usuario"} name={"username"} />
-                                <CustomTextField label={"Email"} name={"email"} />
+                                <CustomTextField
+                                    label={"Nombre de usuario"}
+                                    name={"username"}
+                                    disabled={profileId !== id}
+                                />
+                                <CustomTextField
+                                    label={"Email"}
+                                    name={"email"}
+                                    disabled={profileId !== id}
+                                />
                             </div>
-                            <Button
-                                disabled={isValid(values, errors)}
-                                size="medium"
-                                className="update-button-spacing"
-                            >
-                                Actualizar
-                            </Button>
+                            {profileId === id && (
+                                <Button
+                                    disabled={isValid(values, errors)}
+                                    size="medium"
+                                    className="update-button-spacing"
+                                >
+                                    Actualizar
+                                </Button>
+                            )}
                         </Form>
                     )}
                 </Formik>
             </div>
-            <Button variant="outlined" className="log-out-button-margin" onClick={logOut}>
-                Cerrar sesión
-            </Button>
+            {profileId === id && (
+                <Button variant="outlined" className="log-out-button-margin" onClick={logOut}>
+                    Cerrar sesión
+                </Button>
+            )}
+            <section>
+                {profileId === id ? (
+                    <h5 className="bold">Foros a los que pertenezco</h5>
+                ) : (
+                    <h5 className="bold">Foros a los que pertenece</h5>
+                )}
+
+                {cardInfo.length !== 0 ? (
+                    <div className="cardsGrid">
+                        {cardInfo.map((info) => (
+                            <Card
+                                text={"snowboarders"}
+                                image={
+                                    "https://asomammoth.com/wp-content/uploads/2023/05/Snowboarders-scaled.jpeg"
+                                }
+                                chips={["sick", "powder"]}
+                                members={"90"}
+                                joined={true}
+                            />
+                        ))}
+                    </div>
+                ) : (
+                    <h6 className="aligned">
+                        {profileId === id
+                            ? "No perteneces a ninguna comunidad"
+                            : "No pertenece a ninguna comunidad"}
+                    </h6>
+                )}
+
+                {profileId === id ? (
+                    <h5 className="bold">Mis foros</h5>
+                ) : (
+                    <h5 className="bold">Sus foros</h5>
+                )}
+
+                {cardInfo.length !== 0 ? (
+                    <div className="cardsGrid">
+                        {cardInfo.map((info) => (
+                            <Card
+                                text={"dumpling"}
+                                joined={false}
+                                chips={["tasty"]}
+                                members={"13"}
+                                image={
+                                    "https://imagenes.elpais.com/resizer/yArg87ddp-I6ZMyqJE_rHe-Kuqg=/1960x1103/cloudfront-eu-central-1.images.arcpublishing.com/prisa/LV6UCWRCIVGE4DA4IQ5GEMKRKY.jpg"
+                                }
+                            />
+                        ))}
+                    </div>
+                ) : (
+                    <h6 className="aligned">
+                        {profileId === id ? "No tienes foros creados" : "No tiene foros creados"}
+                    </h6>
+                )}
+            </section>
         </div>
     )
 }
