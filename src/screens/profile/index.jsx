@@ -25,6 +25,9 @@ const ProfileScreen = ({ showToast }) => {
             .then((response) => {
                 if (response.status === 200) {
                     setUser(response.data)
+                } else if (response.status === 401 || response.status === 403) {
+                    localStorage.clear()
+                    navigate("/login")
                 } else {
                     showToast(response.data.message, "error")
                 }

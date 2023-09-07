@@ -39,7 +39,12 @@ export const registerUser = async (username, email, password) => {
     }
 }
 export const getUser = async (id, token) => {
-    return await bookLinkAuthenticatedAxios(token).get(`/user/${id}`)
+    try {
+        const response = await bookLinkAuthenticatedAxios(token).get(`/user/${id}`)
+        return response.data
+    } catch (error) {
+        return error.response
+    }
 }
 export const updateUser = async (id, token, updatedUserInfo) => {
     return await bookLinkAuthenticatedAxios(token).patch(`/user/${id}`, updatedUserInfo)
