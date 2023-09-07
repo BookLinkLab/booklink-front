@@ -32,7 +32,7 @@ export const NavBar = () => {
                 <img
                     src={require("../../assets/images/profile.png")}
                     alt="Profile"
-                    onClick={() => navigate("/profile")}
+                    onClick={() => navigate("/profile/:id")}
                     style={{ marginLeft: 24 }}
                 />
             </div>
