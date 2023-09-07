@@ -1,5 +1,5 @@
 import "./styles.css"
-import TextField from "../../components/TextField"
+import CustomTextField from "../../components/TextField"
 import Button from "../../components/Button"
 import { Form, Formik } from "formik"
 import * as Yup from "yup"
@@ -103,12 +103,12 @@ const ProfileScreen = ({ showToast }) => {
                     {({ values, errors }) => (
                         <Form>
                             <div className="textfield-container">
-                                <TextField
+                                <CustomTextField
                                     label={"Nombre de usuario"}
                                     name={"username"}
                                     disabled={profileId !== id}
                                 />
-                                <TextField
+                                <CustomTextField
                                     label={"Email"}
                                     name={"email"}
                                     disabled={profileId !== id}
