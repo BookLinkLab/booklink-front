@@ -9,9 +9,9 @@ const CustomTextField = (props) => {
     const helperTextFinal = meta.error ?? helpText
     return (
         <div className={"textfield-style " + className}>
-            <label className="body2 labelTextField">{label}</label>
+            {label && <label className="body2 labelTextField">{label}</label>}
             <input className={variant} {...field} {...otherProps}></input>
-            <small className="body3 smallTextField">{helperTextFinal}</small>
+            {helperTextFinal && <small className="body3 smallTextField">{helperTextFinal}</small>}
         </div>
     )
 }
