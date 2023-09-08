@@ -12,6 +12,7 @@ import { useCurrentUser } from "./hooks/useCurrentUser"
 import PublicRoute from "./components/PublicRoute"
 import Home from "./screens/home"
 import Forum from "./screens/forum/forum"
+import EditForum from "./screens/editForum"
 
 function App() {
     const { token } = useCurrentUser()
@@ -54,6 +55,9 @@ function App() {
                 </Route>
                 <Route path={"/forum/:id"} element={<PrivateRoute />}>
                     <Route path={"/forum/:id"} element={<Forum />} />
+                </Route>
+                <Route path={"/editForum/:id"} element={<PrivateRoute />}>
+                    <Route path={"/editForum/:id"} element={<EditForum />} />
                 </Route>
 
                 {/* Not Found */}

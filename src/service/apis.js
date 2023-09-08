@@ -62,3 +62,17 @@ export const createForum = async (token, name, description, img) => {
         return error.response
     }
 }
+
+export const editForum = async (token, id, name, description, img) => {
+    const editedForum = {
+        name: name,
+        description: description,
+        img: img,
+    }
+    try {
+        const response = await bookLinkAuthenticatedAxios(token).patch(`/forum/${id}`, editedForum)
+        return response.data
+    } catch (error) {
+        return error.response
+    }
+}
