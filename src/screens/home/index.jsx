@@ -24,12 +24,15 @@ const Home = ({ showToast }) => {
             const cardsArray = await searchForums(forumName, token)
             setCardsInfo(cardsArray)
         } catch (error) {
-            if (error.status === 401 || error.status === 403) {
-                logOutCurrentUser()
-                navigate("/login")
-            } else if (error.status === 400) {
-                showToast(error.message, "error")
+            console.log(error)
+            if (error.response) {
+                //weird ask
+                if (error.response.status === 401 || error.response.status === 403) {
+                    logOutCurrentUser()
+                    navigate("/login")
+                }
             }
+            showToast("Ocurrió un error", "error")
         } finally {
             setLoading(false)
         }
