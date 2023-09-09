@@ -24,7 +24,6 @@ const Home = ({ showToast }) => {
             const cardsArray = await searchForums(forumName, token)
             setCardsInfo(cardsArray)
         } catch (error) {
-            console.log(error)
             if (error.response) {
                 //weird ask
                 if (error.response.status === 401 || error.response.status === 403) {
