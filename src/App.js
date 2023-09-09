@@ -2,25 +2,22 @@ import React, { useEffect } from "react"
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom"
 import "./App.css"
 import Login from "./screens/login/index.jsx"
-import Register from "./screens/register/register"
-import CreateForum from "./screens/createForum/createForum"
+import Register from "./screens/register"
+import CreateForum from "./screens/createForum"
 import Notifications from "./screens/notifications/notifications"
-import NotFound from "./screens/notFound/notFound"
+import NotFound from "./screens/notFound"
 import ProfileScreen from "./screens/profile"
 import PrivateRoute from "./components/PrivateRoute"
 import { useCurrentUser } from "./hooks/useCurrentUser"
 import PublicRoute from "./components/PublicRoute"
 import Home from "./screens/home"
-import Forum from "./screens/forum/forum"
+import Forum from "./screens/forum"
 
 function App() {
     const { token } = useCurrentUser()
-    console.log("token", token)
 
     useEffect(() => {
-        const updateState = () => {
-            console.log("updateState")
-        }
+        const updateState = () => {}
 
         window.addEventListener("storage", updateState())
         return () => {

@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import HeaderForum from "../../components/HeaderForum/HeaderForum"
+import HeaderForum from "../../components/HeaderForum"
 import { getForum } from "../../service/apis"
 import { useCurrentUser } from "../../hooks/useCurrentUser"
 import { useParams } from "react-router-dom"

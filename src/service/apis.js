@@ -62,3 +62,14 @@ export const createForum = async (token, name, description, img) => {
         return error.response
     }
 }
+
+export const searchForums = async (forumName, token) => {
+    try {
+        const response = await bookLinkAuthenticatedAxios(token).get(
+            `/forum/search?forumName=${forumName}`,
+        )
+        return response.data
+    } catch (error) {
+        throw error
+    }
+}
