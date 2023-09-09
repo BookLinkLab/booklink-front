@@ -4,7 +4,7 @@ import { Form, Formik } from "formik"
 import { useState } from "react"
 import Loader from "../../components/Loader"
 import * as Yup from "yup"
-import { createForum } from "../../service/apis"
+import { createForum, getTags } from "../../service/apis"
 import { useNavigate } from "react-router-dom"
 import withToast from "../../hoc/withToast"
 import Button from "../../components/Button"
@@ -16,7 +16,7 @@ const CreateForum = ({ showToast }) => {
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
 
-    const chipSet = [{ name: "Comedia" }, { name: "Horror" }, { name: "Terror" }, { name: "Drama" }]
+    const [chipSet, setChipSet] = useState(getTags(token))
 
     const validateSchema = Yup.object().shape({
         name: Yup.string().required("Este campo es requerido"),
@@ -28,7 +28,7 @@ const CreateForum = ({ showToast }) => {
     })
 
     const onTagsChange = (event, values) => {
-        console.log(values)
+        setChipSet(values.tags)
     }
 
     return (
@@ -39,13 +39,13 @@ const CreateForum = ({ showToast }) => {
                     name: "",
                     img: "",
                     description: "",
-                    tags: "",
+                    tags: "", // [] next week
                 }}
                 validationSchema={validateSchema}
-                onSubmit={async ({ name, description, img }) => {
+                onSubmit={async ({ name, description, img, tags }) => {
                     try {
                         setLoading(true)
-                        const response = await createForum(token, name, description, img)
+                        const response = await createForum(token, name, description, img, tags)
                         if (response.status === 200) {
                             navigate(`/forum/:${response.data.id}`)
                         } else {
@@ -56,36 +56,34 @@ const CreateForum = ({ showToast }) => {
                     }
                 }}
             >
-                {({ values }) => (
-                    <Form className="create-forum-container">
-                        <h3 className="bold">Crear Foro</h3>
-                        <CustomTextField
-                            label="Nombre"
-                            placeholder="Nombre de la comunidad"
-                            name="name"
-                        />
-                        <CustomTextField
-                            label="Link de la foto"
-                            placeholder="https://www.bookpedia.com/coomunity"
-                            name="img"
-                        />
-                        <CustomTextField
-                            label="Descripción"
-                            placeholder="Lorem ipsum dolor sit amet consectetur..."
-                            name="description"
-                        />
-                        <Autocomplete
-                            label="Etiquetas"
-                            name="tags"
-                            placeholder="Accion, Harry Potter, Romance..."
-                            options={chipSet}
-                            handleChange={onTagsChange}
-                        />
-                        <Button className="create-button" type="submit" size="medium">
-                            Crear
-                        </Button>
-                    </Form>
-                )}
+                <Form className="create-forum-container">
+                    <h3 className="bold">Crear Foro</h3>
+                    <CustomTextField
+                        label="Nombre"
+                        placeholder="Nombre de la comunidad"
+                        name="name"
+                    />
+                    <CustomTextField
+                        label="Link de la foto"
+                        placeholder="https://www.bookpedia.com/coomunity"
+                        name="img"
+                    />
+                    <CustomTextField
+                        label="Descripción"
+                        placeholder="Lorem ipsum dolor sit amet consectetur..."
+                        name="description"
+                    />
+                    <Autocomplete
+                        label="Etiquetas"
+                        name="tags"
+                        placeholder="Accion, Harry Potter, Romance..."
+                        options={chipSet}
+                        handleChange={onTagsChange}
+                    />
+                    <Button className="create-button" type="submit" size="medium">
+                        Crear
+                    </Button>
+                </Form>
             </Formik>
         </>
     )
