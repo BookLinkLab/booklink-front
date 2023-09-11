@@ -8,13 +8,14 @@ import Autocomplete from "../../components/Autocomplete"
 import Button from "../../components/Button"
 import * as Yup from "yup"
 import { useCurrentUser } from "../../hooks/useCurrentUser"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import withToast from "../../hoc/withToast"
 
 export const Index = ({ showToast }) => {
-    const token = useCurrentUser()
+    const { token } = useCurrentUser()
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
+    const { forumId } = useParams()
 
     const validateSchema = Yup.object().shape({
         name: Yup.string().required("Este campo es requerido"),
@@ -45,9 +46,15 @@ export const Index = ({ showToast }) => {
                 onSubmit={async ({ name, description, img }) => {
                     try {
                         setLoading(true)
-                        const response = await editForum(token, name, description, img)
+                        const body = {
+                            name,
+                            description,
+                            img,
+                            tags,
+                        }
+                        const response = await editForum(token, body, forumId)
                         if (response.status === 200) {
-                            navigate(`/forum/:id`)
+                            navigate(`/forum/:${forumId}`)
                         } else {
                             showToast(response.body, "error")
                         }
