@@ -12,7 +12,7 @@ import Autocomplete from "../../components/Autocomplete"
 import { useCurrentUser } from "../../hooks/useCurrentUser"
 
 const CreateForum = ({ showToast }) => {
-    const token = useCurrentUser()
+    const { token } = useCurrentUser()
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
 
@@ -46,7 +46,7 @@ const CreateForum = ({ showToast }) => {
                     try {
                         setLoading(true)
                         const response = await createForum(token, name, description, img, tags)
-                        if (response.status === 200) {
+                        if (response.status === 201) {
                             navigate(`/forum/:${response.data.id}`)
                         } else {
                             showToast(response.body, "error")
