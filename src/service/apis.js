@@ -85,6 +85,7 @@ export const getTags = async (token) => {
     const response = await bookLinkAxios.get("/forum/tags", config(token))
     return response.data
 }
+
 export const searchForums = async (forumName, token) => {
     try {
         const response = await bookLinkAxios.get(
