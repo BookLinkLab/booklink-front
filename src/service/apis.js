@@ -80,3 +80,27 @@ export const createForum = async (token, name, description, img) => {
         return error.response
     }
 }
+
+export const getTags = async (token) => {
+    const response = await bookLinkAxios.get("/forum/tags", config(token))
+    return response.data
+}
+export const searchForums = async (forumName, token) => {
+    try {
+        const response = await bookLinkAxios.get(
+            `/forum/search?forumName=${forumName}`,
+            config(token),
+        )
+        return response.data
+    } catch (error) {
+        throw error
+    }
+}
+export const editForum = async (token, body, forumId) => {
+    try {
+        const response = await bookLinkAxios.patch(`/forum/${forumId}`, body, config(token))
+        return response.data
+    } catch (error) {
+        return error.response
+    }
+}

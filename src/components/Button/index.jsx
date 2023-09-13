@@ -17,6 +17,7 @@ const Button = ({
         medium: "body2",
         small: "body3",
     }
+
     return (
         <button
             className={variant + " " + size + " " + fontSize[size] + " " + className}

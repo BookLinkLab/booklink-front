@@ -11,7 +11,7 @@ const HeaderForum = ({ title, description, image, owner, amtOfUsers, tags }) => 
             <div className="forumHeaders">
                 <h4 className="header">{title}</h4>
                 <div className="description">
-                    <text>{description}</text>
+                    <p>{description}</p>
                 </div>
                 <Members amtOfUsers={amtOfUsers} />
                 <div className="tags">
