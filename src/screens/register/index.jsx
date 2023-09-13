@@ -28,7 +28,7 @@ const RegisterScreen = ({ showToast }) => {
             .min(8, "Mínimo 8 caracteres")
             .matches(
                 /(?=.*[a-z])(?=.*[A-Z])\w+/,
-                "La contraseña debe contener al menus una mayúscula y una minúscula",
+                "La contraseña debe contener al menos una mayúscula y una minúscula",
             )
             .matches(/\d/, "La contraseña debe tener al menos 1 número"),
         confirmPassword: Yup.string().when("password", (password, field) => {

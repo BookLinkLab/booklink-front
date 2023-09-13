@@ -46,7 +46,6 @@ const Home = ({ showToast }) => {
                     initialValues={{ forumName: "" }}
                     onSubmit={async (values, { setSubmitting, resetForm }) => {
                         await handleSearch(values.forumName)
-                        resetForm()
                         setSubmitting(false)
                     }}
                 >
