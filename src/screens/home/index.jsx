@@ -3,21 +3,56 @@ import Button from "../../components/Button"
 import TextField from "../../components/TextField"
 import { Form, Formik } from "formik"
 import Card from "../../components/Card"
-const Home = () => {
-    const cardInfo = [1, 1, 1, 1]
+import Loader from "../../components/Loader"
+import { useEffect, useState } from "react"
+import { searchForums } from "../../service/apis"
+import { useCurrentUser } from "../../hooks/useCurrentUser"
+import withToast from "../../hoc/withToast"
+import { useNavigate } from "react-router-dom"
+const Home = ({ showToast }) => {
+    const [cardsInfo, setCardsInfo] = useState([])
+    const { token, logOutCurrentUser } = useCurrentUser()
+    const [loading, setLoading] = useState(false)
+    const navigate = useNavigate()
+    useEffect(() => {
+        handleSearch("").then()
+    }, [])
+
+    const handleSearch = async (forumName) => {
+        try {
+            setLoading(true)
+            const cardsArray = await searchForums(forumName, token)
+            setCardsInfo(cardsArray)
+        } catch (error) {
+            if (error.response) {
+                //weird ask
+                if (error.response.status === 401 || error.response.status === 403) {
+                    logOutCurrentUser()
+                    navigate("/login")
+                }
+            }
+            showToast("Ocurrió un error", "error")
+        } finally {
+            setLoading(false)
+        }
+    }
 
     return (
         <div>
+            <Loader open={loading} />
             <div className="homeStyle">
                 <h5 className={"bold"}>Buscar comunidad</h5>
                 <Formik
-                    initialValues={{ text: "" }}
-                    onSubmit={() => console.log("hi fabro") /*getComunities('')*/}
+                    initialValues={{ forumName: "" }}
+                    onSubmit={async (values, { setSubmitting, resetForm }) => {
+                        await handleSearch(values.forumName)
+                        setSubmitting(false)
+                    }}
                 >
                     <Form>
                         <div className="aligned">
                             <TextField
-                                name={"text"}
+                                name={"forumName"}
                                 placeholder={"Busca por nombre, etiquetas o descripción..."}
                             />
                             <Button>Buscar</Button>
@@ -25,17 +60,17 @@ const Home = () => {
                     </Form>
                 </Formik>
             </div>
-            {cardInfo.length !== 0 ? (
+            {cardsInfo.length !== 0 ? (
                 <div className="cardsGrid">
-                    {cardInfo.map((info) => (
+                    {cardsInfo.map((info) => (
                         <Card
-                            text={"Pastas by lele"}
-                            joined={false}
-                            members={"777"}
-                            chips={["carbonara", "pesto"]}
-                            image={
-                                "https://www.paulinacocina.net/wp-content/uploads/2023/06/receta-pasta-al-pesto.jpg"
-                            }
+                            key={info.id}
+                            id={info.id}
+                            text={info.name}
+                            joined={true}
+                            members={info.members}
+                            chips={info.tags}
+                            image={info.img}
                         />
                     ))}
                 </div>
@@ -45,4 +80,4 @@ const Home = () => {
         </div>
     )
 }
-export default Home
+export default withToast(Home)
