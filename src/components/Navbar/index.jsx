@@ -14,8 +14,8 @@ export const NavBar = () => {
                 <div className="logo">
                     <Logo height="29" width="28" />
                 </div>
-                <text style={{ fontWeight: "bold" }}>Book</text>
-                <text>Link</text>
+                <p style={{ fontWeight: "bold" }}>Book</p>
+                <p>Link</p>
             </div>
             <div className="buttons">
                 <Button size="medium" variant="ghost" onClick={() => navigate("/createForum")}>

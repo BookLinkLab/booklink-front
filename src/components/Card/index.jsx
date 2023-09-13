@@ -4,12 +4,15 @@ import { useNavigate } from "react-router-dom"
 import Members from "../Members"
 import Chip from "../Chip"
 
-const Card = ({ image, text, chips, members, joined }) => {
+const Card = ({ image, text, chips, members, joined, id }) => {
     const navigate = useNavigate()
 
     return (
-        <div className="card-main-div" onClick={() => (joined ? navigate("/forum") : "not joined")}>
-            <img src={image} className="card-image" alt="card-image" />
+        <div
+            className="card-main-div"
+            onClick={() => (joined ? navigate(`/forum/${id}`) : "not joined")}
+        >
+            <img src={image} className="card-image" alt="card" />
             <div className="card-sub-div">
                 <div className="text-card-div">
                     <h6 className="text-card">
