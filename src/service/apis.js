@@ -74,3 +74,12 @@ export const searchForums = async (forumName, token) => {
         throw error
     }
 }
+
+export const editForum = async (token, body, forumId) => {
+    try {
+        const response = await bookLinkAuthenticatedAxios(token).patch(`/forum/${forumId}`, body)
+        return response.data
+    } catch (error) {
+        return error.response
+    }
+}

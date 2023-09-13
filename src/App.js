@@ -11,6 +11,8 @@ import PrivateRoute from "./components/PrivateRoute"
 import { useCurrentUser } from "./hooks/useCurrentUser"
 import PublicRoute from "./components/PublicRoute"
 import Home from "./screens/home"
+import Forum from "./screens/forum/forum"
+import EditForum from "./screens/editForum"
 import Forum from "./screens/forum"
 
 function App() {
@@ -51,6 +53,9 @@ function App() {
                 </Route>
                 <Route path={"/forum/:id"} element={<PrivateRoute />}>
                     <Route path={"/forum/:id"} element={<Forum />} />
+                </Route>
+                <Route path={"/editForum/:forumId"} element={<PrivateRoute />}>
+                    <Route path={"/editForum/:forumId"} element={<EditForum />} />
                 </Route>
 
                 {/* Not Found */}
