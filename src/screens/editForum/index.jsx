@@ -43,7 +43,7 @@ export const Index = ({ showToast }) => {
                     tags: mockData.tags.map((tag, index) => <Chip tag={tag} key={index} />),
                 }}
                 validationSchema={validateSchema}
-                onSubmit={async ({ name, description, img }) => {
+                onSubmit={async ({ name, description, img, tags }) => {
                     try {
                         setLoading(true)
                         const body = {
