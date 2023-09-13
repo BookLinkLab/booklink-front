@@ -4,6 +4,7 @@
     align-items: flex-start;
     display: flex;
     width: 507px;
+    gap: 6px;
 }
 .create-button {
     padding: 12px 40px;

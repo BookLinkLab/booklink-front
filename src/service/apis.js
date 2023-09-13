@@ -55,10 +55,11 @@ export const createForum = async (token, name, description, img) => {
         description: description,
         img: img,
     }
-    try {
-        const response = await bookLinkAuthenticatedAxios(token).post("/forum", forum)
-        return response.data
-    } catch (error) {
-        return error.response
-    }
+    const response = await bookLinkAuthenticatedAxios(token).post("/forum", forum)
+    return response.data
+}
+
+export const getTags = async (token) => {
+    const response = await bookLinkAuthenticatedAxios(token).get("/forum/tags")
+    return response.data
 }
