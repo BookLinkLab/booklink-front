@@ -2,15 +2,28 @@ import axios from "axios"
 
 const error_status = { 400: "Ha ocurrido un error, ", 500: "Error del servidor, " }
 
+const config = (token) => ({
+    headers: {
+        Authorization: "Bearer " + token,
+    },
+})
+
 const bookLinkAxios = axios.create({
     baseURL: "http://localhost:8080",
 })
 
-const bookLinkAuthenticatedAxios = (token) =>
-    axios.create({
-        baseURL: "http://localhost:8080",
-        headers: { Authorization: "Bearer " + token },
-    })
+bookLinkAxios.interceptors.response.use(
+    function (response) {
+        return response
+    },
+    function (error) {
+        if (error.response.status === 401 || error.response.status === 403) {
+            localStorage.clear()
+            window.location.href = "/login"
+        }
+        return Promise.reject(error)
+    },
+)
 
 export const loginUser = async (email, password) => {
     try {
@@ -40,18 +53,18 @@ export const registerUser = async (username, email, password) => {
 }
 export const getUser = async (id, token) => {
     try {
-        const response = await bookLinkAuthenticatedAxios(token).get(`/user/${id}`)
+        const response = await bookLinkAxios.get(`/user/${id}`, config(token))
         return response.data
     } catch (error) {
         return error.response
     }
 }
 export const updateUser = async (id, token, updatedUserInfo) => {
-    return await bookLinkAuthenticatedAxios(token).patch(`/user/${id}`, updatedUserInfo)
+    return await bookLinkAxios.patch(`/user/${id}`, updatedUserInfo, config(token))
 }
 
 export const getForum = async (id, token) => {
-    return await bookLinkAuthenticatedAxios(token).get(`/forum/${id}`)
+    return await bookLinkAxios.get(`/forum/${id}`, config(token))
 }
 
 export const createForum = async (token, name, description, img) => {
@@ -61,7 +74,7 @@ export const createForum = async (token, name, description, img) => {
         img: img,
     }
     try {
-        const response = await bookLinkAuthenticatedAxios(token).post("/forum", forum)
+        const response = await bookLinkAxios.post("/forum", forum, config(token))
         return response.data
     } catch (error) {
         return error.response

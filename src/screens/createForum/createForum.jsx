@@ -48,9 +48,6 @@ const CreateForum = ({ showToast }) => {
                         const response = await createForum(token, name, description, img)
                         if (response.status === 200) {
                             navigate(`/forum/:${response.data.id}`)
-                        } else if (response.status === 401 || response.status === 403) {
-                            localStorage.clear()
-                            navigate("/login")
                         } else {
                             showToast(response.body, "error")
                         }
