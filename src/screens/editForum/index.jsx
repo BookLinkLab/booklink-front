@@ -54,7 +54,7 @@ export const Index = ({ showToast }) => {
                         }
                         const response = await editForum(token, body, forumId)
                         if (response.status === 200) {
-                            navigate(`/forum/:${forumId}`)
+                            navigate(`/forum/${forumId}`)
                         } else {
                             showToast(response.body, "error")
                         }

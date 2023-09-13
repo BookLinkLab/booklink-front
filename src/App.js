@@ -56,8 +56,8 @@ function App() {
                 <Route path={"/forum/:id"} element={<PrivateRoute />}>
                     <Route path={"/forum/:id"} element={<Forum />} />
                 </Route>
-                <Route path={"/editForum/:id"} element={<PrivateRoute />}>
-                    <Route path={"/editForum/:id"} element={<EditForum />} />
+                <Route path={"/editForum/:forumId"} element={<PrivateRoute />}>
+                    <Route path={"/editForum/:forumId"} element={<EditForum />} />
                 </Route>
 
                 {/* Not Found */}
