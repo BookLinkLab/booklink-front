@@ -1,0 +1,61 @@
+.modal-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    /* The z-index is set to 1000 because it is the highest value that the modal can have */
+    z-index: 1000;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+.modal-main-div {
+    display: inline-flex;
+    /*The position relative is for the remove icon to work correctly*/
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    width: 160px;
+    padding: 32px 40px;
+    flex-direction: column;
+    border-radius: 20px;
+    gap: 24px;
+    background-color: white;
+}
+.text-modal-div {
+    display: flex;
+    padding: 0 16px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    text-align: center;
+}
+.text-modal {
+    display: flex;
+    margin: 0;
+    text-align: center;
+}
+.buttons-modal-div {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.remove-div {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+}
+.remove-div:hover {
+    cursor: pointer;
+}
+/* This modifier was added in order to make the two buttons have a minimum height and a minimum width
+   The two values are calculated with the words 'si' and 'no' because they are the most common ones for the modal
+   The minimum height can be taken out
+*/
+.button-width {
+    text-wrap: nowrap;
+    flex: 1 1 0;
+}
