@@ -11,7 +11,6 @@ import PrivateRoute from "./components/PrivateRoute"
 import { useCurrentUser } from "./hooks/useCurrentUser"
 import PublicRoute from "./components/PublicRoute"
 import Home from "./screens/home"
-import Forum from "./screens/forum/forum"
 import EditForum from "./screens/editForum"
 import Forum from "./screens/forum"
 

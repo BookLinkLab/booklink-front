@@ -9,11 +9,20 @@ import { searchForums } from "../../service/apis"
 import { useCurrentUser } from "../../hooks/useCurrentUser"
 import withToast from "../../hoc/withToast"
 import { useNavigate } from "react-router-dom"
+import AutocompleteMUI from "../../components/Autocomplete"
 const Home = ({ showToast }) => {
     const [cardsInfo, setCardsInfo] = useState([])
     const { token, logOutCurrentUser } = useCurrentUser()
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
+    const mockTags = [
+        { id: 1, value: "Accion" },
+        { id: 2, value: "Aventura" },
+        { id: 3, value: "Comedia" },
+        { id: 4, value: "Drama" },
+        { id: 5, value: "Terror" },
+        { id: 6, value: "Suspenso" },
+    ]
     useEffect(() => {
         handleSearch("").then()
     }, [])
@@ -56,6 +65,14 @@ const Home = ({ showToast }) => {
                                 placeholder={"Busca por nombre, etiquetas o descripción..."}
                             />
                             <Button>Buscar</Button>
+                        </div>
+                        <div>
+                            <h6 className="h6-style-home">Filtrar por etiqueta</h6>
+                            <AutocompleteMUI
+                                name={"name"}
+                                placeholder={"Fantasia, Terror, Humor ..."}
+                                options={mockTags.map((value) => value.value)}
+                            ></AutocompleteMUI>
                         </div>
                     </Form>
                 </Formik>

@@ -16,7 +16,6 @@ const Autocomplete = (props) => {
         <div className={"autocomplete-container"}>
             <label className="body2">{label}</label>
             <AutocompleteMUI
-                style={{ width: 507 }}
                 multiple
                 id="tags-filled"
                 freeSolo
