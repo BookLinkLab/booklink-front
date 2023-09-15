@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import "./styles.css"
 import CustomTextField from "../../components/TextField"
 import Chip from "../../components/Chip"
@@ -11,11 +11,19 @@ import { useCurrentUser } from "../../hooks/useCurrentUser"
 import { useNavigate, useParams } from "react-router-dom"
 import withToast from "../../hoc/withToast"
 
-export const Index = ({ showToast }) => {
+export const EditForum = ({ showExternalToast }) => {
     const { token } = useCurrentUser()
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
     const { forumId } = useParams()
+
+    const [modifiedValues, setModifiedValues] = useState({})
+    const handleFieldChange = (fieldName, fieldValue) => {
+        setModifiedValues({
+            ...modifiedValues,
+            [fieldName]: fieldValue,
+        })
+    }
 
     const validateSchema = Yup.object().shape({
         name: Yup.string().required("Este campo es requerido"),
@@ -30,7 +38,7 @@ export const Index = ({ showToast }) => {
         name: "Los Tomadores del Olimpo",
         description: "Foro para los tomadores del olimpo",
         img: "https://www.bookpedia.com/coomunityhttps://www.bookpedia.com/coomunity",
-        tags: ["Humor", "Rayo", "Mitología"],
+        tags: [{ name: "Humor" }, { name: "Rayo" }, { name: "Mitología" }],
     }
 
     return (
@@ -40,42 +48,65 @@ export const Index = ({ showToast }) => {
                     name: mockData.name,
                     img: mockData.img,
                     description: mockData.description,
-                    tags: mockData.tags.map((tag, index) => <Chip tag={tag} key={index} />),
+                    tags: mockData.tags.map((tag, index) => <Chip tag={tag.name} key={index} />),
                 }}
                 validationSchema={validateSchema}
-                onSubmit={async ({ name, description, img, tags }) => {
+                onSubmit={async (values) => {
                     try {
                         setLoading(true)
                         const body = {
-                            name,
-                            description,
-                            img,
-                            tags,
+                            ...(modifiedValues.name && { name: values.name }),
+                            ...(modifiedValues.description && { description: values.description }),
+                            ...(modifiedValues.img && { img: values.img }),
+                            ...(modifiedValues.tags && { tags: values.tags }),
                         }
-                        const response = await editForum(token, body, forumId)
-                        if (response.status === 200) {
+                        const response = await editForum(body, forumId, token)
+                        if (response === 200) {
                             navigate(`/forum/${forumId}`)
+                            setTimeout(
+                                showExternalToast("Foro editado correctamente", "success"),
+                                500,
+                            )
                         } else {
-                            showToast(response.body, "error")
+                            showExternalToast(response.body, "error")
                         }
                     } finally {
                         setLoading(false)
                     }
                 }}
             >
-                {({ dirty }) => (
+                {({ dirty, values, handleChange }) => (
                     <Form className="editForumContainer">
                         <h4 className="bold">Editar Foro</h4>
-                        <CustomTextField label="Nombre" placeholder={mockData.name} name="name" />
+                        <CustomTextField
+                            label="Nombre"
+                            placeholder={mockData.name}
+                            name="name"
+                            value={values.name}
+                            onChange={(e) => {
+                                handleChange(e)
+                                handleFieldChange("name", e.target.value)
+                            }}
+                        />
                         <CustomTextField
                             label="Link de la foto"
                             placeholder={mockData.image}
                             name="img"
+                            value={values.img}
+                            onChange={(e) => {
+                                handleChange(e)
+                                handleFieldChange("img", e.target.value)
+                            }}
                         />
                         <CustomTextField
                             label="Descripción"
                             placeholder={mockData.description}
                             name="description"
+                            value={values.description}
+                            onChange={(e) => {
+                                handleChange(e)
+                                handleFieldChange("description", e.target.value)
+                            }}
                         />
                         <Autocomplete
                             label="Etiquetas"
@@ -83,6 +114,12 @@ export const Index = ({ showToast }) => {
                             placeholder="Accion, Harry Potter, Romance..."
                             options={["Humor", "Rayo", "Mitología"]}
                             className="autocomplete"
+                            multiple
+                            value={values.tags}
+                            onChange={(e) => {
+                                handleChange(e)
+                                handleFieldChange("tags", e.target.value)
+                            }}
                         />
                         <Button
                             className="create-button"
@@ -99,4 +136,4 @@ export const Index = ({ showToast }) => {
     )
 }
 
-export default withToast(Index)
+export default withToast(EditForum)

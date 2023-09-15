@@ -97,10 +97,10 @@ export const searchForums = async (forumName, token) => {
         throw error
     }
 }
-export const editForum = async (token, body, forumId) => {
+export const editForum = async (body, forumId, token) => {
     try {
         const response = await bookLinkAxios.patch(`/forum/${forumId}`, body, config(token))
-        return response.data
+        return response.status
     } catch (error) {
         return error.response
     }

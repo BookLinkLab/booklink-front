@@ -11,11 +11,11 @@ import PrivateRoute from "./components/PrivateRoute"
 import { useCurrentUser } from "./hooks/useCurrentUser"
 import PublicRoute from "./components/PublicRoute"
 import Home from "./screens/home"
-import Forum from "./screens/forum/forum"
 import EditForum from "./screens/editForum"
 import Forum from "./screens/forum"
+import withToast from "./hoc/withToast"
 
-function App() {
+function App({ showToast }) {
     const { token } = useCurrentUser()
 
     useEffect(() => {
@@ -55,7 +55,10 @@ function App() {
                     <Route path={"/forum/:id"} element={<Forum />} />
                 </Route>
                 <Route path={"/editForum/:forumId"} element={<PrivateRoute />}>
-                    <Route path={"/editForum/:forumId"} element={<EditForum />} />
+                    <Route
+                        path={"/editForum/:forumId"}
+                        element={<EditForum showExternalToast={showToast} />}
+                    />
                 </Route>
 
                 {/* Not Found */}
@@ -65,4 +68,4 @@ function App() {
     )
 }
 
-export default App
+export default withToast(App)
