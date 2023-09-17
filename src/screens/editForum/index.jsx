@@ -63,10 +63,7 @@ export const EditForum = ({ showExternalToast }) => {
                         const response = await editForum(body, forumId, token)
                         if (response === 200) {
                             navigate(`/forum/${forumId}`)
-                            setTimeout(
-                                showExternalToast("Foro editado correctamente", "success"),
-                                500,
-                            )
+                            showExternalToast("Foro editado correctamente", "success")
                         } else {
                             showExternalToast(response.body, "error")
                         }
