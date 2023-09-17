@@ -15,9 +15,11 @@ const HeaderForum = ({ title, description, image, owner, amtOfUsers, tags }) => 
                 </div>
                 <Members amtOfUsers={amtOfUsers} />
                 <div className="tags">
-                    {tags.map((tag, index) => (
-                        <Chip key={index} tag={tag} />
-                    ))}
+                    {tags ? (
+                        tags.map((tag, index) => <Chip key={index} tag={tag} />)
+                    ) : (
+                        <p>No tags available</p>
+                    )}
                 </div>
             </div>
             {owner ? (

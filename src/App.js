@@ -11,7 +11,6 @@ import PrivateRoute from "./components/PrivateRoute"
 import { useCurrentUser } from "./hooks/useCurrentUser"
 import PublicRoute from "./components/PublicRoute"
 import Home from "./screens/home"
-import Forum from "./screens/forum/forum"
 import EditForum from "./screens/editForum"
 import Forum from "./screens/forum"
 
@@ -51,8 +50,8 @@ function App() {
                 <Route path={"/home"} element={<PrivateRoute />}>
                     <Route path={"/home"} element={<Home />} />
                 </Route>
-                <Route path={"/forum/:id"} element={<PrivateRoute />}>
-                    <Route path={"/forum/:id"} element={<Forum />} />
+                <Route path={"/forum/:forumId"} element={<PrivateRoute />}>
+                    <Route path={"/forum/:forumId"} element={<Forum />} />
                 </Route>
                 <Route path={"/editForum/:forumId"} element={<PrivateRoute />}>
                     <Route path={"/editForum/:forumId"} element={<EditForum />} />
