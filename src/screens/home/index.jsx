@@ -5,10 +5,12 @@ import { Form, Formik } from "formik"
 import Card from "../../components/Card"
 import Loader from "../../components/Loader"
 import { useEffect, useState } from "react"
-import { searchForums } from "../../service/apis"
+import { getForum, searchForums } from "../../service/apis"
 import { useCurrentUser } from "../../hooks/useCurrentUser"
 import withToast from "../../hoc/withToast"
 import { useNavigate } from "react-router-dom"
+import { joinForum } from "../../service/apis"
+
 const Home = ({ showToast }) => {
     const [cardsInfo, setCardsInfo] = useState([])
     const { token, logOutCurrentUser } = useCurrentUser()
@@ -67,10 +69,22 @@ const Home = ({ showToast }) => {
                             key={info.id}
                             id={info.id}
                             text={info.name}
-                            joined={true}
+                            joined={info.searcherIsMember}
                             members={info.members}
                             chips={info.tags}
                             image={info.img}
+                            buttonAction={() => {
+                                setLoading(true)
+                                joinForum(token, info.id)
+                                    .then((response) => {
+                                        if (response.status === 200) {
+                                            navigate(`/forum/${info.id}`)
+                                        } else {
+                                            showToast(response.body, "error")
+                                        }
+                                    })
+                                    .finally(() => setLoading(false))
+                            }}
                         />
                     ))}
                 </div>
