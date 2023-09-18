@@ -53,8 +53,7 @@ export const registerUser = async (username, email, password) => {
 }
 export const getUser = async (id, token) => {
     try {
-        const response = await bookLinkAxios.get(`/user/${id}`, config(token))
-        return response.data
+        return await bookLinkAxios.get(`/user/${id}`, config(token))
     } catch (error) {
         return error.response
     }
@@ -82,8 +81,12 @@ export const createForum = async (token, name, description, img) => {
 }
 
 export const getTags = async (token) => {
-    const response = await bookLinkAxios.get("/forum/tags", config(token))
-    return response.data
+    try {
+        const response = await bookLinkAxios.get("/forum/tags", config(token))
+        return response.data
+    } catch (error) {
+        return error.response
+    }
 }
 
 export const searchForums = async (forumName, token) => {
