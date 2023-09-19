@@ -48,7 +48,7 @@ export const EditForum = ({ showExternalToast }) => {
                     name: mockData.name,
                     img: mockData.img,
                     description: mockData.description,
-                    tags: mockData.tags.map((tag, index) => <Chip tag={tag.name} key={index} />),
+                    tags: mockData.tags,
                 }}
                 validationSchema={validateSchema}
                 onSubmit={async (values) => {
