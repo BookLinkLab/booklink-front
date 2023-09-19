@@ -81,6 +81,15 @@ export const createForum = async (token, name, description, img) => {
     }
 }
 
+export const leaveForum = async (token, forumId) => {
+    try {
+        const response = await bookLinkAxios.delete(`/forum/${forumId}/leave`, config(token))
+        return response.data
+    } catch (error) {
+        return error.response
+    }
+}
+
 export const getTags = async (token) => {
     const response = await bookLinkAxios.get("/forum/tags", config(token))
     return response.data

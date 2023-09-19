@@ -2,10 +2,14 @@ import React, { useState } from "react"
 import HeaderForum from "../../components/HeaderForum"
 import { getForum } from "../../service/apis"
 import { useCurrentUser } from "../../hooks/useCurrentUser"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { Chip } from "@mui/material"
+import { leaveForum } from "../../service/apis"
+import withToast from "../../hoc/withToast"
 
-const Forum = () => {
+const Forum = ({ showToast }) => {
+    const navigate = useNavigate()
+    const token = useCurrentUser()
     // const { id } = useParams();
     //
     // const forum = await getForum(id, useCurrentUser().token);
@@ -19,6 +23,21 @@ const Forum = () => {
             "Somos un grupo apasionado de entusiastas de Percy Jackson y todo el maravilloso universo creado por Rick Riordan. Si te encanta sumergirte en las aventuras épicas de semidioses, monstruos mitológicos y la magia del Olimpo, este es el lugar perfecto para ti.",
         amtOfUsers: 48,
         tags: ["Tag 1", "Tag 2", "Tag 3"],
+    }
+
+    const clickLeaveForum = async () => {
+        setLoading(true)
+        try {
+            const resp = await leaveForum(token, forum.id)
+            if (resp.status === 200) {
+                showToast(resp.body, "success")
+                navigate("/home")
+            } else {
+                showToast(resp.body, "error")
+            }
+        } finally {
+            setLoading(false)
+        }
     }
 
     return (
@@ -35,4 +54,4 @@ const Forum = () => {
     )
 }
 
-export default Forum
+export default withToast(Forum)
