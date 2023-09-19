@@ -20,7 +20,6 @@ const ProfileScreen = ({ showToast }) => {
     const navigate = useNavigate()
     const [forumsJoined, setForumsJoined] = useState([])
     const [myForums, setMyForums] = useState([])
-    const [cardInfo, setCardInfo] = useState([1, 1])
 
     useEffect(() => {
         setLoading(true)
