@@ -105,3 +105,11 @@ export const editForum = async (token, body, forumId) => {
         return error.response
     }
 }
+
+export const joinForum = async (token, id) => {
+    try {
+        return await bookLinkAxios.post(`/forum/${id}/join`, null, config(token))
+    } catch (error) {
+        return error.response
+    }
+}
