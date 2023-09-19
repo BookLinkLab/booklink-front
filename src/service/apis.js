@@ -67,15 +67,16 @@ export const getForum = async (id, token) => {
     return await bookLinkAxios.get(`/forum/${id}`, config(token))
 }
 
-export const createForum = async (token, name, description, img) => {
+export const createForum = async (token, name, description, img, tags) => {
     const forum = {
         name: name,
         description: description,
         img: img,
+        tags: tags ? tags : [],
     }
     try {
         const response = await bookLinkAxios.post("/forum", forum, config(token))
-        return response.data
+        return response
     } catch (error) {
         return error.response
     }

@@ -16,15 +16,16 @@ const CreateForum = ({ showToast }) => {
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
 
-    const [chipSet, setChipSet] = useState(getTags(token))
+    const [chipSet, setChipSet] = useState([
+        { name: "Horror" },
+        { name: "Drama" },
+    ]) /* TODO getTags(token) */
 
     const validateSchema = Yup.object().shape({
         name: Yup.string().required("Este campo es requerido"),
         img: Yup.string().url().required("Este campo es requerido"),
         description: Yup.string().required("Este campo es requerido"),
-        tags: Yup.array()
-            .required("Este campo es requerido")
-            .min(1, "Selecciona al menos una etiqueta"),
+        tags: Yup.array(),
     })
 
     const onTagsChange = (event, values) => {
@@ -39,7 +40,7 @@ const CreateForum = ({ showToast }) => {
                     name: "",
                     img: "",
                     description: "",
-                    tags: "", // [] next week
+                    tags: [],
                 }}
                 validationSchema={validateSchema}
                 onSubmit={async ({ name, description, img, tags }) => {
@@ -47,9 +48,12 @@ const CreateForum = ({ showToast }) => {
                         setLoading(true)
                         const response = await createForum(token, name, description, img, tags)
                         if (response.status === 201) {
-                            navigate(`/forum/:${response.data.id}`)
+                            showToast(response.data, "success")
+                            setTimeout(() => {
+                                navigate(`/forum/:${response.data.id}`)
+                            }, 2000)
                         } else {
-                            showToast(response.body, "error")
+                            showToast(response.data, "error")
                         }
                     } finally {
                         setLoading(false)
