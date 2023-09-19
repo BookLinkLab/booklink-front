@@ -42,7 +42,7 @@ export const EditForum = ({ showExternalToast }) => {
     }
 
     return (
-        <>
+        <div className={"container-edit"}>
             <Formik
                 initialValues={{
                     name: mockData.name,
@@ -74,7 +74,9 @@ export const EditForum = ({ showExternalToast }) => {
             >
                 {({ dirty, values, handleChange }) => (
                     <Form className="editForumContainer">
-                        <h4 className="bold">Editar Foro</h4>
+                        <h3 className="bold" style={{ marginBottom: 28 }}>
+                            Editar Foro
+                        </h3>
                         <CustomTextField
                             label="Nombre"
                             placeholder={mockData.name}
@@ -129,7 +131,7 @@ export const EditForum = ({ showExternalToast }) => {
                     </Form>
                 )}
             </Formik>
-        </>
+        </div>
     )
 }
 
