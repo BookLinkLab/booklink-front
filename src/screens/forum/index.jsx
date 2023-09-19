@@ -1,9 +1,7 @@
-import React, { useState } from "react"
+import React from "react"
 import HeaderForum from "../../components/HeaderForum"
-import { getForum } from "../../service/apis"
 import { useCurrentUser } from "../../hooks/useCurrentUser"
-import { useNavigate, useParams } from "react-router-dom"
-import { Chip } from "@mui/material"
+import { useNavigate } from "react-router-dom"
 import { leaveForum } from "../../service/apis"
 import withToast from "../../hoc/withToast"
 
