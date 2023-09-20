@@ -49,9 +49,7 @@ const CreateForum = ({ showToast }) => {
                         const response = await createForum(token, name, description, img, tags)
                         if (response.status === 201) {
                             showToast(response.data, "success")
-                            setTimeout(() => {
-                                navigate(`/forum/:${response.data.id}`)
-                            }, 2000)
+                            navigate(`/forum/${response.data.id}`)
                         } else {
                             showToast(response.data, "error")
                         }
