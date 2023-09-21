@@ -28,7 +28,6 @@ const Forum = ({ showToast, showExternalToast }) => {
         const response = await getForum(token, forumId)
         if (response.status === 200) {
             setForum(response.data)
-            console.log(response.data.owner)
         } else {
             showExternalToast("Error al cargar el foro")
             navigate("/home")
@@ -61,7 +60,6 @@ const Forum = ({ showToast, showExternalToast }) => {
                 owner={forum.owner === id}
                 amtOfUsers={forum.members}
                 tags={forum.tags}
-
             />
         </>
     )
