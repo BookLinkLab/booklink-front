@@ -7,16 +7,19 @@ import Loader from "../../components/Loader"
 import withToast from "../../hoc/withToast"
 import { useCurrentUser } from "../../hooks/useCurrentUser"
 import { deleteForum } from "../../service/apis"
+import { useNavigate } from "react-router-dom"
 
 const HeaderForum = ({ title, description, image, owner, amtOfUsers, tags, id, showToast }) => {
     const { token } = useCurrentUser()
     const [loading, setLoading] = useState(false)
+    const navigate = useNavigate()
 
     const handleDelete = async () => {
         try {
             setLoading(true)
             await deleteForum(token, id)
             showToast("Foro eliminado correctamente", "success")
+            navigate("/home")
         } catch (error) {
             if (error.response) {
                 if (400 <= error.response.status <= 500) {
