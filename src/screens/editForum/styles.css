@@ -1,5 +1,12 @@
+.container-edit {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 145px;
+}
+
 .editForumContainer {
-    margin-top: 147px;
+    max-width: 507px;
     margin-left: 186px;
     display: inline-flex;
     flex-direction: column;
@@ -14,4 +21,14 @@
 .smallTextField {
     margin-top: 0;
     height: 0;
+}
+
+.autocomplete {
+    width: 100%;
+}
+
+.MuiChip-root {
+    padding: 0;
+    margin-top: 0;
+    margin-bottom: 0;
 }

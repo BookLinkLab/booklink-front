@@ -1,8 +1,7 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import "./styles.css"
 import CustomTextField from "../../components/TextField"
-import Chip from "../../components/Chip"
-import { editForum } from "../../service/apis"
+import { editForum, getForum } from "../../service/apis"
 import { Form, Formik } from "formik"
 import Autocomplete from "../../components/Autocomplete"
 import Button from "../../components/Button"
@@ -11,11 +10,35 @@ import { useCurrentUser } from "../../hooks/useCurrentUser"
 import { useNavigate, useParams } from "react-router-dom"
 import withToast from "../../hoc/withToast"
 
-export const Index = ({ showToast }) => {
+export const EditForum = ({ showExternalToast }) => {
     const { token } = useCurrentUser()
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
     const { forumId } = useParams()
+    const [forumData, setForumData] = useState({})
+
+    const [modifiedValues, setModifiedValues] = useState({})
+    const handleFieldChange = (fieldName, fieldValue) => {
+        setModifiedValues({
+            ...modifiedValues,
+            [fieldName]: fieldValue,
+        })
+    }
+
+    const getForumDataById = async (forumId) => {
+        setLoading(true)
+        const response = await getForum(token, forumId)
+        if (response.status === 200) {
+            setForumData(response.data)
+        } else {
+            showExternalToast(response.body, "error")
+        }
+        setLoading(false)
+    }
+
+    useEffect(() => {
+        getForumDataById(forumId)
+    }, [forumId])
 
     const validateSchema = Yup.object().shape({
         name: Yup.string().required("Este campo es requerido"),
@@ -30,52 +53,77 @@ export const Index = ({ showToast }) => {
         name: "Los Tomadores del Olimpo",
         description: "Foro para los tomadores del olimpo",
         img: "https://www.bookpedia.com/coomunityhttps://www.bookpedia.com/coomunity",
-        tags: ["Humor", "Rayo", "Mitología"],
+        tags: [{ name: "Humor" }, { name: "Rayo" }, { name: "Mitología" }],
     }
 
+    console.log(forumData)
+
     return (
-        <>
+        <div className={"container-edit"}>
             <Formik
+                enableReinitialize
                 initialValues={{
-                    name: mockData.name,
-                    img: mockData.img,
-                    description: mockData.description,
-                    tags: mockData.tags.map((tag, index) => <Chip tag={tag} key={index} />),
+                    name: forumData.title,
+                    img: forumData.img,
+                    description: forumData.description,
+                    tags: forumData.tags,
                 }}
                 validationSchema={validateSchema}
-                onSubmit={async ({ name, description, img, tags }) => {
+                onSubmit={async (values) => {
                     try {
                         setLoading(true)
                         const body = {
-                            name,
-                            description,
-                            img,
-                            tags,
+                            ...(modifiedValues.name && { name: values.name }),
+                            ...(modifiedValues.description && { description: values.description }),
+                            ...(modifiedValues.img && { img: values.img }),
+                            ...(modifiedValues.tags && { tags: values.tags }),
                         }
                         const response = await editForum(token, body, forumId)
-                        if (response.status === 200) {
+                        if (response === 200) {
                             navigate(`/forum/${forumId}`)
+                            showExternalToast("Foro editado correctamente", "success")
                         } else {
-                            showToast(response.body, "error")
+                            showExternalToast(response.body, "error")
                         }
                     } finally {
                         setLoading(false)
                     }
                 }}
             >
-                {({ dirty }) => (
+                {({ dirty, values, handleChange }) => (
                     <Form className="editForumContainer">
-                        <h4 className="bold">Editar Foro</h4>
-                        <CustomTextField label="Nombre" placeholder={mockData.name} name="name" />
+                        <h3 className="bold" style={{ marginBottom: 28 }}>
+                            Editar Foro
+                        </h3>
+                        <CustomTextField
+                            label="Nombre"
+                            placeholder={mockData.name}
+                            name="name"
+                            value={values.name}
+                            onChange={(e) => {
+                                handleChange(e)
+                                handleFieldChange("name", e.target.value)
+                            }}
+                        />
                         <CustomTextField
                             label="Link de la foto"
                             placeholder={mockData.image}
                             name="img"
+                            value={values.img}
+                            onChange={(e) => {
+                                handleChange(e)
+                                handleFieldChange("img", e.target.value)
+                            }}
                         />
                         <CustomTextField
                             label="Descripción"
                             placeholder={mockData.description}
                             name="description"
+                            value={values.description}
+                            onChange={(e) => {
+                                handleChange(e)
+                                handleFieldChange("description", e.target.value)
+                            }}
                         />
                         <Autocomplete
                             label="Etiquetas"
@@ -83,6 +131,12 @@ export const Index = ({ showToast }) => {
                             placeholder="Accion, Harry Potter, Romance..."
                             options={["Humor", "Rayo", "Mitología"]}
                             className="autocomplete"
+                            multiple
+                            value={values.tags}
+                            onChange={(e) => {
+                                handleChange(e)
+                                handleFieldChange("tags", e.target.value)
+                            }}
                         />
                         <Button
                             className="create-button"
@@ -95,8 +149,8 @@ export const Index = ({ showToast }) => {
                     </Form>
                 )}
             </Formik>
-        </>
+        </div>
     )
 }
 
-export default withToast(Index)
+export default withToast(EditForum)

@@ -129,7 +129,7 @@ export const searchForums = async (forumName, token, tags) => {
 export const editForum = async (token, body, forumId) => {
     try {
         const response = await bookLinkAxios.patch(`/forum/${forumId}`, body, config(token))
-        return response.data
+        return response.status
     } catch (error) {
         return error.response
     }
