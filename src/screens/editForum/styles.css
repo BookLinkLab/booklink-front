@@ -2,11 +2,11 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    height: calc(100vw - 64px);
 }
 
 .editForumContainer {
     max-width: 507px;
-    margin-top: 147px;
     margin-left: 186px;
     display: inline-flex;
     flex-direction: column;
@@ -24,7 +24,7 @@
 }
 
 .autocomplete {
-    height: 44px;
+    width: 100%;
 }
 
 .MuiChip-root {

@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react"
 import "./styles.css"
 import CustomTextField from "../../components/TextField"
-import Chip from "../../components/Chip"
-import { editForum } from "../../service/apis"
+import { editForum, getForum } from "../../service/apis"
 import { Form, Formik } from "formik"
 import Autocomplete from "../../components/Autocomplete"
 import Button from "../../components/Button"
@@ -16,6 +15,7 @@ export const EditForum = ({ showExternalToast }) => {
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
     const { forumId } = useParams()
+    const [forumData, setForumData] = useState({})
 
     const [modifiedValues, setModifiedValues] = useState({})
     const handleFieldChange = (fieldName, fieldValue) => {
@@ -24,6 +24,21 @@ export const EditForum = ({ showExternalToast }) => {
             [fieldName]: fieldValue,
         })
     }
+
+    const getForumDataById = async (forumId) => {
+        setLoading(true)
+        const response = await getForum(token, forumId)
+        if (response.status === 200) {
+            setForumData(response.data)
+        } else {
+            showExternalToast(response.body, "error")
+        }
+        setLoading(false)
+    }
+
+    useEffect(() => {
+        getForumDataById(forumId)
+    }, [forumId])
 
     const validateSchema = Yup.object().shape({
         name: Yup.string().required("Este campo es requerido"),
@@ -41,14 +56,17 @@ export const EditForum = ({ showExternalToast }) => {
         tags: [{ name: "Humor" }, { name: "Rayo" }, { name: "Mitología" }],
     }
 
+    console.log(forumData)
+
     return (
         <div className={"container-edit"}>
             <Formik
+                enableReinitialize
                 initialValues={{
-                    name: mockData.name,
-                    img: mockData.img,
-                    description: mockData.description,
-                    tags: mockData.tags,
+                    name: forumData.title,
+                    img: forumData.img,
+                    description: forumData.description,
+                    tags: forumData.tags,
                 }}
                 validationSchema={validateSchema}
                 onSubmit={async (values) => {
