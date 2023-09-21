@@ -78,7 +78,7 @@ export const EditForum = ({ showExternalToast }) => {
                             ...(modifiedValues.img && { img: values.img }),
                             ...(modifiedValues.tags && { tags: values.tags }),
                         }
-                        const response = await editForum(body, forumId, token)
+                        const response = await editForum(token, body, forumId)
                         if (response === 200) {
                             navigate(`/forum/${forumId}`)
                             showExternalToast("Foro editado correctamente", "success")
