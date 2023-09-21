@@ -18,13 +18,17 @@ const ProfileScreen = ({ showToast }) => {
     const [user, setUser] = useState({ username: "", email: "", id: "" })
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
-    const cardInfo = [1, 1, 1, 1, 1, 1, 1, 1]
+    const [forumsJoined, setForumsJoined] = useState([])
+    const [myForums, setMyForums] = useState([])
+
     useEffect(() => {
         setLoading(true)
-        getUser(profileId, token)
+        getUser(id, token)
             .then((response) => {
                 if (response.status === 200) {
                     setUser(response.data)
+                    setForumsJoined(response.data.forumsJoined)
+                    setMyForums(response.data.forumsCreated)
                 } else {
                     showToast(response.data.message, "error")
                 }
@@ -42,6 +46,7 @@ const ProfileScreen = ({ showToast }) => {
             errors.email
         )
     }
+
     async function handleUpdate(values) {
         setLoading(true)
         updateUser(id, token, values)
@@ -135,16 +140,16 @@ const ProfileScreen = ({ showToast }) => {
                     <h5 className="bold">Foros a los que pertenece</h5>
                 )}
 
-                {cardInfo.length !== 0 ? (
+                {forumsJoined.length !== 0 ? (
                     <div className="cardsGrid">
-                        {cardInfo.map((info) => (
+                        {forumsJoined.map((info) => (
                             <Card
-                                text={"snowboarders"}
-                                image={
-                                    "https://asomammoth.com/wp-content/uploads/2023/05/Snowboarders-scaled.jpeg"
-                                }
-                                chips={["sick", "powder"]}
-                                members={"90"}
+                                key={info.id}
+                                id={info.id}
+                                text={info.name}
+                                members={info.members.length}
+                                chips={info.tags.map((tag) => tag.name)}
+                                image={info.img}
                                 joined={true}
                             />
                         ))}
@@ -163,17 +168,17 @@ const ProfileScreen = ({ showToast }) => {
                     <h5 className="bold">Sus foros</h5>
                 )}
 
-                {cardInfo.length !== 0 ? (
+                {myForums.length !== 0 ? (
                     <div className="cardsGrid">
-                        {cardInfo.map((info) => (
+                        {myForums.map((info) => (
                             <Card
-                                text={"dumpling"}
-                                joined={false}
-                                chips={["tasty"]}
-                                members={"13"}
-                                image={
-                                    "https://imagenes.elpais.com/resizer/yArg87ddp-I6ZMyqJE_rHe-Kuqg=/1960x1103/cloudfront-eu-central-1.images.arcpublishing.com/prisa/LV6UCWRCIVGE4DA4IQ5GEMKRKY.jpg"
-                                }
+                                key={info.id}
+                                id={info.id}
+                                text={info.name}
+                                members={info.members.length}
+                                chips={info.tags.map((tag) => tag.name)}
+                                image={info.img}
+                                joined={true}
                             />
                         ))}
                     </div>
