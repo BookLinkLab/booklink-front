@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react"
-import React from "react"
 import HeaderForum from "../../components/HeaderForum"
 import { useCurrentUser } from "../../hooks/useCurrentUser"
 import { useNavigate, useParams } from "react-router-dom"
@@ -12,19 +11,6 @@ const Forum = ({ showExternalToast }) => {
     const navigate = useNavigate()
     const [loading, setLoading] = useState(false)
     const [forum, setForum] = useState({})
-    
-import { useNavigate } from "react-router-dom"
-import { leaveForum } from "../../service/apis"
-import withToast from "../../hoc/withToast"
-
-const Forum = ({ showToast }) => {
-    const navigate = useNavigate()
-    const token = useCurrentUser()
-    // const { id } = useParams();
-    //
-    // const forum = await getForum(id, useCurrentUser().token);
-    //
-    // const isOwner = useCurrentUser().id === forum.ownerId;
 
     useEffect(() => {
         setLoading(true)
@@ -40,21 +26,6 @@ const Forum = ({ showToast }) => {
         } else {
             showExternalToast("Error al cargar el foro")
             navigate("/home")
-        }
-    }
-
-    const clickLeaveForum = async () => {
-        setLoading(true)
-        try {
-            const resp = await leaveForum(token, forum.id)
-            if (resp.status === 200) {
-                showToast(resp.body, "success")
-                navigate("/home")
-            } else {
-                showToast(resp.body, "error")
-            }
-        } finally {
-            setLoading(false)
         }
     }
 
