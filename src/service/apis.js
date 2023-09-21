@@ -62,8 +62,12 @@ export const updateUser = async (id, token, updatedUserInfo) => {
     return await bookLinkAxios.patch(`/user/${id}`, updatedUserInfo, config(token))
 }
 
-export const getForum = async (id, token) => {
-    return await bookLinkAxios.get(`/forum/${id}`, config(token))
+export const getForum = async (token, forumId) => {
+    try {
+        return await bookLinkAxios.get(`/forum/${forumId}`, config(token))
+    } catch (error) {
+        return error.response
+    }
 }
 
 export const createForum = async (token, name, description, img, tags) => {

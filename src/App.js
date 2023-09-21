@@ -50,8 +50,8 @@ function App() {
                 <Route path={"/home"} element={<PrivateRoute />}>
                     <Route path={"/home"} element={<Home />} />
                 </Route>
-                <Route path={"/forum/:id"} element={<PrivateRoute />}>
-                    <Route path={"/forum/:id"} element={<Forum />} />
+                <Route path={"/forum/:forumId"} element={<PrivateRoute />}>
+                    <Route path={"/forum/:forumId"} element={<Forum />} />
                 </Route>
                 <Route path={"/editForum/:forumId"} element={<PrivateRoute />}>
                     <Route path={"/editForum/:forumId"} element={<EditForum />} />
