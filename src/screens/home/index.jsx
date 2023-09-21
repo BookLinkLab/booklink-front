@@ -71,7 +71,7 @@ const Home = ({ showToast }) => {
                             text={info.name}
                             joined={info.searcherIsMember}
                             members={info.members}
-                            chips={info.tags.map((tag) => tag.name)}
+                            chips={info.tags}
                             image={info.img}
                             buttonAction={() => {
                                 setLoading(true)
