@@ -34,3 +34,9 @@
     justify-content: center;
     align-items: center;
 }
+
+.h6-style-home {
+    font-size: medium;
+    margin-top: 10px;
+    margin-bottom: 4px;
+}

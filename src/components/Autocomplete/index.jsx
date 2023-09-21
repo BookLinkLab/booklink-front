@@ -3,7 +3,7 @@ import "./styles.css"
 import { useField } from "formik"
 
 const Autocomplete = (props) => {
-    const { options, label, name, placeholder, freeSolo = false, onTagChange, className } = props
+    const { options, label, name, placeholder } = props
     const [field, meta, helpers] = useField(name)
 
     const handleChange = (event, values) => {
@@ -19,6 +19,7 @@ const Autocomplete = (props) => {
         <div className={"autocomplete-container" + " " + className}>
             <label className="body2">{label}</label>
             <AutocompleteMUI
+                style={{ width: 507 }}
                 multiple
                 id="tags-filled"
                 freeSolo={freeSolo}
