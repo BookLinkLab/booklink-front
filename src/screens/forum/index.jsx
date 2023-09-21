@@ -6,7 +6,7 @@ import withToast from "../../hoc/withToast"
 import Loader from "../../components/Loader"
 import { getForum, leaveForum } from "../../service/apis"
 
-const Forum = ({ showToast, showExternalToast }) => {
+const Forum = ({ showToast }) => {
     const { forumId } = useParams()
     const { token, id } = useCurrentUser()
     const navigate = useNavigate()
@@ -20,7 +20,7 @@ const Forum = ({ showToast, showExternalToast }) => {
 
     useEffect(() => {
         setLoading(true)
-        getForumData()
+        getForumData().then()
         setLoading(false)
     }, [])
 
@@ -29,7 +29,7 @@ const Forum = ({ showToast, showExternalToast }) => {
         if (response.status === 200) {
             setForum(response.data)
         } else {
-            showExternalToast("Error al cargar el foro")
+            showToast("Error al cargar el foro", "error")
             navigate("/home")
         }
     }
