@@ -142,3 +142,7 @@ export const joinForum = async (token, id) => {
         return error.response
     }
 }
+
+export const deleteForum = async (token, id) => {
+    return await bookLinkAxios.delete(`/forum/${id}`, config(token))
+}
