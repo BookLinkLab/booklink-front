@@ -47,6 +47,7 @@ const HeaderForum = ({ title, description, image, owner, amtOfUsers, tags, id, s
                             <Chip key={index} tag={tag} />
                         ))}
                     </div>
+
                 </div>
                 {owner ? (
                     <div className="headerForumButtonContainer">
@@ -66,6 +67,7 @@ const HeaderForum = ({ title, description, image, owner, amtOfUsers, tags, id, s
                 )}
             </div>
         </>
+
     )
 }
 

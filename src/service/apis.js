@@ -62,8 +62,12 @@ export const updateUser = async (id, token, updatedUserInfo) => {
     return await bookLinkAxios.patch(`/user/${id}`, updatedUserInfo, config(token))
 }
 
-export const getForum = async (id, token) => {
-    return await bookLinkAxios.get(`/forum/${id}`, config(token))
+export const getForum = async (token, forumId) => {
+    try {
+        return await bookLinkAxios.get(`/forum/${forumId}`, config(token))
+    } catch (error) {
+        return error.response
+    }
 }
 
 export const createForum = async (token, name, description, img, tags) => {
@@ -92,24 +96,36 @@ export const leaveForum = async (token, forumId) => {
 
 export const getTags = async (token) => {
     try {
-        const response = await bookLinkAxios.get("/forum/tags", config(token))
+        const response = await bookLinkAxios.get("/tag", config(token))
         return response.data
     } catch (error) {
         return error.response
     }
 }
 
-export const searchForums = async (forumName, token) => {
+export const searchForums = async (forumName, token, tags) => {
     try {
+        const params = new URLSearchParams()
+
+        if (forumName) {
+            params.append("forumName", forumName)
+        }
+
+        if (tags && tags.length > 0) {
+            params.append("tagIds", tags.join(","))
+        }
+
         const response = await bookLinkAxios.get(
-            `/forum/search?forumName=${forumName}`,
+            `/forum/search?${params.toString()}`,
             config(token),
         )
+
         return response.data
     } catch (error) {
         throw error
     }
 }
+
 export const editForum = async (token, body, forumId) => {
     try {
         const response = await bookLinkAxios.patch(`/forum/${forumId}`, body, config(token))
