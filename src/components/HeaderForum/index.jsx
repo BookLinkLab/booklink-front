@@ -43,11 +43,10 @@ const HeaderForum = ({ title, description, image, owner, amtOfUsers, tags, id, s
                     </div>
                     <Members amtOfUsers={amtOfUsers} />
                     <div className="tags">
-                        {tags.map((tag, index) => (
-                            <Chip key={index} tag={tag} />
+                        {tags?.map((tag, index) => (
+                            <Chip key={index} tag={tag.name} />
                         ))}
                     </div>
-
                 </div>
                 {owner ? (
                     <div className="headerForumButtonContainer">
@@ -67,7 +66,6 @@ const HeaderForum = ({ title, description, image, owner, amtOfUsers, tags, id, s
                 )}
             </div>
         </>
-
     )
 }
 
