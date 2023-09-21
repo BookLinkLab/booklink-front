@@ -79,6 +79,7 @@ const CreateForum = ({ showToast }) => {
                         placeholder="Accion, Harry Potter, Romance..."
                         options={chipSet}
                         handleChange={onTagsChange}
+                        freeSolo={true}
                     />
                     <Button className="create-button" type="submit" size="medium">
                         Crear
