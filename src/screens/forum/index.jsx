@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom"
 import { Chip } from "@mui/material"
 
 const Forum = () => {
-    // const { id } = useParams();
+    const { id } = useParams()
     //
     // const forum = await getForum(id, useCurrentUser().token);
     //
@@ -30,6 +30,7 @@ const Forum = () => {
                 owner={true}
                 amtOfUsers={mock.amtOfUsers}
                 tags={mock.tags}
+                id={id}
             />
         </>
     )
