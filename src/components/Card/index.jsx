@@ -4,9 +4,8 @@ import { useNavigate } from "react-router-dom"
 import Members from "../Members"
 import Chip from "../Chip"
 
-const Card = ({ image, text, chips, members, joined, id }) => {
+const Card = ({ image, text, chips, members, joined, id, buttonAction }) => {
     const navigate = useNavigate()
-
     return (
         <div
             className="card-main-div"
@@ -31,9 +30,8 @@ const Card = ({ image, text, chips, members, joined, id }) => {
                     <Button
                         size="small"
                         disabled={joined}
-                        onClick={(event) => {
-                            event.stopPropagation()
-                            navigate("/home")
+                        onClick={() => {
+                            buttonAction()
                         }}
                     >
                         {joined ? "Unido" : "Unirse"}
