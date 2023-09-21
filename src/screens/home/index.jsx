@@ -5,23 +5,32 @@ import { Form, Formik } from "formik"
 import Card from "../../components/Card"
 import Loader from "../../components/Loader"
 import { useEffect, useState } from "react"
-import { searchForums } from "../../service/apis"
+import { getForum, getTags, searchForums } from "../../service/apis"
 import { useCurrentUser } from "../../hooks/useCurrentUser"
 import withToast from "../../hoc/withToast"
 import { useNavigate } from "react-router-dom"
+import AutocompleteMUI from "../../components/Autocomplete"
+import { joinForum } from "../../service/apis"
+
 const Home = ({ showToast }) => {
     const [cardsInfo, setCardsInfo] = useState([])
     const { token, logOutCurrentUser } = useCurrentUser()
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
+    const [tags, setTags] = useState([])
+    const [selectedTags, setSelectedTags] = useState([])
+
     useEffect(() => {
+        getTags(token).then((data) => {
+            setTags(data)
+        })
         handleSearch("").then()
-    }, [])
+    }, [token])
 
     const handleSearch = async (forumName) => {
         try {
             setLoading(true)
-            const cardsArray = await searchForums(forumName, token)
+            const cardsArray = await searchForums(forumName, token, selectedTags)
             setCardsInfo(cardsArray)
         } catch (error) {
             if (error.response) {
@@ -37,6 +46,15 @@ const Home = ({ showToast }) => {
         }
     }
 
+    const handleTagChange = (values) => {
+        const updatedTags = values.map((tagName) => {
+            const tag = tags.find((t) => t.name === tagName)
+            return tag ? tag.id : null
+        })
+
+        setSelectedTags(updatedTags)
+    }
+
     return (
         <div>
             <Loader open={loading} />
@@ -44,7 +62,7 @@ const Home = ({ showToast }) => {
                 <h5 className={"bold"}>Buscar comunidad</h5>
                 <Formik
                     initialValues={{ forumName: "" }}
-                    onSubmit={async (values, { setSubmitting, resetForm }) => {
+                    onSubmit={async (values, { setSubmitting }) => {
                         await handleSearch(values.forumName)
                         setSubmitting(false)
                     }}
@@ -53,9 +71,18 @@ const Home = ({ showToast }) => {
                         <div className="aligned">
                             <TextField
                                 name={"forumName"}
-                                placeholder={"Busca por nombre, etiquetas o descripción..."}
+                                placeholder={"Busca por nombre o descripción..."}
                             />
                             <Button>Buscar</Button>
+                        </div>
+                        <div>
+                            <h6 className="h6-style-home">Filtrar por etiqueta</h6>
+                            <AutocompleteMUI
+                                name={"tags"}
+                                placeholder={"Fantasia, Terror, Humor ..."}
+                                options={tags?.map((value) => value.name)}
+                                onTagChange={handleTagChange}
+                            ></AutocompleteMUI>
                         </div>
                     </Form>
                 </Formik>
@@ -67,10 +94,22 @@ const Home = ({ showToast }) => {
                             key={info.id}
                             id={info.id}
                             text={info.name}
-                            joined={true}
+                            joined={info.searcherIsMember}
                             members={info.members}
                             chips={info.tags}
                             image={info.img}
+                            buttonAction={() => {
+                                setLoading(true)
+                                joinForum(token, info.id)
+                                    .then((response) => {
+                                        if (response.status === 200) {
+                                            navigate(`/forum/${info.id}`)
+                                        } else {
+                                            showToast(response.body, "error")
+                                        }
+                                    })
+                                    .finally(() => setLoading(false))
+                            }}
                         />
                     ))}
                 </div>
