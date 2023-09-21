@@ -20,3 +20,18 @@
         fill: var(--primary-500);
     }
 }
+
+.MuiInputBase-root fieldset {
+    border-color: var(--grey-300) !important;
+    border-width: 1px !important;
+}
+
+.MuiInputBase-root input {
+    font-family: Inter, sans-serif !important;
+}
+
+.MuiInputBase-root input::placeholder {
+    color: var(--grey-500);
+    font-size: 16px;
+    opacity: 1;
+}

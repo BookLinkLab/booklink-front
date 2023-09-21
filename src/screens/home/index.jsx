@@ -5,7 +5,7 @@ import { Form, Formik } from "formik"
 import Card from "../../components/Card"
 import Loader from "../../components/Loader"
 import { useEffect, useState } from "react"
-import { getForum, getTags, searchForums } from "../../service/apis"
+import { getTags, searchForums } from "../../service/apis"
 import { useCurrentUser } from "../../hooks/useCurrentUser"
 import withToast from "../../hoc/withToast"
 import { useNavigate } from "react-router-dom"
@@ -59,7 +59,7 @@ const Home = ({ showToast }) => {
         <div>
             <Loader open={loading} />
             <div className="homeStyle">
-                <h5 className={"bold"}>Buscar comunidad</h5>
+                <h5 className={"bold title-gap"}>Buscar comunidad</h5>
                 <Formik
                     initialValues={{ forumName: "" }}
                     onSubmit={async (values, { setSubmitting }) => {
@@ -78,6 +78,8 @@ const Home = ({ showToast }) => {
                         <div>
                             <h6 className="h6-style-home">Filtrar por etiqueta</h6>
                             <AutocompleteMUI
+                                noOptionsText="No existe esa etiqueta"
+                                className="autocomplete-style-home"
                                 name={"tags"}
                                 placeholder={"Fantasia, Terror, Humor ..."}
                                 options={tags?.map((value) => value.name)}

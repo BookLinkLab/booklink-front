@@ -3,7 +3,16 @@ import "./styles.css"
 import { useField } from "formik"
 
 const Autocomplete = (props) => {
-    const { options, label, name, placeholder, freeSolo = false, onTagChange, className } = props
+    const {
+        options,
+        label,
+        name,
+        placeholder,
+        freeSolo = false,
+        onTagChange,
+        className,
+        noOptionsText,
+    } = props
     const [field, meta, helpers] = useField(name)
 
     const handleChange = (event, values) => {
@@ -23,9 +32,11 @@ const Autocomplete = (props) => {
                 id="tags-filled"
                 freeSolo={freeSolo}
                 name={name}
+                noOptionsText={noOptionsText}
                 options={options}
                 value={field.value || []}
                 onChange={handleChange}
+                className={className}
                 getOptionLabel={(option) => option.name || option}
                 renderInput={(params) => <TextField {...params} placeholder={placeholder} />}
             />

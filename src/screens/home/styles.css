@@ -21,6 +21,7 @@
     align-items: center;
     gap: 16px;
     width: 40vw;
+    margin-top: 20px;
 }
 
 .notFound {
