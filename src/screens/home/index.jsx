@@ -19,6 +19,7 @@ const Home = ({ showToast }) => {
     const navigate = useNavigate()
     const [tags, setTags] = useState([])
     const [selectedTags, setSelectedTags] = useState([])
+    const [tagOptions, setTagOptions] = useState([])
 
     useEffect(() => {
         getTags(token).then((data) => {
@@ -55,6 +56,19 @@ const Home = ({ showToast }) => {
         setSelectedTags(updatedTags)
     }
 
+    useEffect(() => {
+        setLoading(true)
+        getTags(token)
+            .then((tags) => {
+                const tagNames = tags.map((tag) => tag.name)
+                setTagOptions(tagNames)
+            })
+            .catch((error) => {
+                console.error("Error fetching tags:", error)
+            })
+            .finally(() => setLoading(false))
+    }, [token])
+
     return (
         <div>
             <Loader open={loading} />
@@ -80,7 +94,7 @@ const Home = ({ showToast }) => {
                             <AutocompleteMUI
                                 name={"tags"}
                                 placeholder={"Fantasia, Terror, Humor ..."}
-                                options={tags?.map((value) => value.name)}
+                                options={tagOptions}
                                 onTagChange={handleTagChange}
                             ></AutocompleteMUI>
                         </div>

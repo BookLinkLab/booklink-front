@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import "./styles.css"
 import CustomTextField from "../../components/TextField"
-import { editForum, getForum } from "../../service/apis"
+import { editForum, getForum, getTags } from "../../service/apis"
 import { Form, Formik } from "formik"
 import Autocomplete from "../../components/Autocomplete"
 import Button from "../../components/Button"
@@ -16,7 +16,7 @@ export const EditForum = ({ showExternalToast }) => {
     const navigate = useNavigate()
     const { forumId } = useParams()
     const [forumData, setForumData] = useState({})
-
+    const [tagOptions, setTagOptions] = useState([])
     const [modifiedValues, setModifiedValues] = useState({})
     const handleFieldChange = (fieldName, fieldValue) => {
         setModifiedValues({
@@ -56,7 +56,16 @@ export const EditForum = ({ showExternalToast }) => {
         tags: [{ name: "Humor" }, { name: "Rayo" }, { name: "Mitología" }],
     }
 
-    console.log(forumData)
+    useEffect(() => {
+        getTags(token)
+            .then((tags) => {
+                const tagNames = tags.map((tag) => tag.name)
+                setTagOptions(tagNames)
+            })
+            .catch((error) => {
+                console.error("Error fetching tags:", error)
+            })
+    }, [token])
 
     return (
         <div className={"container-edit"}>
@@ -129,7 +138,8 @@ export const EditForum = ({ showExternalToast }) => {
                             label="Etiquetas"
                             name="tags"
                             placeholder="Accion, Harry Potter, Romance..."
-                            options={["Humor", "Rayo", "Mitología"]}
+                            options={tagOptions}
+                            freeSolo={true}
                             className="autocomplete"
                             multiple
                             value={values.tags}
