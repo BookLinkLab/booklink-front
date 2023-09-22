@@ -13,11 +13,6 @@ const Forum = ({ showToast }) => {
     const [loading, setLoading] = useState(false)
     const [forum, setForum] = useState({})
 
-    //
-    // const forum = await getForum(id, useCurrentUser().token);
-    //
-    // const isOwner = useCurrentUser().id === forum.ownerId;
-
     useEffect(() => {
         setLoading(true)
         getForumData().then()
@@ -57,7 +52,7 @@ const Forum = ({ showToast }) => {
                 title={forum.title}
                 description={forum.description}
                 image={forum.img}
-                owner={forum.owner === id}
+                owner={forum.ownerId == id}
                 amtOfUsers={forum.members}
                 tags={forum.tags}
             />
