@@ -59,7 +59,9 @@ const CreateForum = ({ showToast }) => {
                 }}
             >
                 <Form className="create-forum-container">
-                    <h3 className="bold">Crear Foro</h3>
+                    <h3 className="bold" style={{ marginBottom: 60 }}>
+                        Crear Foro
+                    </h3>
                     <CustomTextField
                         label="Nombre"
                         placeholder="Nombre de la comunidad"
