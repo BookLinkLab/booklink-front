@@ -1,12 +1,14 @@
 import React from "react"
 import { useNavigate } from "react-router-dom"
 import NotificationBell from "../../assets/icons/notificationBell"
+import { useCurrentUser } from "../../hooks/useCurrentUser"
 import Logo from "../../assets/icons/logo"
 import "./styles.css"
 import Button from "../Button"
 
 export const NavBar = () => {
     const navigate = useNavigate()
+    const { id } = useCurrentUser()
 
     return (
         <div className="navbar">
@@ -32,7 +34,7 @@ export const NavBar = () => {
                 <img
                     src={require("../../assets/images/profile.png")}
                     alt="Profile"
-                    onClick={() => navigate("/profile/:id")}
+                    onClick={() => navigate(`/profile/${id}`)}
                     style={{ marginLeft: 24 }}
                 />
             </div>
