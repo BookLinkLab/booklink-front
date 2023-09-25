@@ -59,7 +59,7 @@ const RegisterScreen = ({ showToast }) => {
                             changeCurrentUser(response.token, response.user.id)
                             navigate("/home")
                         } else {
-                            showToast(response.body, "error")
+                            showToast(response.data, "error")
                         }
                     } finally {
                         setLoading(false)

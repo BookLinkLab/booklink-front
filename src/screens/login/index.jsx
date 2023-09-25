@@ -39,7 +39,7 @@ const Login = ({ showToast }) => {
                                 changeCurrentUser(response.token, response.id)
                                 navigate("/home")
                             } else {
-                                showToast(response.body, "error")
+                                showToast(response.data, "error")
                             }
                         })
                         .finally(() => {

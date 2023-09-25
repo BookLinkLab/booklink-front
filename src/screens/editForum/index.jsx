@@ -63,7 +63,7 @@ export const EditForum = ({ showExternalToast }) => {
                 setTagOptions(tagNames)
             })
             .catch((error) => {
-                console.error("Error fetching tags:", error)
+                showExternalToast(error.data, "error")
             })
     }, [token])
 

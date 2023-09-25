@@ -41,7 +41,7 @@ const CreateForum = ({ showToast }) => {
                 setTagOptions(tagNames)
             })
             .catch((error) => {
-                console.error("Error fetching tags:", error)
+                showToast(error.data, "error")
             })
             .finally(() => {
                 setLoading(false)
