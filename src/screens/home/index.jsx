@@ -5,7 +5,7 @@ import { Form, Formik } from "formik"
 import Card from "../../components/Card"
 import Loader from "../../components/Loader"
 import { useEffect, useState } from "react"
-import { getTags, searchForums } from "../../service/apis"
+import { searchForums } from "../../service/apis"
 import { useCurrentUser } from "../../hooks/useCurrentUser"
 import withToast from "../../hoc/withToast"
 import { useNavigate } from "react-router-dom"
@@ -16,20 +16,15 @@ const Home = ({ showToast }) => {
     const { token, logOutCurrentUser } = useCurrentUser()
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
-    const [tags, setTags] = useState([])
-    const [selectedTags, setSelectedTags] = useState([])
 
     useEffect(() => {
-        getTags(token).then((data) => {
-            setTags(data)
-        })
         handleSearch("").then()
     }, [token])
 
     const handleSearch = async (forumName) => {
         try {
             setLoading(true)
-            const cardsArray = await searchForums(forumName, token, selectedTags)
+            const cardsArray = await searchForums(forumName, token)
             setCardsInfo(cardsArray)
         } catch (error) {
             if (error.response) {
@@ -61,7 +56,7 @@ const Home = ({ showToast }) => {
                         <div className="aligned">
                             <TextField
                                 name={"forumName"}
-                                placeholder={"Busca por nombre, descripción o etiqueta..."}
+                                placeholder={"Busca por nombre o etiqueta..."}
                             />
                             <Button>Buscar</Button>
                         </div>
