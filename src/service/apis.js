@@ -94,6 +94,14 @@ export const leaveForum = async (token, forumId) => {
     }
 }
 
+export const getTags = async (token) => {
+    try {
+        const response = await bookLinkAxios.get("/tag", config(token))
+        return response.data
+    } catch (error) {
+        return error.response
+    }
+}
 export const searchForums = async (forumName, token, tags) => {
     try {
         const params = new URLSearchParams()
