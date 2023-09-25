@@ -71,18 +71,9 @@ const Home = ({ showToast }) => {
                         <div className="aligned">
                             <TextField
                                 name={"forumName"}
-                                placeholder={"Busca por nombre o descripción..."}
+                                placeholder={"Busca por nombre, descripción o etiqueta..."}
                             />
                             <Button>Buscar</Button>
-                        </div>
-                        <div>
-                            <h6 className="h6-style-home">Filtrar por etiqueta</h6>
-                            <AutocompleteMUI
-                                name={"tags"}
-                                placeholder={"Fantasia, Terror, Humor ..."}
-                                options={tags?.map((value) => value.name)}
-                                onTagChange={handleTagChange}
-                            ></AutocompleteMUI>
                         </div>
                     </Form>
                 </Formik>
