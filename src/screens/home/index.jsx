@@ -11,6 +11,7 @@ import withToast from "../../hoc/withToast"
 import { useNavigate } from "react-router-dom"
 import AutocompleteMUI from "../../components/Autocomplete"
 import { joinForum } from "../../service/apis"
+import Navbar from "../../components/Navbar"
 
 const Home = ({ showToast }) => {
     const [cardsInfo, setCardsInfo] = useState([])
@@ -59,7 +60,9 @@ const Home = ({ showToast }) => {
         <div>
             <Loader open={loading} />
             <div className="homeStyle">
-                <h5 className={"bold"}>Buscar comunidad</h5>
+                <h5 className={"bold"} style={{ marginTop: 100, marginBottom: 42 }}>
+                    Buscar comunidad
+                </h5>
                 <Formik
                     initialValues={{ forumName: "" }}
                     onSubmit={async (values, { setSubmitting }) => {
@@ -75,15 +78,15 @@ const Home = ({ showToast }) => {
                             />
                             <Button>Buscar</Button>
                         </div>
-                        <div>
-                            <h6 className="h6-style-home">Filtrar por etiqueta</h6>
-                            <AutocompleteMUI
-                                name={"tags"}
-                                placeholder={"Fantasia, Terror, Humor ..."}
-                                options={tags?.map((value) => value.name)}
-                                onTagChange={handleTagChange}
-                            ></AutocompleteMUI>
-                        </div>
+                        {/*<div>*/}
+                        {/*    <h6 className="h6-style-home">Filtrar por etiqueta</h6>*/}
+                        {/*    <AutocompleteMUI*/}
+                        {/*        name={"tags"}*/}
+                        {/*        placeholder={"Fantasia, Terror, Humor ..."}*/}
+                        {/*        options={tags?.map((value) => value.name)}*/}
+                        {/*        onTagChange={handleTagChange}*/}
+                        {/*    ></AutocompleteMUI>*/}
+                        {/*</div>*/}
                     </Form>
                 </Formik>
             </div>
