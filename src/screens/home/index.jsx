@@ -5,11 +5,10 @@ import { Form, Formik } from "formik"
 import Card from "../../components/Card"
 import Loader from "../../components/Loader"
 import { useEffect, useState } from "react"
-import { getForum, getTags, searchForums } from "../../service/apis"
+import { getTags, searchForums } from "../../service/apis"
 import { useCurrentUser } from "../../hooks/useCurrentUser"
 import withToast from "../../hoc/withToast"
 import { useNavigate } from "react-router-dom"
-import AutocompleteMUI from "../../components/Autocomplete"
 import { joinForum } from "../../service/apis"
 
 const Home = ({ showToast }) => {
@@ -44,15 +43,6 @@ const Home = ({ showToast }) => {
         } finally {
             setLoading(false)
         }
-    }
-
-    const handleTagChange = (values) => {
-        const updatedTags = values.map((tagName) => {
-            const tag = tags.find((t) => t.name === tagName)
-            return tag ? tag.id : null
-        })
-
-        setSelectedTags(updatedTags)
     }
 
     return (
