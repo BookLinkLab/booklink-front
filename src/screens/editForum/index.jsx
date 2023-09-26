@@ -53,7 +53,7 @@ export const EditForum = ({ showExternalToast }) => {
     const mockData = {
         name: "Los Tomadores del Olimpo",
         description: "Foro para los tomadores del olimpo",
-        img: "https://www.bookpedia.com/coomunityhttps://www.bookpedia.com/coomunity",
+        img: "https://www.bookpedia.com/coomunity",
         tags: [{ name: "Humor" }, { name: "Rayo" }, { name: "Mitología" }],
     }
 
