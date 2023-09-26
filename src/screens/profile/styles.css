@@ -29,7 +29,7 @@
 .no-forums-message {
     display: flex;
     color: var(--grey-700);
-    height: 366px;
+    height: 150px;
     align-items: center;
     justify-content: center;
 }
