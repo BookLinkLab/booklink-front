@@ -85,11 +85,11 @@ const CreateForum = ({ showToast }) => {
                     />
                     <CustomTextField
                         label="Link de la foto"
-                        placeholder="https://www.bookpedia.com/coomunity"
+                        placeholder="https://www.bookpedia.com/community"
                         name="img"
                     />
                     <CustomTextField
-                        label="DescripciÃ³n"
+                        label="Descripción"
                         placeholder="Lorem ipsum dolor sit amet consectetur..."
                         name="description"
                     />

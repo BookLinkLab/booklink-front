@@ -8,6 +8,7 @@ import withToast from "../../hoc/withToast"
 import { useCurrentUser } from "../../hooks/useCurrentUser"
 import { deleteForum } from "../../service/apis"
 import { useNavigate } from "react-router-dom"
+import Modal from "../Modal"
 
 const HeaderForum = ({ title, description, image, owner, amtOfUsers, tags, id, showToast }) => {
     const { token } = useCurrentUser()
