@@ -15,7 +15,6 @@
 .items-aligned {
     margin-left: 115px;
 }
-
 .log-out-button-margin {
     margin-top: 81px;
     margin-bottom: 90px;
@@ -23,23 +22,34 @@
 .update-button-spacing {
     margin-top: 32px;
 }
-
-.profile-cards {
-    margin-top: 32px;
+.no-forums-message {
+    display: flex;
+    color: var(--grey-700);
+    height: 366px;
+    align-items: center;
+    justify-content: center;
 }
-
+.joined-cards-message {
+    padding: 0 244px;
+}
+.own-cards-message {
+    padding: 0 292px;
+}
 .aligned {
     color: var(--grey-700);
     display: flex;
     flex-direction: column;
     align-items: center;
 }
-
 .m-85 {
     margin-top: 85px;
 }
-.no-forums {
-    margin-top: 200px;
-    justify-content: center;
-    align-items: center;
+.forums-div {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 32px;
+}
+.mb-48 {
+    margin-bottom: 48px;
 }
