@@ -5,11 +5,10 @@ import { Form, Formik } from "formik"
 import Card from "../../components/Card"
 import Loader from "../../components/Loader"
 import { useEffect, useState } from "react"
-import { getForum, getTags, searchForums } from "../../service/apis"
+import { searchForums } from "../../service/apis"
 import { useCurrentUser } from "../../hooks/useCurrentUser"
 import withToast from "../../hoc/withToast"
 import { useNavigate } from "react-router-dom"
-import AutocompleteMUI from "../../components/Autocomplete"
 import { joinForum } from "../../service/apis"
 
 const Home = ({ showToast }) => {
@@ -17,20 +16,15 @@ const Home = ({ showToast }) => {
     const { token, logOutCurrentUser } = useCurrentUser()
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
-    const [tags, setTags] = useState([])
-    const [selectedTags, setSelectedTags] = useState([])
 
     useEffect(() => {
-        getTags(token).then((data) => {
-            setTags(data)
-        })
         handleSearch("").then()
     }, [token])
 
     const handleSearch = async (forumName) => {
         try {
             setLoading(true)
-            const cardsArray = await searchForums(forumName, token, selectedTags)
+            const cardsArray = await searchForums(forumName, token)
             setCardsInfo(cardsArray)
         } catch (error) {
             if (error.response) {
@@ -44,15 +38,6 @@ const Home = ({ showToast }) => {
         } finally {
             setLoading(false)
         }
-    }
-
-    const handleTagChange = (values) => {
-        const updatedTags = values.map((tagName) => {
-            const tag = tags.find((t) => t.name === tagName)
-            return tag ? tag.id : null
-        })
-
-        setSelectedTags(updatedTags)
     }
 
     return (
@@ -71,18 +56,9 @@ const Home = ({ showToast }) => {
                         <div className="aligned">
                             <TextField
                                 name={"forumName"}
-                                placeholder={"Busca por nombre o descripción..."}
+                                placeholder={"Busca por nombre o etiqueta..."}
                             />
                             <Button>Buscar</Button>
-                        </div>
-                        <div>
-                            <h6 className="h6-style-home">Filtrar por etiqueta</h6>
-                            <AutocompleteMUI
-                                name={"tags"}
-                                placeholder={"Fantasia, Terror, Humor ..."}
-                                options={tags?.map((value) => value.name)}
-                                onTagChange={handleTagChange}
-                            ></AutocompleteMUI>
                         </div>
                     </Form>
                 </Formik>

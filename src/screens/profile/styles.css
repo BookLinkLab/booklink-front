@@ -15,12 +15,16 @@
 .items-aligned {
     margin-left: 115px;
 }
+
+/*The width in this buttons is fixed for the figma */
 .log-out-button-margin {
     margin-top: 81px;
     margin-bottom: 90px;
+    width: 136px;
 }
 .update-button-spacing {
     margin-top: 32px;
+    width: 126px;
 }
 .no-forums-message {
     display: flex;

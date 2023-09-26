@@ -1,11 +1,18 @@
 .create-forum-container {
-    margin: 100px 819px 222px 186px;
+    margin-left: 186px;
     flex-direction: column;
     align-items: flex-start;
     display: flex;
     width: 507px;
-    gap: 6px;
+    gap: 32px;
 }
 .create-button {
     padding: 12px 40px;
+}
+
+.container-create {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: calc(100vh - 64px);
 }
