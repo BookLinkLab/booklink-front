@@ -10,6 +10,7 @@ import { useCurrentUser } from "../../hooks/useCurrentUser"
 import withToast from "../../hoc/withToast"
 import { useNavigate } from "react-router-dom"
 import { joinForum } from "../../service/apis"
+import Navbar from "../../components/Navbar"
 
 const Home = ({ showToast }) => {
     const [cardsInfo, setCardsInfo] = useState([])
@@ -44,7 +45,9 @@ const Home = ({ showToast }) => {
         <div>
             <Loader open={loading} />
             <div className="homeStyle">
-                <h5 className={"bold"}>Buscar comunidad</h5>
+                <h5 className={"bold"} style={{ marginTop: 100, marginBottom: 42 }}>
+                    Buscar comunidad
+                </h5>
                 <Formik
                     initialValues={{ forumName: "" }}
                     onSubmit={async (values, { setSubmitting }) => {
