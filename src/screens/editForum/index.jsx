@@ -45,9 +45,6 @@ export const EditForum = ({ showExternalToast }) => {
         name: Yup.string().required("Este campo es requerido"),
         img: Yup.string().url().required("Este campo es requerido"),
         description: Yup.string().required("Este campo es requerido"),
-        tags: Yup.array()
-            .required("Este campo es requerido")
-            .min(1, "Selecciona al menos una etiqueta"),
     })
 
     const mockData = {
