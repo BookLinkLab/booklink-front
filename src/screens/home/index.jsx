@@ -64,7 +64,7 @@ const Home = ({ showToast }) => {
                 </Formik>
             </div>
             {cardsInfo.length !== 0 ? (
-                <div className="cardsGrid">
+                <div className="cardsGrid home-cards">
                     {cardsInfo.map((info) => (
                         <Card
                             key={info.id}

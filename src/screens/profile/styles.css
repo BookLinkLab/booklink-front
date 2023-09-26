@@ -1,7 +1,7 @@
 .container {
     display: flex;
     flex-direction: column;
-    gap: 0;
+    gap: 32px;
     width: 507px;
     height: auto;
 }
@@ -9,31 +9,40 @@
 .textfield-container {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 24px;
 }
 
 .items-aligned {
     margin-left: 115px;
 }
 
+/*The width in this buttons is fixed for the figma */
 .log-out-button-margin {
-    margin-top: 37px;
+    margin-top: 81px;
+    margin-bottom: 90px;
+    width: 136px;
 }
 .update-button-spacing {
-    margin-top: 10px;
+    margin-top: 32px;
+    width: 126px;
 }
 
-.cardsGrid {
-    display: grid;
-    grid-template-columns: repeat(3, fit-content(100%));
-    gap: 20px;
-    align-content: center;
-    justify-items: center;
+.profile-cards {
+    margin-top: 32px;
 }
 
 .aligned {
     color: var(--grey-700);
     display: flex;
     flex-direction: column;
+    align-items: center;
+}
+
+.m-85 {
+    margin-top: 85px;
+}
+.no-forums {
+    margin-top: 200px;
+    justify-content: center;
     align-items: center;
 }
