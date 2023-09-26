@@ -6,9 +6,9 @@ import Members from "../Members"
 import Loader from "../../components/Loader"
 import withToast from "../../hoc/withToast"
 import { useCurrentUser } from "../../hooks/useCurrentUser"
-import { deleteForum } from "../../service/apis"
+import { deleteForum, leaveForum } from "../../service/apis"
 import { useNavigate } from "react-router-dom"
-import Modal from "../Modal"
+import Modal from "../../components/Modal"
 
 const HeaderForum = ({ title, description, image, owner, amtOfUsers, tags, id, showToast }) => {
     const { token } = useCurrentUser()
@@ -32,6 +32,26 @@ const HeaderForum = ({ title, description, image, owner, amtOfUsers, tags, id, s
         }
     }
 
+    const clickLeaveForum = async () => {
+        setLoading(true)
+        try {
+            const resp = await leaveForum(token, id)
+            if (resp.status === 200) {
+                showToast(resp.data, "success")
+                navigate("/home")
+            } else {
+                showToast(resp.data, "error")
+            }
+        } finally {
+            setLoading(false)
+        }
+    }
+
+    const handleEdit = async () => {
+        try {
+        } catch (error) {}
+    }
+
     return (
         <>
             <Loader open={loading} />
@@ -51,7 +71,20 @@ const HeaderForum = ({ title, description, image, owner, amtOfUsers, tags, id, s
                 </div>
                 {owner ? (
                     <div className="headerForumButtonContainer">
-                        <Button className="headerForumButton" variant="outlined" size="small">
+                        <Button
+                            className="headerForumButton"
+                            variant="outlined"
+                            size="small"
+                            onClick={() => navigate(`/editForum/${id}`)}
+                        >
+                            Editar
+                        </Button>
+                        <Button
+                            className="headerForumButton"
+                            variant="outlined"
+                            size="small"
+                            onClick={handleEdit}
+                        >
                             Editar
                         </Button>
                         <Button className="headerForumButton" size="small" onClick={handleDelete}>
@@ -60,7 +93,11 @@ const HeaderForum = ({ title, description, image, owner, amtOfUsers, tags, id, s
                     </div>
                 ) : (
                     <div className="headerForumButtonContainer">
-                        <Button className="headerForumButton" size="small">
+                        <Button
+                            className="headerForumButton"
+                            size="small"
+                            onClick={clickLeaveForum()}
+                        >
                             Abandonar
                         </Button>
                     </div>
