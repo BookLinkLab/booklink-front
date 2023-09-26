@@ -33,7 +33,7 @@ const CreateForum = ({ showToast }) => {
     }
 
     return (
-        <>
+        <div className={"container-create"}>
             <Loader open={loading} />
             <Formik
                 initialValues={{
@@ -59,7 +59,9 @@ const CreateForum = ({ showToast }) => {
                 }}
             >
                 <Form className="create-forum-container">
-                    <h3 className="bold">Crear Foro</h3>
+                    <h3 className="bold" style={{ marginBottom: 60 }}>
+                        Crear Foro
+                    </h3>
                     <CustomTextField
                         label="Nombre"
                         placeholder="Nombre de la comunidad"
@@ -71,7 +73,7 @@ const CreateForum = ({ showToast }) => {
                         name="img"
                     />
                     <CustomTextField
-                        label="Descripción"
+                        label="DescripciÃ³n"
                         placeholder="Lorem ipsum dolor sit amet consectetur..."
                         name="description"
                     />
@@ -88,7 +90,7 @@ const CreateForum = ({ showToast }) => {
                     </Button>
                 </Form>
             </Formik>
-        </>
+        </div>
     )
 }
 
