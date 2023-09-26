@@ -93,7 +93,7 @@ const ProfileScreen = ({ showToast }) => {
                             .required("Este campo es obligatorio")
                             .email("Ingrese una dirección de correo válida."),
                     })}
-                    onSubmit={async (values, { setSubmitting, resetForm }) => {
+                    onSubmit={async (values, { setSubmitting }) => {
                         if (values.username === user.username && values.email === user.email) {
                             setSubmitting(false)
                             return

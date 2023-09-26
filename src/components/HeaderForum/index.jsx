@@ -48,8 +48,7 @@ const HeaderForum = ({ title, description, image, owner, amtOfUsers, tags, id, s
     }
 
     const handleEdit = async () => {
-        try {
-        } catch (error) {}
+        navigate(`/editForum/${id}`)
     }
 
     return (
@@ -79,14 +78,7 @@ const HeaderForum = ({ title, description, image, owner, amtOfUsers, tags, id, s
                         >
                             Editar
                         </Button>
-                        <Button
-                            className="headerForumButton"
-                            variant="outlined"
-                            size="small"
-                            onClick={handleEdit}
-                        >
-                            Editar
-                        </Button>
+
                         <Button className="headerForumButton" size="small" onClick={handleDelete}>
                             Eliminar
                         </Button>
@@ -96,7 +88,7 @@ const HeaderForum = ({ title, description, image, owner, amtOfUsers, tags, id, s
                         <Button
                             className="headerForumButton"
                             size="small"
-                            onClick={clickLeaveForum()}
+                            onClick={clickLeaveForum}
                         >
                             Abandonar
                         </Button>
