@@ -18,7 +18,6 @@ const Home = ({ showToast }) => {
     const navigate = useNavigate()
     const [tags, setTags] = useState([])
     const [selectedTags, setSelectedTags] = useState([])
-    const [tagOptions, setTagOptions] = useState([])
 
     useEffect(() => {
         handleSearch("").then()
@@ -52,19 +51,6 @@ const Home = ({ showToast }) => {
         setSelectedTags(updatedTags)
     }
 
-    useEffect(() => {
-        setLoading(true)
-        getTags(token)
-            .then((tags) => {
-                const tagNames = tags.map((tag) => tag.name)
-                setTagOptions(tagNames)
-            })
-            .catch((error) => {
-                showToast(error.data, "error")
-            })
-            .finally(() => setLoading(false))
-    }, [token])
-
     return (
         <div>
             <Loader open={loading} />
@@ -84,15 +70,6 @@ const Home = ({ showToast }) => {
                                 placeholder={"Busca por nombre o etiqueta..."}
                             />
                             <Button>Buscar</Button>
-                        </div>
-                        <div>
-                            <h6 className="h6-style-home">Filtrar por etiqueta</h6>
-                            <AutocompleteMUI
-                                name={"tags"}
-                                placeholder={"Fantasia, Terror, Humor ..."}
-                                options={tagOptions}
-                                onTagChange={handleTagChange}
-                            ></AutocompleteMUI>
                         </div>
                     </Form>
                 </Formik>
