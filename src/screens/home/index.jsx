@@ -5,11 +5,10 @@ import { Form, Formik } from "formik"
 import Card from "../../components/Card"
 import Loader from "../../components/Loader"
 import { useEffect, useState } from "react"
-import { getForum, getTags, searchForums } from "../../service/apis"
+import { searchForums } from "../../service/apis"
 import { useCurrentUser } from "../../hooks/useCurrentUser"
 import withToast from "../../hoc/withToast"
 import { useNavigate } from "react-router-dom"
-import AutocompleteMUI from "../../components/Autocomplete"
 import { joinForum } from "../../service/apis"
 
 const Home = ({ showToast }) => {
@@ -22,16 +21,13 @@ const Home = ({ showToast }) => {
     const [tagOptions, setTagOptions] = useState([])
 
     useEffect(() => {
-        getTags(token).then((data) => {
-            setTags(data)
-        })
         handleSearch("").then()
     }, [token])
 
     const handleSearch = async (forumName) => {
         try {
             setLoading(true)
-            const cardsArray = await searchForums(forumName, token, selectedTags)
+            const cardsArray = await searchForums(forumName, token)
             setCardsInfo(cardsArray)
         } catch (error) {
             if (error.response) {
@@ -85,7 +81,7 @@ const Home = ({ showToast }) => {
                         <div className="aligned">
                             <TextField
                                 name={"forumName"}
-                                placeholder={"Busca por nombre o descripción..."}
+                                placeholder={"Busca por nombre o etiqueta..."}
                             />
                             <Button>Buscar</Button>
                         </div>

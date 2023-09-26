@@ -18,10 +18,11 @@ export const EditForum = ({ showExternalToast }) => {
     const [forumData, setForumData] = useState({})
     const [tagOptions, setTagOptions] = useState([])
     const [modifiedValues, setModifiedValues] = useState({})
+
     const handleFieldChange = (fieldName, fieldValue) => {
         setModifiedValues({
             ...modifiedValues,
-            [fieldName]: fieldValue,
+            [fieldName]: fieldName === "tags" ? fieldValue.split(",") : fieldValue,
         })
     }
 
@@ -81,13 +82,7 @@ export const EditForum = ({ showExternalToast }) => {
                 onSubmit={async (values) => {
                     try {
                         setLoading(true)
-                        const body = {
-                            ...(modifiedValues.name && { name: values.name }),
-                            ...(modifiedValues.description && { description: values.description }),
-                            ...(modifiedValues.img && { img: values.img }),
-                            ...(modifiedValues.tags && { tags: values.tags }),
-                        }
-                        const response = await editForum(token, body, forumId)
+                        const response = await editForum(token, values, forumId)
                         if (response === 200) {
                             navigate(`/forum/${forumId}`)
                             showExternalToast("Foro editado correctamente", "success")
@@ -143,9 +138,10 @@ export const EditForum = ({ showExternalToast }) => {
                             className="autocomplete"
                             multiple
                             value={values.tags}
-                            onChange={(e) => {
+                            onChange={(e, selectedOptions) => {
+                                const selectedTags = selectedOptions.map((option) => option.name)
                                 handleChange(e)
-                                handleFieldChange("tags", e.target.value)
+                                handleFieldChange("tags", selectedTags.join(","))
                             }}
                         />
                         <Button
