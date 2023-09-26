@@ -134,63 +134,58 @@ const ProfileScreen = ({ showToast }) => {
                 </Button>
             )}
             <section>
-                {profileId === id ? (
+                <div className="forums-div">
                     <h5 className="bold" style={{ marginTop: "32px" }}>
-                        Foros a los que pertenezco
-                    </h5>
-                ) : (
-                    <h5 className="bold" style={{ marginTop: "32px" }}>
-                        Foros a los que pertenece
-                    </h5>
-                )}
-
-                {forumsJoined.length !== 0 ? (
-                    <div className="cardsGrid profile-cards">
-                        {forumsJoined.map((info) => (
-                            <Card
-                                key={info.id}
-                                id={info.id}
-                                text={info.name}
-                                members={info.members.length}
-                                chips={info.tags}
-                                image={info.img}
-                                joined={true}
-                            />
-                        ))}
-                    </div>
-                ) : (
-                    <h6 className="aligned no-forums">
                         {profileId === id
-                            ? "No perteneces a ninguna comunidad"
-                            : "No pertenece a ninguna comunidad"}
-                    </h6>
-                )}
-
-                {profileId === id ? (
-                    <h5 className="bold m-85">Mis foros</h5>
-                ) : (
-                    <h5 className="bold m-85">Sus foros</h5>
-                )}
-
-                {myForums.length !== 0 ? (
-                    <div className="cardsGrid profile-cards">
-                        {myForums.map((info) => (
-                            <Card
-                                key={info.id}
-                                id={info.id}
-                                text={info.name}
-                                members={info.members.length}
-                                chips={info.tags}
-                                image={info.img}
-                                joined={true}
-                            />
-                        ))}
-                    </div>
-                ) : (
-                    <h6 className="aligned no-forums">
-                        {profileId === id ? "No tienes foros creados" : "No tiene foros creados"}
-                    </h6>
-                )}
+                            ? "Foros a los que pertenezco"
+                            : "Foros a los que pertenece"}
+                    </h5>
+                    {forumsJoined.length !== 0 ? (
+                        <div className="cardsGrid">
+                            {forumsJoined.map((info) => (
+                                <Card
+                                    key={info.id}
+                                    id={info.id}
+                                    text={info.name}
+                                    members={info.members.length}
+                                    chips={info.tags}
+                                    image={info.img}
+                                    joined={true}
+                                />
+                            ))}
+                        </div>
+                    ) : (
+                        <h6 className="no-forums-message joined-cards-message">
+                            {profileId === id
+                                ? "No perteneces a ninguna comunidad"
+                                : "No pertenece a ninguna comunidad"}
+                        </h6>
+                    )}
+                </div>
+                <div className="forums-div mb-48">
+                    <h5 className="bold m-85">{profileId === id ? "Mis foros" : "Sus foros"}</h5>
+                    {myForums.length !== 0 ? (
+                        <div className="cardsGrid">
+                            {myForums.map((info) => (
+                                <Card
+                                    key={info.id}
+                                    id={info.id}
+                                    text={info.name}
+                                    members={info.members.length}
+                                    chips={info.tags}
+                                    image={info.img}
+                                    joined={true}
+                                />
+                            ))}
+                        </div>
+                    ) : (
+                        <h6 className="no-forums-message own-cards-message">
+                            {profileId === id
+                                ? "No tienes foros creados"
+                                : "No tiene foros creados"}
+                        </h6>
+                    )}
+                </div>
             </section>
         </div>
     )
