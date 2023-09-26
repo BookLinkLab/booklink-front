@@ -1,7 +1,7 @@
 import "./styles.css"
 import CustomTextField from "../../components/TextField"
 import { Form, Formik } from "formik"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Loader from "../../components/Loader"
 import * as Yup from "yup"
 import { createForum, getTags } from "../../service/apis"
@@ -15,6 +15,7 @@ const CreateForum = ({ showToast }) => {
     const { token } = useCurrentUser()
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
+    const [tagOptions, setTagOptions] = useState([])
 
     const [chipSet, setChipSet] = useState([
         { name: "Horror" },
@@ -31,6 +32,21 @@ const CreateForum = ({ showToast }) => {
     const onTagsChange = (event, values) => {
         setChipSet(values.tags)
     }
+
+    useEffect(() => {
+        setLoading(true)
+        getTags(token)
+            .then((tags) => {
+                const tagNames = tags.map((tag) => tag.name)
+                setTagOptions(tagNames)
+            })
+            .catch((error) => {
+                showToast(error.data, "error")
+            })
+            .finally(() => {
+                setLoading(false)
+            })
+    }, [token])
 
     return (
         <div className={"container-create"}>
@@ -81,7 +97,7 @@ const CreateForum = ({ showToast }) => {
                         label="Etiquetas"
                         name="tags"
                         placeholder="Accion, Harry Potter, Romance..."
-                        options={chipSet}
+                        options={tagOptions}
                         handleChange={onTagsChange}
                         freeSolo={true}
                     />

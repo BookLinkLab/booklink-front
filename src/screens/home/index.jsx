@@ -17,6 +17,8 @@ const Home = ({ showToast }) => {
     const { token, logOutCurrentUser } = useCurrentUser()
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
+    const [tags, setTags] = useState([])
+    const [selectedTags, setSelectedTags] = useState([])
 
     useEffect(() => {
         handleSearch("").then()
@@ -39,6 +41,15 @@ const Home = ({ showToast }) => {
         } finally {
             setLoading(false)
         }
+    }
+
+    const handleTagChange = (values) => {
+        const updatedTags = values.map((tagName) => {
+            const tag = tags.find((t) => t.name === tagName)
+            return tag ? tag.id : null
+        })
+
+        setSelectedTags(updatedTags)
     }
 
     return (
