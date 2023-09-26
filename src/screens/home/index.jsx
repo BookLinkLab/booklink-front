@@ -63,16 +63,6 @@ const Home = ({ showToast }) => {
                             />
                             <Button>Buscar</Button>
                         </div>
-
-                        {/*<div>*/}
-                        {/*    <h6 className="h6-style-home">Filtrar por etiqueta</h6>*/}
-                        {/*    <AutocompleteMUI*/}
-                        {/*        name={"tags"}*/}
-                        {/*        placeholder={"Fantasia, Terror, Humor ..."}*/}
-                        {/*        options={tags?.map((value) => value.name)}*/}
-                        {/*        onTagChange={handleTagChange}*/}
-                        {/*    ></AutocompleteMUI>*/}
-                        {/*</div>*/}
                     </Form>
                 </Formik>
             </div>
