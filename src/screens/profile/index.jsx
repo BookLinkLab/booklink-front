@@ -49,7 +49,9 @@ const ProfileScreen = ({ showToast }) => {
 
     async function handleUpdate(values) {
         setLoading(true)
-        updateUser(id, token, values)
+        const { email, username } = values
+
+        updateUser(id, token, { email, username })
             .then((response) => {
                 if (response.status === 200) {
                     setUser(response.data)
@@ -96,9 +98,6 @@ const ProfileScreen = ({ showToast }) => {
                             setSubmitting(false)
                             return
                         }
-                        await handleUpdate(values)
-                        resetForm()
-                        setSubmitting(false)
                     }}
                 >
                     {({ values, errors }) => (
@@ -117,6 +116,7 @@ const ProfileScreen = ({ showToast }) => {
                             </div>
                             {profileId === id && (
                                 <Button
+                                    onClick={() => handleUpdate(values)}
                                     disabled={isValid(values, errors)}
                                     size="medium"
                                     className="update-button-spacing"
