@@ -81,11 +81,11 @@ export const EditForum = ({ showExternalToast }) => {
                     try {
                         setLoading(true)
                         const response = await editForum(token, values, forumId)
-                        if (response === 200) {
+                        if (response.status === 200) {
                             navigate(`/forum/${forumId}`)
                             showExternalToast("Foro editado correctamente", "success")
                         } else {
-                            showExternalToast(response.body, "error")
+                            showExternalToast(response.data, "error")
                         }
                     } finally {
                         setLoading(false)

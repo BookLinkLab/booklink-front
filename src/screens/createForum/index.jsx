@@ -64,10 +64,11 @@ const CreateForum = ({ showToast }) => {
                         setLoading(true)
                         const response = await createForum(token, name, description, img, tags)
                         if (response.status === 201) {
-                            showToast(response.data.name, "success")
+                            showToast(response.data, "success")
                             navigate(`/forum/${response.data.id}`)
                         } else {
-                            showToast(response.data.name, "error")
+                            console.log(response)
+                            showToast(response.data, "error")
                         }
                     } finally {
                         setLoading(false)
