@@ -23,7 +23,7 @@ const ProfileScreen = ({ showToast }) => {
 
     useEffect(() => {
         setLoading(true)
-        getUser(id, token)
+        getUser(profileId, token)
             .then((response) => {
                 if (response.status === 200) {
                     setUser(response.data)
