@@ -26,7 +26,7 @@ const CreateForum = ({ showToast }) => {
         name: Yup.string().required("Este campo es requerido"),
         img: Yup.string().url().required("Este campo es requerido"),
         description: Yup.string().required("Este campo es requerido"),
-        tags: Yup.array().max(4, "No puedes agregar más de 5 etiquetas"),
+        tags: Yup.array().max(5, "No puedes agregar más de 5 etiquetas"),
     })
 
     const onTagsChange = (event, values) => {
@@ -67,7 +67,6 @@ const CreateForum = ({ showToast }) => {
                             showToast(response.data, "success")
                             navigate(`/forum/${response.data.id}`)
                         } else {
-                            console.log(response)
                             showToast(response.data, "error")
                         }
                     } finally {
