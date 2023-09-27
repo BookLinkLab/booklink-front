@@ -1,5 +1,5 @@
 import "./styles.css"
-import TextField from "../../components/TextField"
+import CustomTextField from "../../components/TextField"
 import Button from "../../components/Button"
 import { Form, Formik } from "formik"
 import * as Yup from "yup"
@@ -9,32 +9,35 @@ import { useEffect, useState } from "react"
 import { getUser } from "../../service/apis"
 import withToast from "../../hoc/withToast"
 import Loader from "../../components/Loader"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
+import Card from "../../components/Card"
 
 const ProfileScreen = ({ showToast }) => {
     const { id, token, logOutCurrentUser } = useCurrentUser()
+    const { id: profileId } = useParams()
     const [user, setUser] = useState({ username: "", email: "", id: "" })
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
+    const [forumsJoined, setForumsJoined] = useState([])
+    const [myForums, setMyForums] = useState([])
+
     useEffect(() => {
         setLoading(true)
-        getUser(id, token)
+        getUser(profileId, token)
             .then((response) => {
                 if (response.status === 200) {
                     setUser(response.data)
-                } else if (response.status === 400) {
-                    throw new Error("Tipo de dato incorrecto.")
-                } else if (response.status === 404) {
-                    throw new Error("Usuario no encontrado.")
-                } else if (response.status === 500) {
-                    throw new Error(`Ha ocurrido un error, ${response.data.message}`)
+                    setForumsJoined(response.data.forumsJoined)
+                    setMyForums(response.data.forumsCreated)
+                } else {
+                    showToast(response.data.message, "error")
                 }
             })
             .catch((error) => {
                 showToast(error.message, "error")
             })
             .finally(() => setLoading(false))
-    }, [id, showToast, token])
+    }, [id, showToast, token, profileId])
 
     function isValid(values, errors) {
         return (
@@ -43,9 +46,12 @@ const ProfileScreen = ({ showToast }) => {
             errors.email
         )
     }
+
     async function handleUpdate(values) {
         setLoading(true)
-        updateUser(id, token, values)
+        const { email, username } = values
+
+        updateUser(id, token, { email, username })
             .then((response) => {
                 if (response.status === 200) {
                     setUser(response.data)
@@ -87,36 +93,100 @@ const ProfileScreen = ({ showToast }) => {
                             .required("Este campo es obligatorio")
                             .email("Ingrese una dirección de correo válida."),
                     })}
-                    onSubmit={async (values, { setSubmitting, resetForm }) => {
+                    onSubmit={async (values, { setSubmitting }) => {
                         if (values.username === user.username && values.email === user.email) {
                             setSubmitting(false)
                             return
                         }
-                        await handleUpdate(values)
-                        resetForm()
-                        setSubmitting(false)
                     }}
                 >
                     {({ values, errors }) => (
                         <Form>
                             <div className="textfield-container">
-                                <TextField label={"Nombre de usuario"} name={"username"} />
-                                <TextField label={"Email"} name={"email"} />
+                                <CustomTextField
+                                    label={"Nombre de usuario"}
+                                    name={"username"}
+                                    disabled={profileId !== id}
+                                />
+                                <CustomTextField
+                                    label={"Email"}
+                                    name={"email"}
+                                    disabled={profileId !== id}
+                                />
                             </div>
-                            <Button
-                                disabled={isValid(values, errors)}
-                                size="medium"
-                                className="update-button-spacing"
-                            >
-                                Actualizar
-                            </Button>
+                            {profileId === id && (
+                                <Button
+                                    onClick={() => handleUpdate(values)}
+                                    disabled={isValid(values, errors)}
+                                    size="medium"
+                                    className="update-button-spacing"
+                                >
+                                    Actualizar
+                                </Button>
+                            )}
                         </Form>
                     )}
                 </Formik>
             </div>
-            <Button variant="outlined" className="log-out-button-margin" onClick={logOut}>
-                Cerrar sesión
-            </Button>
+            {profileId === id && (
+                <Button variant="outlined" className="log-out-button-margin" onClick={logOut}>
+                    Cerrar sesión
+                </Button>
+            )}
+            <section>
+                <div className="forums-div">
+                    <h5 className="bold" style={{ marginTop: "32px" }}>
+                        {profileId === id
+                            ? "Foros a los que pertenezco"
+                            : "Foros a los que pertenece"}
+                    </h5>
+                    {forumsJoined.length !== 0 ? (
+                        <div className="cardsGrid">
+                            {forumsJoined.map((info) => (
+                                <Card
+                                    key={info.id}
+                                    id={info.id}
+                                    text={info.name}
+                                    members={info.members.length}
+                                    chips={info.tags}
+                                    image={info.img}
+                                    joined={true}
+                                />
+                            ))}
+                        </div>
+                    ) : (
+                        <h6 className="no-forums-message joined-cards-message">
+                            {profileId === id
+                                ? "No perteneces a ninguna comunidad"
+                                : "No pertenece a ninguna comunidad"}
+                        </h6>
+                    )}
+                </div>
+                <div className="forums-div mb-48">
+                    <h5 className="bold m-85">{profileId === id ? "Mis foros" : "Sus foros"}</h5>
+                    {myForums.length !== 0 ? (
+                        <div className="cardsGrid">
+                            {myForums.map((info) => (
+                                <Card
+                                    key={info.id}
+                                    id={info.id}
+                                    text={info.name}
+                                    members={info.members.length}
+                                    chips={info.tags}
+                                    image={info.img}
+                                    joined={true}
+                                />
+                            ))}
+                        </div>
+                    ) : (
+                        <h6 className="no-forums-message own-cards-message">
+                            {profileId === id
+                                ? "No tienes foros creados"
+                                : "No tiene foros creados"}
+                        </h6>
+                    )}
+                </div>
+            </section>
         </div>
     )
 }

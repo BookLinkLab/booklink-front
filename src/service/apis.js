@@ -2,15 +2,28 @@ import axios from "axios"
 
 const error_status = { 400: "Ha ocurrido un error, ", 500: "Error del servidor, " }
 
+const config = (token) => ({
+    headers: {
+        Authorization: "Bearer " + token,
+    },
+})
+
 const bookLinkAxios = axios.create({
     baseURL: "http://localhost:8080",
 })
 
-const bookLinkAuthenticatedAxios = (token) =>
-    axios.create({
-        baseURL: "http://localhost:8080",
-        headers: { Authorization: "Bearer " + token },
-    })
+bookLinkAxios.interceptors.response.use(
+    function (response) {
+        return response
+    },
+    function (error) {
+        if (error.response.status === 401 || error.response.status === 403) {
+            localStorage.clear()
+            window.location.href = "/login"
+        }
+        return Promise.reject(error)
+    },
+)
 
 export const loginUser = async (email, password) => {
     try {
@@ -39,8 +52,92 @@ export const registerUser = async (username, email, password) => {
     }
 }
 export const getUser = async (id, token) => {
-    return await bookLinkAuthenticatedAxios(token).get(`/user/${id}`)
+    try {
+        return await bookLinkAxios.get(`/user/${id}`, config(token))
+    } catch (error) {
+        return error.response
+    }
 }
 export const updateUser = async (id, token, updatedUserInfo) => {
-    return await bookLinkAuthenticatedAxios(token).patch(`/user/${id}`, updatedUserInfo)
+    return await bookLinkAxios.patch(`/user/${id}`, updatedUserInfo, config(token))
+}
+
+export const getForum = async (token, forumId) => {
+    try {
+        return await bookLinkAxios.get(`/forum/${forumId}`, config(token))
+    } catch (error) {
+        return error.response
+    }
+}
+
+export const createForum = async (token, name, description, img, tags) => {
+    const forum = {
+        name: name,
+        description: description,
+        img: img,
+        tags: tags ? tags : [],
+    }
+    try {
+        return await bookLinkAxios.post("/forum", forum, config(token))
+    } catch (error) {
+        return error.response
+    }
+}
+
+export const leaveForum = async (token, forumId) => {
+    try {
+        return await bookLinkAxios.delete(`/forum/${forumId}/leave`, config(token))
+    } catch (error) {
+        return error.response
+    }
+}
+export const getTags = async (token) => {
+    try {
+        const response = await bookLinkAxios.get("/tag", config(token))
+        return response.data
+    } catch (error) {
+        return error.response
+    }
+}
+export const searchForums = async (forumName, token, tags) => {
+    try {
+        const params = new URLSearchParams()
+
+        if (forumName) {
+            params.append("searchTerm", forumName)
+        }
+
+        if (tags && tags.length > 0) {
+            params.append("tagIds", tags.join(","))
+        }
+
+        const response = await bookLinkAxios.get(
+            `/forum/search?${params.toString()}`,
+            config(token),
+        )
+
+        return response.data
+    } catch (error) {
+        throw error
+    }
+}
+
+export const editForum = async (token, body, forumId) => {
+    try {
+        return await bookLinkAxios.patch(`/forum/${forumId}`, body, config(token))
+    } catch (error) {
+        return error.response
+    }
+}
+
+export const joinForum = async (token, id) => {
+    try {
+        return await bookLinkAxios.post(`/forum/${id}/join`, null, config(token))
+    } catch (error) {
+        return error.response
+    }
+}
+
+export const deleteForum = async (token, id) => {
+    return await bookLinkAxios.delete(`/forum/${id}`, config(token))
 }

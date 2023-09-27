@@ -3,7 +3,7 @@ import { Formik, Form } from "formik"
 import * as Yup from "yup"
 import { loginUser } from "../../service/apis"
 import { useNavigate } from "react-router-dom"
-import TextField from "../../components/TextField"
+import CustomTextField from "../../components/TextField"
 import Button from "../../components/Button"
 import Logo from "../../components/Logo"
 import { useState } from "react"
@@ -30,7 +30,7 @@ const Login = ({ showToast }) => {
                         .email("El email no es válido"),
                     password: Yup.string().required("La contraseña es requerida"),
                 })}
-                onSubmit={async (values, { resetForm }) => {
+                onSubmit={async (values) => {
                     const { email, password } = values
                     setLoading(true)
                     loginUser(email, password)
@@ -39,7 +39,6 @@ const Login = ({ showToast }) => {
                                 changeCurrentUser(response.token, response.id)
                                 navigate("/home")
                             } else {
-                                resetForm()
                                 showToast(response.data, "error")
                             }
                         })
@@ -53,14 +52,14 @@ const Login = ({ showToast }) => {
                     <Logo size="large" />
                     <div className="login-div-2">
                         <div className="inputs-login-div">
-                            <TextField
+                            <CustomTextField
                                 label="Email"
                                 name="email"
                                 placeholder="janedoe@gmail.com"
                                 variant="placeholder"
                                 helpText=""
                             />
-                            <TextField
+                            <CustomTextField
                                 label="Contraseña"
                                 name="password"
                                 type="Password"

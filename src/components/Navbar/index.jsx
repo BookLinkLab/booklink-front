@@ -1,12 +1,14 @@
 import React from "react"
 import { useNavigate } from "react-router-dom"
 import NotificationBell from "../../assets/icons/notificationBell"
+import { useCurrentUser } from "../../hooks/useCurrentUser"
 import Logo from "../../assets/icons/logo"
 import "./styles.css"
 import Button from "../Button"
 
 export const NavBar = () => {
     const navigate = useNavigate()
+    const { id } = useCurrentUser()
 
     return (
         <div className="navbar">
@@ -14,8 +16,8 @@ export const NavBar = () => {
                 <div className="logo">
                     <Logo height="29" width="28" />
                 </div>
-                <text style={{ fontWeight: "bold" }}>Book</text>
-                <text>Link</text>
+                <p style={{ fontWeight: "bold" }}>Book</p>
+                <p>Link</p>
             </div>
             <div className="buttons">
                 <Button size="medium" variant="ghost" onClick={() => navigate("/createForum")}>
@@ -32,7 +34,7 @@ export const NavBar = () => {
                 <img
                     src={require("../../assets/images/profile.png")}
                     alt="Profile"
-                    onClick={() => navigate("/profile")}
+                    onClick={() => navigate(`/profile/${id}`)}
                     style={{ marginLeft: 24 }}
                 />
             </div>

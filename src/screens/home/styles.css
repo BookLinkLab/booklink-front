@@ -1,0 +1,44 @@
+.homeStyle {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.cardsGrid {
+    display: grid;
+    grid-template-columns: repeat(3, fit-content(100%));
+    gap: 32px;
+    align-content: center;
+    justify-items: center;
+}
+.home-cards {
+    margin-top: 60px;
+    justify-content: center;
+    padding: 20px;
+}
+
+.aligned {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+    width: 40vw;
+}
+
+.notFound {
+    text-align: center;
+    margin-top: 150px;
+    color: var(--grey-700);
+}
+
+.itemsInGrid {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.h6-style-home {
+    font-size: medium;
+    margin-top: 10px;
+    margin-bottom: 4px;
+}

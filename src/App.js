@@ -2,30 +2,31 @@ import React, { useEffect } from "react"
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom"
 import "./App.css"
 import Login from "./screens/login/index.jsx"
-import Register from "./screens/register/register"
-import CreateForum from "./screens/createForum/createForum"
+import Register from "./screens/register"
+import CreateForum from "./screens/createForum"
 import Notifications from "./screens/notifications/notifications"
-import NotFound from "./screens/notFound/notFound"
-import Navbar from "./components/Navbar"
+import NotFound from "./screens/notFound"
 import ProfileScreen from "./screens/profile"
 import PrivateRoute from "./components/PrivateRoute"
 import { useCurrentUser } from "./hooks/useCurrentUser"
 import PublicRoute from "./components/PublicRoute"
+import Home from "./screens/home"
+import EditForum from "./screens/editForum"
+import Forum from "./screens/forum"
+import withToast from "./hoc/withToast"
 
-function App() {
+function App({ showToast }) {
     const { token } = useCurrentUser()
-    console.log("token", token)
 
     useEffect(() => {
-        const updateState = () => {
-            console.log("updateState")
-        }
+        const updateState = () => {}
 
         window.addEventListener("storage", updateState())
         return () => {
             window.removeEventListener("storage", updateState())
         }
     }, [])
+
     return (
         <Router>
             <Routes>
@@ -45,10 +46,19 @@ function App() {
                     <Route path={"/notifications"} element={<Notifications />} />
                 </Route>
                 <Route path={"/profile"} element={<PrivateRoute />}>
-                    <Route path={"/profile"} element={<ProfileScreen />} />
+                    <Route path={"/profile/:id"} element={<ProfileScreen />} />
                 </Route>
                 <Route path={"/home"} element={<PrivateRoute />}>
-                    <Route path={"/home"} element={<div>PROXIMAMENTE</div>} />
+                    <Route path={"/home"} element={<Home />} />
+                </Route>
+                <Route path={"/forum/:forumId"} element={<PrivateRoute />}>
+                    <Route path={"/forum/:forumId"} element={<Forum />} />
+                </Route>
+                <Route path={"/editForum/:forumId"} element={<PrivateRoute />}>
+                    <Route
+                        path={"/editForum/:forumId"}
+                        element={<EditForum showExternalToast={showToast} />}
+                    />
                 </Route>
 
                 {/* Not Found */}
@@ -58,4 +68,4 @@ function App() {
     )
 }
 
-export default App
+export default withToast(App)

@@ -1,0 +1,18 @@
+.chip-style {
+    display: inline-flex;
+    /* This property makes the box have a padding without modifying the original height */
+    box-sizing: border-box;
+    align-items: center;
+    justify-content: center;
+    height: 23px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    gap: 10px;
+    background-color: var(--primary-300);
+}
+
+.chip-text-style {
+    color: var(--primary-900);
+    line-height: normal;
+    font-style: normal;
+}
