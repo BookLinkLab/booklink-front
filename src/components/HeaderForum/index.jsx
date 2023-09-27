@@ -6,11 +6,21 @@ import Members from "../Members"
 import Loader from "../../components/Loader"
 import withToast from "../../hoc/withToast"
 import { useCurrentUser } from "../../hooks/useCurrentUser"
-import { deleteForum, leaveForum } from "../../service/apis"
+import { deleteForum, joinForum, leaveForum } from "../../service/apis"
 import { useNavigate } from "react-router-dom"
-import Modal from "../../components/Modal"
 
-const HeaderForum = ({ title, description, image, owner, amtOfUsers, tags, id, showToast }) => {
+const HeaderForum = ({
+    title,
+    description,
+    image,
+    owner,
+    amtOfUsers,
+    tags,
+    id,
+    showToast,
+    isMember,
+    setForumData,
+}) => {
     const { token } = useCurrentUser()
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
@@ -38,7 +48,7 @@ const HeaderForum = ({ title, description, image, owner, amtOfUsers, tags, id, s
             const resp = await leaveForum(token, id)
             if (resp.status === 200) {
                 showToast(resp.data, "success")
-                navigate("/home")
+                setForumData((prev) => ({ ...prev, searcherIsMember: resp.data.searcherIsMember }))
             } else {
                 showToast(resp.data, "error")
             }
@@ -49,6 +59,21 @@ const HeaderForum = ({ title, description, image, owner, amtOfUsers, tags, id, s
 
     const handleEdit = async () => {
         navigate(`/editForum/${id}`)
+    }
+
+    const handleJoinForum = async () => {
+        setLoading(true)
+        try {
+            const resp = await joinForum(token, id)
+            if (resp.status === 200) {
+                showToast("Te has unido al foro correctamente", "success")
+                setForumData((prev) => ({ ...prev, searcherIsMember: resp.data.searcherIsMember }))
+            } else {
+                showToast(resp.data, "error")
+            }
+        } finally {
+            setLoading(false)
+        }
     }
 
     return (
@@ -74,11 +99,10 @@ const HeaderForum = ({ title, description, image, owner, amtOfUsers, tags, id, s
                             className="headerForumButton"
                             variant="outlined"
                             size="small"
-                            onClick={() => navigate(`/editForum/${id}`)}
+                            onClick={handleEdit}
                         >
                             Editar
                         </Button>
-
                         <Button className="headerForumButton" size="small" onClick={handleDelete}>
                             Eliminar
                         </Button>
@@ -88,9 +112,9 @@ const HeaderForum = ({ title, description, image, owner, amtOfUsers, tags, id, s
                         <Button
                             className="headerForumButton"
                             size="small"
-                            onClick={clickLeaveForum}
+                            onClick={isMember ? clickLeaveForum : handleJoinForum}
                         >
-                            Abandonar
+                            {isMember ? "Abandonar" : "Unirse"}
                         </Button>
                     </div>
                 )}

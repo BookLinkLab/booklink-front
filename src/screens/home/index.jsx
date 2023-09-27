@@ -10,15 +10,12 @@ import { useCurrentUser } from "../../hooks/useCurrentUser"
 import withToast from "../../hoc/withToast"
 import { useNavigate } from "react-router-dom"
 import { joinForum } from "../../service/apis"
-import Navbar from "../../components/Navbar"
 
 const Home = ({ showToast }) => {
     const [cardsInfo, setCardsInfo] = useState([])
     const { token, logOutCurrentUser } = useCurrentUser()
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
-    const [tags, setTags] = useState([])
-    const [selectedTags, setSelectedTags] = useState([])
 
     useEffect(() => {
         handleSearch("").then()
@@ -43,15 +40,6 @@ const Home = ({ showToast }) => {
         }
     }
 
-    const handleTagChange = (values) => {
-        const updatedTags = values.map((tagName) => {
-            const tag = tags.find((t) => t.name === tagName)
-            return tag ? tag.id : null
-        })
-
-        setSelectedTags(updatedTags)
-    }
-
     return (
         <div>
             <Loader open={loading} />
@@ -71,6 +59,7 @@ const Home = ({ showToast }) => {
                             <TextField
                                 name={"forumName"}
                                 placeholder={"Busca por nombre o etiqueta..."}
+                                maxLength={32}
                             />
                             <Button>Buscar</Button>
                         </div>
