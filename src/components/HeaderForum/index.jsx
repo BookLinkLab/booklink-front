@@ -1,4 +1,5 @@
 import React, { useState } from "react"
+import { createPortal } from "react-dom"
 import Button from "../Button"
 import "./styles.css"
 import Chip from "../Chip"
@@ -8,6 +9,7 @@ import withToast from "../../hoc/withToast"
 import { useCurrentUser } from "../../hooks/useCurrentUser"
 import { deleteForum, joinForum, leaveForum } from "../../service/apis"
 import { useNavigate } from "react-router-dom"
+import Modal from "../Modal"
 
 const HeaderForum = ({
     title,
@@ -24,8 +26,21 @@ const HeaderForum = ({
     const { token } = useCurrentUser()
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
+    const [openModal, setOpenModal] = useState(false)
+
+    const modalType = {
+        delete: {
+            title: "Eliminar foro",
+            description: "¿Estás seguro que deseas eliminar este foro?",
+        },
+        leave: {
+            title: "Abandonar foro",
+            description: "¿Estás seguro que deseas abandonar este foro?",
+        },
+    }
 
     const handleDelete = async () => {
+        setOpenModal(false)
         try {
             setLoading(true)
             await deleteForum(token, id)
@@ -43,6 +58,7 @@ const HeaderForum = ({
     }
 
     const clickLeaveForum = async () => {
+        setOpenModal(false)
         setLoading(true)
         try {
             const resp = await leaveForum(token, id)
@@ -103,7 +119,11 @@ const HeaderForum = ({
                         >
                             Editar
                         </Button>
-                        <Button className="headerForumButton" size="small" onClick={handleDelete}>
+                        <Button
+                            className="headerForumButton"
+                            size="small"
+                            onClick={() => setOpenModal(modalType.delete)}
+                        >
                             Eliminar
                         </Button>
                     </div>
@@ -112,13 +132,33 @@ const HeaderForum = ({
                         <Button
                             className="headerForumButton"
                             size="small"
-                            onClick={isMember ? clickLeaveForum : handleJoinForum}
+                            onClick={
+                                isMember ? () => setOpenModal(modalType.leave) : handleJoinForum
+                            }
                         >
                             {isMember ? "Abandonar" : "Unirse"}
                         </Button>
                     </div>
                 )}
             </div>
+            {createPortal(
+                <>
+                    {!!openModal && (
+                        <Modal
+                            showModal={!!openModal}
+                            setShowModal={setOpenModal}
+                            firstButtonText={"Cancelar"}
+                            title={openModal.title}
+                            subtitle={openModal.description}
+                            secondButtonText={owner ? "Eliminar" : "Abandonar"}
+                            handleOnClose={() => setOpenModal(undefined)}
+                            firstButtonAction={() => setOpenModal(undefined)}
+                            secondButtonAction={owner ? handleDelete : clickLeaveForum}
+                        />
+                    )}
+                </>,
+                document.body,
+            )}
         </>
     )
 }
