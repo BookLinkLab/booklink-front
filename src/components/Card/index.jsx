@@ -6,11 +6,9 @@ import Chip from "../Chip"
 
 const Card = ({ image, text, chips, members, joined, id, buttonAction }) => {
     const navigate = useNavigate()
+
     return (
-        <div
-            className="card-main-div"
-            onClick={() => (joined ? navigate(`/forum/${id}`) : "not joined")}
-        >
+        <div className="card-main-div" onClick={() => navigate(`/forum/${id}`)}>
             <img src={image} className="card-image" alt="card" />
             <div className="card-sub-div">
                 <div className="text-card-div">

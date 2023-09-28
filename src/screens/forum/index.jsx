@@ -17,7 +17,7 @@ const Forum = ({ showToast }) => {
         setLoading(true)
         getForumData().then()
         setLoading(false)
-    }, [])
+    }, [forum.searcherIsMember])
 
     const getForumData = async () => {
         const response = await getForum(token, forumId)
@@ -26,21 +26,6 @@ const Forum = ({ showToast }) => {
         } else {
             showToast("Error al cargar el foro", "error")
             navigate("/home")
-        }
-    }
-
-    const clickLeaveForum = async () => {
-        setLoading(true)
-        try {
-            const resp = await leaveForum(token, forum.id)
-            if (resp.status === 200) {
-                showToast(resp.body, "success")
-                navigate("/home")
-            } else {
-                showToast(resp.body, "error")
-            }
-        } finally {
-            setLoading(false)
         }
     }
 
@@ -55,6 +40,8 @@ const Forum = ({ showToast }) => {
                 owner={forum.ownerId == id}
                 amtOfUsers={forum.members}
                 tags={forum.tags}
+                isMember={forum.searcherIsMember}
+                setForumData={setForum}
             />
         </>
     )
