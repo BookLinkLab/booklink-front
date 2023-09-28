@@ -3,12 +3,7 @@
     justify-content: center;
     margin-top: 40px;
 }
-.background-modal {
-    background-color: #0c1012;
-    width: 100vw;
-    height: 100vh;
-    position: relative;
-}
+
 .forumImage {
     width: 200px;
     height: 200px;
