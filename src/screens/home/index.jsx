@@ -59,7 +59,7 @@ const Home = ({ showToast }) => {
                             <TextField
                                 name={"forumName"}
                                 placeholder={"Busca por nombre o etiqueta..."}
-                                maxLength={32}
+                                maxLength={64}
                             />
                             <Button>Buscar</Button>
                         </div>
