@@ -45,6 +45,7 @@ export const EditForum = ({ showExternalToast }) => {
         name: Yup.string().required("Este campo es requerido"),
         img: Yup.string().url().required("Este campo es requerido"),
         description: Yup.string().required("Este campo es requerido"),
+        tags: Yup.array().max(5, "No puedes agregar más de 5 etiquetas"),
     })
 
     const mockData = {
@@ -80,11 +81,11 @@ export const EditForum = ({ showExternalToast }) => {
                     try {
                         setLoading(true)
                         const response = await editForum(token, values, forumId)
-                        if (response === 200) {
+                        if (response.status === 200) {
                             navigate(`/forum/${forumId}`)
                             showExternalToast("Foro editado correctamente", "success")
                         } else {
-                            showExternalToast(response.body, "error")
+                            showExternalToast(response.data, "error")
                         }
                     } finally {
                         setLoading(false)

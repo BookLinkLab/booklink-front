@@ -18,7 +18,7 @@ const Forum = ({ showToast }) => {
         setLoading(true)
         getForumData().then()
         setLoading(false)
-    }, [])
+    }, [forum.searcherIsMember])
 
     const getForumData = async () => {
         const response = await getForum(token, forumId)
@@ -29,6 +29,7 @@ const Forum = ({ showToast }) => {
             navigate("/home")
         }
     }
+
 
     const clickLeaveForum = async () => {
         setLoading(true)
@@ -47,6 +48,7 @@ const Forum = ({ showToast }) => {
 
     const handleAddPost = () => {}
 
+
     return (
         <>
             <Loader open={loading} />
@@ -58,6 +60,8 @@ const Forum = ({ showToast }) => {
                 owner={forum.ownerId == id}
                 amtOfUsers={forum.members}
                 tags={forum.tags}
+                isMember={forum.searcherIsMember}
+                setForumData={setForum}
             />
             <div style={{ marginTop: 98 }}>
                 <AddPost

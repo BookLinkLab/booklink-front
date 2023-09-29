@@ -23,15 +23,14 @@ const ProfileScreen = ({ showToast }) => {
 
     useEffect(() => {
         setLoading(true)
-        getUser(id, token)
+        getUser(profileId, token)
             .then((response) => {
                 if (response.status === 200) {
                     setUser(response.data)
                     setForumsJoined(response.data.forumsJoined)
                     setMyForums(response.data.forumsCreated)
-                } else {
-                    showToast(response.data.message, "error")
-                }
+                } else if (response.status === 400 || response.status === 404) navigate("/")
+                else showToast(response.data.message, "error")
             })
             .catch((error) => {
                 showToast(error.message, "error")
