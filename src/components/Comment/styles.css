@@ -1,0 +1,41 @@
+.comment-main-div {
+    display: flex;
+    align-items: flex-start;
+    gap: 26px;
+}
+.comment-sub-div {
+    display: flex;
+    width: 813px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+}
+.comment-sub-div-2 {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    align-self: stretch;
+}
+.comment-username-div {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.comment-time-div {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 16px;
+}
+.comment-profile-buttons {
+    appearance: none;
+    background-color: transparent;
+    border: none;
+    color: var(--primary-500);
+    line-height: normal;
+}
+.underlined {
+    text-decoration-line: underline;
+}
