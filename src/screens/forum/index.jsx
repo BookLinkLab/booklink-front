@@ -5,6 +5,7 @@ import { useNavigate, useParams } from "react-router-dom"
 import withToast from "../../hoc/withToast"
 import Loader from "../../components/Loader"
 import { getForum, leaveForum } from "../../service/apis"
+import AddPost from "../../components/AddPost"
 
 const Forum = ({ showToast }) => {
     const { forumId } = useParams()
@@ -44,6 +45,8 @@ const Forum = ({ showToast }) => {
         }
     }
 
+    const handleAddPost = () => {}
+
     return (
         <>
             <Loader open={loading} />
@@ -56,6 +59,13 @@ const Forum = ({ showToast }) => {
                 amtOfUsers={forum.members}
                 tags={forum.tags}
             />
+            <div style={{ marginTop: 98 }}>
+                <AddPost
+                    textFieldPlaceholder={"Comparte tus ideas"}
+                    onClick={handleAddPost}
+                    buttonText={"Crear publicacion"}
+                />
+            </div>
         </>
     )
 }
