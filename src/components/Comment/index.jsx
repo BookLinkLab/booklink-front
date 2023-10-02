@@ -5,15 +5,7 @@ import "moment/locale/es"
 
 import Moment from "react-moment"
 
-const Comment = ({
-    username,
-    commentDate,
-    commentText,
-    commentsButtonAction,
-    editButtonAction,
-    deleteButtonAction,
-    commentsAmount,
-}) => {
+const Comment = ({ username, commentDate, commentText, deleteButtonAction, commentsAmount }) => {
     return (
         <div className={"comment-main-div"}>
             <img
@@ -39,7 +31,9 @@ const Comment = ({
                             Eliminar
                         </button>
                         <button
-                            onClick={editButtonAction}
+                            onClick={() => {
+                                console.log("editing")
+                            }}
                             className={"comment-profile-buttons body2 underlined"}
                         >
                             Editar
@@ -47,7 +41,9 @@ const Comment = ({
                     </div>
                     <p className={"body1"}>{commentText}</p>
                     <button
-                        onClick={commentsButtonAction}
+                        onClick={() => {
+                            console.log("commenting")
+                        }}
                         className={"comment-profile-buttons body2 underlined"}
                     >
                         {commentsAmount} Comentarios
@@ -55,23 +51,6 @@ const Comment = ({
                 </div>
 
                 {/*Traer componente de chulo*/}
-                {/*<div className={"comment-like-buttons-div"}>*/}
-                {/*    <div className={"comment-icon-div"}>*/}
-                {/*        <button className={"comment-like-unlike-button " + (liked && "liked-button")}*/}
-                {/*                onClick={likeButtonAction}>*/}
-                {/*            <ThumbUp width={16} height={16} color={liked ? "#70BE7C" : "#747F86"}/>*/}
-                {/*        </button>*/}
-                {/*        <p className={"body2"}>{likeAmount}</p>*/}
-                {/*    </div>*/}
-                {/*    <div className={"comment-icon-div"}>*/}
-                {/*        <button className={"comment-like-unlike-button " + (disliked && "disliked-button")}*/}
-                {/*                onClick={dislikeButtonAction}>*/}
-                {/*            <ThumbDown width={16} height={16} color={disliked ? "#94313E" : "#747F86"}/>*/}
-                {/*        </button>*/}
-                {/*        <p className={"body2"}>{dislikeAmount}</p>*/}
-                {/*    </div>*/}
-
-                {/*</div>*/}
             </div>
         </div>
     )
