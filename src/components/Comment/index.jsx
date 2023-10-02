@@ -5,7 +5,7 @@ import "moment/locale/es"
 
 import Moment from "react-moment"
 
-const Comment = ({ username, commentDate, commentText, deleteButtonAction, commentsAmount }) => {
+const Comment = ({ username, commentDate, commentText, commentsAmount }) => {
     return (
         <div className={"comment-main-div"}>
             <img
@@ -25,7 +25,9 @@ const Comment = ({ username, commentDate, commentText, deleteButtonAction, comme
                         </div>
 
                         <button
-                            onClick={deleteButtonAction}
+                            onClick={() => {
+                                console.log("deleted")
+                            }}
                             className={"comment-profile-buttons body2"}
                         >
                             Eliminar
