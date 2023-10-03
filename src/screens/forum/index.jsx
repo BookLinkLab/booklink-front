@@ -8,6 +8,8 @@ import AddPost from "../../components/AddPost"
 import "./styles.css"
 import { getForum, addPostToForum, getPosts } from "../../service/apis"
 import Comment from "../../components/Comment"
+import Button from "../../components/Button"
+import TextInputModal from "../../components/TextInputModal"
 
 const Forum = ({ showToast }) => {
     const { forumId } = useParams()
