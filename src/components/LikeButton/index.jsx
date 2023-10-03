@@ -2,17 +2,12 @@ import { ThumbUp } from "../../assets/icons/thumbUp"
 import React, { useEffect, useState } from "react"
 import "./styles.css"
 
-const LikeButton = ({ initialLiked }) => {
+const LikeButton = ({ initialLiked, likeAmount }) => {
     const [liked, setLiked] = useState(initialLiked)
-    const likeAmount = 12
 
     const likeButtonAction = () => {
         setLiked(!liked)
     }
-
-    useEffect(() => {
-        setLiked(initialLiked)
-    }, [initialLiked])
 
     return (
         <div className="likeButtonContainer">

@@ -2,8 +2,7 @@ import { ThumbDown } from "../../assets/icons/thumbDown"
 import { useState } from "react"
 import "./styles.css"
 
-const DislikeButton = ({ initialDisliked }) => {
-    const dislikeAmount = 12
+const DislikeButton = ({ initialDisliked, dislikeAmount }) => {
     const [disliked, setDisliked] = useState(initialDisliked)
 
     const dislikeButtonAction = () => {
