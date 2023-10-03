@@ -1,7 +1,5 @@
 import "./styles.css"
-import CustomTextField from "../TextField"
 import Button from "../Button"
-import { Remove } from "../../assets/icons/remove"
 import { Form, Formik } from "formik"
 const TextInputModal = ({
     title,
@@ -18,7 +16,7 @@ const TextInputModal = ({
                 <h5 className="title-style bold">{title}</h5>
 
                 <Formik initialValues={{ updatedComment: initialValue }}>
-                    {({ dirty, values, handleChange }) => (
+                    {({ handleChange }) => (
                         <Form className="input-container">
                             <textarea
                                 name={"updatedComment"}
