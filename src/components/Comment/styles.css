@@ -1,5 +1,6 @@
 .comment-main-div {
     display: flex;
+    width: fit-content;
     align-items: flex-start;
     gap: 26px;
 }
