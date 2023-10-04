@@ -4,8 +4,9 @@ import { useCurrentUser } from "../../hooks/useCurrentUser"
 import { useNavigate, useParams } from "react-router-dom"
 import withToast from "../../hoc/withToast"
 import Loader from "../../components/Loader"
-import { getForum, leaveForum } from "../../service/apis"
+import { getForum } from "../../service/apis"
 import AddPost from "../../components/AddPost"
+import "./styles.css"
 
 const Forum = ({ showToast }) => {
     const { forumId } = useParams()
@@ -30,25 +31,6 @@ const Forum = ({ showToast }) => {
         }
     }
 
-
-    const clickLeaveForum = async () => {
-        setLoading(true)
-        try {
-            const resp = await leaveForum(token, forum.id)
-            if (resp.status === 200) {
-                showToast(resp.body, "success")
-                navigate("/home")
-            } else {
-                showToast(resp.body, "error")
-            }
-        } finally {
-            setLoading(false)
-        }
-    }
-
-    const handleAddPost = () => {}
-
-
     return (
         <>
             <Loader open={loading} />
@@ -63,10 +45,10 @@ const Forum = ({ showToast }) => {
                 isMember={forum.searcherIsMember}
                 setForumData={setForum}
             />
-            <div style={{ marginTop: 98 }}>
+            <div className="addPostContainer">
                 <AddPost
                     textFieldPlaceholder={"Comparte tus ideas"}
-                    onClick={handleAddPost}
+                    onClick={() => {}} //aca iria la funcion que añade el post
                     buttonText={"Crear publicacion"}
                 />
             </div>

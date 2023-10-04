@@ -5,3 +5,7 @@
     align-items: center;
     gap: 16px;
 }
+
+.addPostTextField {
+    width: 636px;
+}

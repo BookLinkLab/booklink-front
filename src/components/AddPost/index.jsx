@@ -5,13 +5,15 @@ import Button from "../Button"
 import { Form, Formik } from "formik"
 
 const AddPost = ({ buttonText, textFieldPlaceholder, onClick }) => {
+    const handleAddPost = () => {}
+
     return (
         <div>
             <Formik
                 initialValues={{ comment: "" }}
                 onSubmit={(values, { resetForm }) => {
                     const commentValue = values.comment
-                    onClick(console.log(commentValue))
+                    onClick(handleAddPost(console.log(commentValue)))
                     resetForm()
                 }}
             >
@@ -19,7 +21,7 @@ const AddPost = ({ buttonText, textFieldPlaceholder, onClick }) => {
                     <Form>
                         <div className="addPost">
                             <img src={require("../../assets/images/profile.png")} alt="Profile" />
-                            <div style={{ width: 636 }}>
+                            <div className="addPostTextField">
                                 <CustomTextField
                                     variant="placeholder"
                                     placeholder={textFieldPlaceholder}
