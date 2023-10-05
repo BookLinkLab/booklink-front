@@ -4,6 +4,9 @@ import { useCurrentUser } from "../../hooks/useCurrentUser"
 import { useNavigate, useParams } from "react-router-dom"
 import withToast from "../../hoc/withToast"
 import Loader from "../../components/Loader"
+import { getForum } from "../../service/apis"
+import AddPost from "../../components/AddPost"
+import "./styles.css"
 import { getForum, leaveForum } from "../../service/apis"
 import LikeButton from "../../components/LikeButton"
 import DislikeButton from "../../components/DislikeButton"
@@ -54,6 +57,13 @@ const Forum = ({ showToast }) => {
                 isMember={forum.searcherIsMember}
                 setForumData={setForum}
             />
+            <div className="addPostContainer">
+                <AddPost
+                    textFieldPlaceholder={"Comparte tus ideas"}
+                    onClick={() => {}} //aca iria la funcion que añade el post
+                    buttonText={"Crear publicacion"}
+                />
+            </div>
 
             {/*<br />*/}
             {/*<div style={{ justifyContent: "center", alignItems: "center", display: "flex" }}>*/}
