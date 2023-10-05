@@ -10,7 +10,6 @@ const Comment = ({ username, commentDate, commentText, commentsAmount, className
     const commentId = 1
     const navigate = useNavigate()
     const [openModal, setOpenModal] = useState(false)
-
     const deleteComment = () => {}
 
     return (
