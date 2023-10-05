@@ -4,12 +4,9 @@ import { useCurrentUser } from "../../hooks/useCurrentUser"
 import { useNavigate, useParams } from "react-router-dom"
 import withToast from "../../hoc/withToast"
 import Loader from "../../components/Loader"
-import { getForum } from "../../service/apis"
 import AddPost from "../../components/AddPost"
 import "./styles.css"
-import { getForum, leaveForum } from "../../service/apis"
-import LikeButton from "../../components/LikeButton"
-import DislikeButton from "../../components/DislikeButton"
+import { getForum } from "../../service/apis"
 
 const Forum = ({ showToast }) => {
     const { forumId } = useParams()
