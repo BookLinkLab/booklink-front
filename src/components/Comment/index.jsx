@@ -2,12 +2,15 @@ import "./styles.css"
 import React from "react"
 import { Ellipse } from "../../assets/icons/ellipse"
 import "moment/locale/es"
-
 import Moment from "react-moment"
+import { useNavigate } from "react-router-dom"
 
-const Comment = ({ username, commentDate, commentText, commentsAmount }) => {
+const Comment = ({ username, commentDate, commentText, commentsAmount, className }) => {
+    const commentId = 1
+    const navigate = useNavigate()
+
     return (
-        <div className={"comment-main-div"}>
+        <div className={`comment-main-div ${className ?? ""}`}>
             <img src={require("../../assets/images/profile.png")} alt="Profile" />
             <div className={"comment-sub-div"}>
                 <div className={"comment-sub-div-2"}>
@@ -40,7 +43,7 @@ const Comment = ({ username, commentDate, commentText, commentsAmount }) => {
                     <p className={"body1"}>{commentText}</p>
                     <button
                         onClick={() => {
-                            console.log("commenting")
+                            navigate(`comment/${commentId}`)
                         }}
                         className={"comment-profile-buttons body2 underlined"}
                     >

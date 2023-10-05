@@ -1,0 +1,32 @@
+.forum-name-img {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 30px;
+    margin-bottom: 117px;
+    margin-left: 216px;
+}
+
+.commentContainer {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.commentsOfComment {
+    margin-left: 64px;
+    margin-bottom: 32px;
+}
+
+.several-comments {
+    height: 415px;
+}
+
+.smaller-comments.comment-main-div {
+    width: 823px !important;
+}
+
+.mainComment {
+    margin-bottom: 32px;
+}
