@@ -18,8 +18,6 @@ const Forum = ({ showToast }) => {
     const navigate = useNavigate()
     const [loading, setLoading] = useState(false)
     const [forum, setForum] = useState({})
-    const [showModal, setShowModal] = useState(false)
-    const [updateValue, setUpdateValue] = useState("fabroo") //mock
 
     // const mockLikesAmount = 12
     // const mockDislikesAmount= 12
@@ -45,9 +43,6 @@ const Forum = ({ showToast }) => {
             navigate("/home")
         }
     }
-    const handleInputChange = (value) => {
-        setUpdateValue(value)
-    }
 
     return (
         <>
@@ -57,7 +52,7 @@ const Forum = ({ showToast }) => {
                 title={forum.title}
                 description={forum.description}
                 image={forum.img}
-                owner={forum.ownerId == id}
+                owner={forum.ownerId === id}
                 amtOfUsers={forum.members}
                 tags={forum.tags}
                 isMember={forum.searcherIsMember}
@@ -67,7 +62,7 @@ const Forum = ({ showToast }) => {
                 <AddPost
                     textFieldPlaceholder={"Comparte tus ideas"}
                     onClick={() => {}} //aca iria la funcion que añade el post
-                    buttonText={"Crear publicacion"}
+                    buttonText={"Crear publicación"}
                 />
             </div>
 
@@ -79,24 +74,6 @@ const Forum = ({ showToast }) => {
             {/*<div style={{ justifyContent: "center", alignItems: "center", display: "flex" }}>*/}
             {/*    <DislikeButton initialDisliked={userHasDisliked} dislikeAmount={mockDislikesAmount}/>*/}
             {/*</div>*/}
-            <Button onClick={() => setShowModal(true)}>Editar</Button>
-            {showModal && (
-                <TextInputModal
-                    title={"Actualizar Comentario."}
-                    firstButton="Cancelar"
-                    secondButton="Actualizar"
-                    firstButtonAction={() => {
-                        setShowModal(false)
-                        setUpdateValue("") //mock deberia decir fabro pero al estar en mock no puedo tomar el valor anterior
-                    }}
-                    secondButtonAction={() => {
-                        console.log(updateValue)
-                        setShowModal(false)
-                    }}
-                    initialValue={updateValue}
-                    handleInputChange={handleInputChange}
-                ></TextInputModal>
-            )}
         </>
     )
 }

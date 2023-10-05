@@ -16,24 +16,27 @@ const TextInputModal = ({
                 <h5 className="title-style bold">{title}</h5>
 
                 <Formik initialValues={{ updatedComment: initialValue }}>
-                    {({ handleChange }) => (
+                    {({ handleChange, values, dirty }) => (
                         <Form className="input-container">
                             <textarea
+                                value={initialValue}
                                 name={"updatedComment"}
                                 onChange={(e) => {
                                     handleChange(e)
                                     handleInputChange(e.target.value)
                                 }}
                             ></textarea>
+                            <div className="modal-buttons">
+                                <Button onClick={firstButtonAction} variant="outlined">
+                                    {firstButton}
+                                </Button>
+                                <Button onClick={secondButtonAction} disabled={!dirty}>
+                                    {secondButton}
+                                </Button>
+                            </div>
                         </Form>
                     )}
                 </Formik>
-                <div className="modal-buttons">
-                    <Button onClick={firstButtonAction} variant="outlined">
-                        {firstButton}
-                    </Button>
-                    <Button onClick={secondButtonAction}>{secondButton}</Button>
-                </div>
             </div>
         </div>
     )
