@@ -8,11 +8,7 @@ import Moment from "react-moment"
 const Comment = ({ username, commentDate, commentText, commentsAmount }) => {
     return (
         <div className={"comment-main-div"}>
-            <img
-                src={require("../../assets/images/profile.png")}
-                alt="Profile"
-                style={{ marginLeft: 24 }}
-            />
+            <img src={require("../../assets/images/profile.png")} alt="Profile" />
             <div className={"comment-sub-div"}>
                 <div className={"comment-sub-div-2"}>
                     <div className={"comment-time-div"}>

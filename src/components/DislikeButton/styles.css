@@ -1,0 +1,23 @@
+.dislikeButton {
+    border: 1px solid #747f86;
+    background-color: #fff;
+    padding: 6px;
+    flex-direction: column;
+    border-radius: 50px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dislikeButton.disliked {
+    border: 1px solid #94313e;
+    background-color: #f8e8e8;
+}
+
+.dislikeButtonContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 13px;
+}

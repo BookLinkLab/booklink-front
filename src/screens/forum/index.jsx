@@ -4,7 +4,11 @@ import { useCurrentUser } from "../../hooks/useCurrentUser"
 import { useNavigate, useParams } from "react-router-dom"
 import withToast from "../../hoc/withToast"
 import Loader from "../../components/Loader"
+import AddPost from "../../components/AddPost"
+import "./styles.css"
 import { getForum, leaveForum } from "../../service/apis"
+import LikeButton from "../../components/LikeButton"
+import DislikeButton from "../../components/DislikeButton"
 import Button from "../../components/Button"
 import TextInputModal from "../../components/TextInputModal"
 
@@ -16,6 +20,15 @@ const Forum = ({ showToast }) => {
     const [forum, setForum] = useState({})
     const [showModal, setShowModal] = useState(false)
     const [updateValue, setUpdateValue] = useState("fabroo") //mock
+
+    // const mockLikesAmount = 12
+    // const mockDislikesAmount= 12
+    //
+    // const mockLikes = [1, 2, 3, 4, 10]
+    // const mockDislikes = [5, 6, 7, 8]
+    //
+    // const userHasLiked = mockLikes.includes(parseInt(id))
+    // const userHasDisliked = mockDislikes.includes(parseInt(id))
 
     useEffect(() => {
         setLoading(true)
@@ -50,6 +63,22 @@ const Forum = ({ showToast }) => {
                 isMember={forum.searcherIsMember}
                 setForumData={setForum}
             />
+            <div className="addPostContainer">
+                <AddPost
+                    textFieldPlaceholder={"Comparte tus ideas"}
+                    onClick={() => {}} //aca iria la funcion que añade el post
+                    buttonText={"Crear publicacion"}
+                />
+            </div>
+
+            {/*<br />*/}
+            {/*<div style={{ justifyContent: "center", alignItems: "center", display: "flex" }}>*/}
+            {/*    <LikeButton initialLiked={userHasLiked} likeAmount={mockLikesAmount} />*/}
+            {/*</div>*/}
+            {/*<br />*/}
+            {/*<div style={{ justifyContent: "center", alignItems: "center", display: "flex" }}>*/}
+            {/*    <DislikeButton initialDisliked={userHasDisliked} dislikeAmount={mockDislikesAmount}/>*/}
+            {/*</div>*/}
             <Button onClick={() => setShowModal(true)}>Editar</Button>
             {showModal && (
                 <TextInputModal

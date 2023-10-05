@@ -1,0 +1,23 @@
+.likeButton {
+    border: 1px solid #747f86;
+    background-color: #fff;
+    padding: 6px;
+    flex-direction: column;
+    border-radius: 50px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.likeButton.liked {
+    border: 1px solid #70be7c;
+    background-color: #ddf3e2;
+}
+
+.likeButtonContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 13px;
+}
