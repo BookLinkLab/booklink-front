@@ -7,6 +7,9 @@ import Loader from "../../components/Loader"
 import { getForum } from "../../service/apis"
 import AddPost from "../../components/AddPost"
 import "./styles.css"
+import { getForum, leaveForum } from "../../service/apis"
+import LikeButton from "../../components/LikeButton"
+import DislikeButton from "../../components/DislikeButton"
 
 const Forum = ({ showToast }) => {
     const { forumId } = useParams()
@@ -14,6 +17,15 @@ const Forum = ({ showToast }) => {
     const navigate = useNavigate()
     const [loading, setLoading] = useState(false)
     const [forum, setForum] = useState({})
+
+    // const mockLikesAmount = 12
+    // const mockDislikesAmount= 12
+    //
+    // const mockLikes = [1, 2, 3, 4, 10]
+    // const mockDislikes = [5, 6, 7, 8]
+    //
+    // const userHasLiked = mockLikes.includes(parseInt(id))
+    // const userHasDisliked = mockDislikes.includes(parseInt(id))
 
     useEffect(() => {
         setLoading(true)
@@ -52,6 +64,15 @@ const Forum = ({ showToast }) => {
                     buttonText={"Crear publicacion"}
                 />
             </div>
+
+            {/*<br />*/}
+            {/*<div style={{ justifyContent: "center", alignItems: "center", display: "flex" }}>*/}
+            {/*    <LikeButton initialLiked={userHasLiked} likeAmount={mockLikesAmount} />*/}
+            {/*</div>*/}
+            {/*<br />*/}
+            {/*<div style={{ justifyContent: "center", alignItems: "center", display: "flex" }}>*/}
+            {/*    <DislikeButton initialDisliked={userHasDisliked} dislikeAmount={mockDislikesAmount}/>*/}
+            {/*</div>*/}
         </>
     )
 }
