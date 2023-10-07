@@ -4,16 +4,13 @@ import CustomTextField from "../TextField"
 import Button from "../Button"
 import { Form, Formik } from "formik"
 
-const AddPost = ({ buttonText, textFieldPlaceholder, onClick }) => {
-    const handleAddPost = () => {}
-
+const AddPost = ({ buttonText, textFieldPlaceholder, onSubmit }) => {
     return (
         <div>
             <Formik
                 initialValues={{ comment: "" }}
                 onSubmit={(values, { resetForm }) => {
-                    const commentValue = values.comment
-                    onClick(handleAddPost(console.log(commentValue)))
+                    onSubmit(values.comment)
                     resetForm()
                 }}
             >
