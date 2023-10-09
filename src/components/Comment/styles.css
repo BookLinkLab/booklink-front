@@ -1,3 +1,7 @@
+.delete-comment-modal .modal-main-div {
+    width: 344px;
+}
+
 .comment-main-div {
     display: flex;
     width: fit-content;

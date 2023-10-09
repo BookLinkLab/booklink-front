@@ -1,7 +1,6 @@
 import "./styles.css"
 import Button from "../Button"
 import { Remove } from "../../assets/icons/remove"
-import { useState } from "react"
 
 const Modal = ({
     title,
@@ -11,9 +10,10 @@ const Modal = ({
     firstButtonAction,
     secondButtonAction,
     handleOnClose,
+    className,
 }) => {
     return (
-        <div className={"modal-container"}>
+        <div className={`modal-container ${className ?? ""}`}>
             <div className="modal-main-div">
                 <div className="remove-div" onClick={handleOnClose}>
                     <Remove width={18} height={18} />
