@@ -85,15 +85,8 @@ const CommentsScreen = ({ showToast }) => {
         <>
             <div className="forum-name-img">
                 <ChevronLeft onClick={() => navigate(`/forum/${forumId}`)} />
-                <img
-                    className="forumImage"
-                    src={forum.img}
-                    alt="header-forum"
-                    style={{ width: 40, height: 40 }}
-                />
-                <h6 className="bold" style={{ marginLeft: 12 }}>
-                    {forum.title}
-                </h6>
+                <img className="forumImage" src={forum.img} alt="header-forum" />
+                <h6 className="bold forum-title">{forum.title}</h6>
             </div>
             <div className="commentContainer">
                 <div className="mainComment">
@@ -115,7 +108,9 @@ const CommentsScreen = ({ showToast }) => {
                     </div>
                 ))}
             </div>
-            <AddPost buttonText={"Comentar"} textFieldPlaceholder={"Comparte tus ideas..."} />
+            <div className="add-post-style">
+                <AddPost buttonText={"Comentar"} textFieldPlaceholder={"Comparte tus ideas..."} />
+            </div>
         </>
     )
 }

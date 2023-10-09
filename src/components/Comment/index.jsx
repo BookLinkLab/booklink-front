@@ -1,5 +1,5 @@
 import "./styles.css"
-import React from "react"
+import React, { useState } from "react"
 import { Ellipse } from "../../assets/icons/ellipse"
 import "moment/locale/es"
 import Moment from "react-moment"
