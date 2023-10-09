@@ -55,6 +55,7 @@ const Comment = ({ username, commentDate, commentText, commentsAmount }) => {
                             </button>
                             <button
                                 onClick={() => {
+                                    setShowModal(true)
                                     console.log("editing")
                                 }}
                                 className={"comment-profile-buttons body2 underlined"}
@@ -65,7 +66,6 @@ const Comment = ({ username, commentDate, commentText, commentsAmount }) => {
                         <p className={"body1"}>{commentText}</p>
                         <button
                             onClick={() => {
-                                setShowModal(true)
                                 console.log("commenting")
                             }}
                             className={"comment-profile-buttons body2 underlined"}
