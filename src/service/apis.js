@@ -149,3 +149,11 @@ export const addPostToForum = async (token, forumId, content) => {
         return error.response
     }
 }
+
+export const updateComment = async (token, id, content) => {
+    try {
+        return await bookLinkAxios.patch(`/comment/${id}`, { content }, config(token))
+    } catch (error) {
+        return error.response
+    }
+}
