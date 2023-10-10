@@ -6,7 +6,10 @@ import withToast from "../../hoc/withToast"
 import Loader from "../../components/Loader"
 import AddPost from "../../components/AddPost"
 import "./styles.css"
-import { addPostToForum, getForum } from "../../service/apis"
+import { getForum, leaveForum, addPostToForum } from "../../service/apis"
+import LikeButton from "../../components/LikeButton"
+import DislikeButton from "../../components/DislikeButton"
+import Comment from "../../components/Comment"
 
 const Forum = ({ showToast }) => {
     const { forumId } = useParams()
