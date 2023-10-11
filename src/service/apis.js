@@ -142,6 +142,14 @@ export const deleteForum = async (token, id) => {
     return await bookLinkAxios.delete(`/forum/${id}`, config(token))
 }
 
+export const deletePost = async (token, id) => {
+    try {
+        return await bookLinkAxios.delete(`/post/${id}`, config(token))
+    } catch (error) {
+        return error.response
+    }
+}
+
 export const addPostToForum = async (token, forumId, content) => {
     try {
         return await bookLinkAxios.post(`/post`, { forumId, content }, config(token))

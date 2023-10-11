@@ -3,31 +3,21 @@ import React, { useState } from "react"
 import { Ellipse } from "../../assets/icons/ellipse"
 import "moment/locale/es"
 import Moment from "react-moment"
-import Modal from "../Modal"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 
-const Comment = ({ username, commentDate, commentText, commentsAmount, className }) => {
-    const commentId = 1
+const Comment = ({
+    username,
+    commentDate,
+    commentText,
+    commentsAmount,
+    className,
+    handleDelete,
+}) => {
     const navigate = useNavigate()
-    const [openModal, setOpenModal] = useState(false)
-    const deleteComment = () => {}
+    const commentId = useParams()
 
     return (
         <>
-            {!!openModal && (
-                <Modal
-                    className={"delete-comment-modal"}
-                    showModal={!!openModal}
-                    setShowModal={setOpenModal}
-                    firstButtonText={"Cancelar"}
-                    title={"Eliminar Comentario"}
-                    subtitle={"¿Estás seguro que deseas eliminar este comentario?"}
-                    secondButtonText={"Eliminar"}
-                    handleOnClose={() => setOpenModal(undefined)}
-                    firstButtonAction={() => setOpenModal(undefined)}
-                    secondButtonAction={deleteComment}
-                />
-            )}
             <div className={`comment-main-div ${className ?? ""}`}>
                 <img src={require("../../assets/images/profile.png")} alt="Profile" />
                 <div className={"comment-sub-div"}>
@@ -42,9 +32,7 @@ const Comment = ({ username, commentDate, commentText, commentsAmount, className
                             </div>
 
                             <button
-                                onClick={() => {
-                                    setOpenModal(true)
-                                }}
+                                onClick={() => handleDelete()}
                                 className={"comment-profile-buttons body2"}
                             >
                                 Eliminar
