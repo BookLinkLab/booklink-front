@@ -149,3 +149,11 @@ export const addPostToForum = async (token, forumId, content) => {
         return error.response
     }
 }
+
+export const getPostInfo = async (token, postId) => {
+    try {
+        return await bookLinkAxios.get(`/post/${postId}`, config(token))
+    } catch (error) {
+        return error.response
+    }
+}

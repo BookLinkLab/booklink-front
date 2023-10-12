@@ -1,5 +1,5 @@
 import { ThumbDown } from "../../assets/icons/thumbDown"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import "./styles.css"
 
 const DislikeButton = ({ initialDisliked, dislikeAmount }) => {
@@ -8,6 +8,10 @@ const DislikeButton = ({ initialDisliked, dislikeAmount }) => {
     const dislikeButtonAction = () => {
         setDisliked(!disliked)
     }
+
+    useEffect(() => {
+        setDisliked(initialDisliked)
+    }, [initialDisliked])
 
     return (
         <div className="dislikeButtonContainer">
