@@ -9,6 +9,10 @@ const LikeButton = ({ initialLiked, likeAmount }) => {
         setLiked(!liked)
     }
 
+    useEffect(() => {
+        setLiked(initialLiked)
+    }, [initialLiked])
+
     return (
         <div className="likeButtonContainer">
             <button className={"likeButton " + (liked && "liked")} onClick={likeButtonAction}>

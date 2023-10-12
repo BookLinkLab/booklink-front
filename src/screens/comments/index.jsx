@@ -43,6 +43,7 @@ const CommentsScreen = ({ showToast }) => {
         //Está puesto en 1 para mockearlo
         const response = await getPostInfo(token, 1)
         if (response.status === 200) {
+            //mock likes and dislikes
             const likes = ["1", "2", "3", "4", "10", "11", "12"]
             const dislikes = ["5", "6", "7", "8", "10"]
             const newPostInfo = {
