@@ -1,9 +1,13 @@
 import "./styles.css"
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { Ellipse } from "../../assets/icons/ellipse"
 import "moment/locale/es"
 import Moment from "react-moment"
+import Modal from "../Modal"
 import { useNavigate, useParams } from "react-router-dom"
+import { useCurrentUser } from "../../hooks/useCurrentUser"
+import DislikeButton from "../../components/DislikeButton/index"
+import LikeButton from "../../components/LikeButton/index"
 
 const Comment = ({
     username,
@@ -12,8 +16,14 @@ const Comment = ({
     commentsAmount,
     className,
     handleDelete,
+    owner,
+    isLiked,
+    isDisliked,
+    likeAmt,
+    dislikeAmt,
 }) => {
     const navigate = useNavigate()
+    const [openModal, setOpenModal] = useState(false)
     const commentId = useParams()
 
     return (
@@ -30,21 +40,24 @@ const Comment = ({
                                     {new Date(commentDate)}
                                 </Moment>
                             </div>
-
-                            <button
-                                onClick={() => handleDelete()}
-                                className={"comment-profile-buttons body2"}
-                            >
-                                Eliminar
-                            </button>
-                            <button
-                                onClick={() => {
-                                    console.log("editing")
-                                }}
-                                className={"comment-profile-buttons body2 underlined"}
-                            >
-                                Editar
-                            </button>
+                            {owner && (
+                                <>
+                                    <button
+                                        onClick={() => handleDelete()}
+                                        className={"comment-profile-buttons body2"}
+                                    >
+                                        Eliminar
+                                    </button>
+                                    <button
+                                        onClick={() => {
+                                            console.log("editing")
+                                        }}
+                                        className={"comment-profile-buttons body2 underlined"}
+                                    >
+                                        Editar
+                                    </button>
+                                </>
+                            )}
                         </div>
                         <p className={"body1"}>{commentText}</p>
                         <button
@@ -57,7 +70,15 @@ const Comment = ({
                         </button>
                     </div>
 
-                    {/*Traer componente de chulo*/}
+                    {!owner && (
+                        <div className="like-dislike-div">
+                            <LikeButton initialLiked={isLiked} likeAmount={likeAmt} />
+                            <DislikeButton
+                                initialDisliked={isDisliked}
+                                dislikeAmount={dislikeAmt}
+                            />
+                        </div>
+                    )}
                 </div>
             </div>
         </>
