@@ -8,6 +8,8 @@ import { useNavigate } from "react-router-dom"
 import { useCurrentUser } from "../../hooks/useCurrentUser"
 import DislikeButton from "../../components/DislikeButton/index"
 import LikeButton from "../../components/LikeButton/index"
+import { likePost } from "../../service/apis"
+import withToast from "../../hoc/withToast"
 
 const Comment = ({
     username,
@@ -20,12 +22,36 @@ const Comment = ({
     isDisliked,
     likeAmt,
     dislikeAmt,
+    showToast,
+    isPost,
+    id,
 }) => {
-    const commentId = 1
+    const postId = 1
     const navigate = useNavigate()
 
     const [openModal, setOpenModal] = useState(false)
     const deleteComment = () => {}
+
+    const { token } = useCurrentUser()
+    const [loading, setLoading] = useState(false)
+
+    const handleLike = async () => {
+        if (isPost) {
+            try {
+                setLoading(true)
+                const response = await likePost(token, id)
+                if (response.status === 200) {
+                    showToast(response.data, "success")
+                } else {
+                    showToast(response.data, "error")
+                }
+            } finally {
+                setLoading(false)
+            }
+        } else {
+            // Manejar "like" en comentarios
+        }
+    }
 
     return (
         <>
@@ -79,7 +105,7 @@ const Comment = ({
                         <p className={"body1"}>{commentText}</p>
                         <button
                             onClick={() => {
-                                navigate(`comment/${commentId}`)
+                                navigate(`post/${postId}`)
                             }}
                             className={"comment-profile-buttons body2 underlined"}
                         >
@@ -89,7 +115,11 @@ const Comment = ({
 
                     {!owner && (
                         <div className="like-dislike-div">
-                            <LikeButton initialLiked={isLiked} likeAmount={likeAmt} />
+                            <LikeButton
+                                initialLiked={isLiked}
+                                likeAmount={likeAmt}
+                                onClick={() => handleLike(id)}
+                            />
                             <DislikeButton
                                 initialDisliked={isDisliked}
                                 dislikeAmount={dislikeAmt}
@@ -101,4 +131,4 @@ const Comment = ({
         </>
     )
 }
-export default Comment
+export default withToast(Comment)

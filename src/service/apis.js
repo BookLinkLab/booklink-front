@@ -157,3 +157,19 @@ export const getPostInfo = async (token, postId) => {
         return error.response
     }
 }
+
+export const getPosts = async (token, forumId) => {
+    try {
+        return await bookLinkAxios.get(`/post/forum/${forumId}`, config(token))
+    } catch (error) {
+        return error.response
+    }
+}
+
+export const likePost = async (token, postId) => {
+    try {
+        return await bookLinkAxios.post(`/post/${postId}/toggle-like`, config(token))
+    } catch (error) {
+        return error.response
+    }
+}
