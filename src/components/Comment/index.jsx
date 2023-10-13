@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom"
 import { useCurrentUser } from "../../hooks/useCurrentUser"
 import DislikeButton from "../../components/DislikeButton/index"
 import LikeButton from "../../components/LikeButton/index"
-import { likePost } from "../../service/apis"
+import { dislikePost, likePost } from "../../service/apis"
 import withToast from "../../hoc/withToast"
 
 const Comment = ({
@@ -50,6 +50,24 @@ const Comment = ({
             }
         } else {
             // Manejar "like" en comentarios
+        }
+    }
+
+    const handleDislike = async () => {
+        if (isPost) {
+            try {
+                setLoading(true)
+                const response = await dislikePost(token, id)
+                if (response.status === 200) {
+                    showToast(response.data, "success")
+                } else {
+                    showToast(response.data, "error")
+                }
+            } finally {
+                setLoading(false)
+            }
+        } else {
+            // Manejar "dislike" en comentarios
         }
     }
 
@@ -123,6 +141,7 @@ const Comment = ({
                             <DislikeButton
                                 initialDisliked={isDisliked}
                                 dislikeAmount={dislikeAmt}
+                                onCLick={() => handleDislike(id)}
                             />
                         </div>
                     )}
