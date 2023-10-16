@@ -157,3 +157,15 @@ export const getPostInfo = async (token, postId) => {
         return error.response
     }
 }
+
+export const postComment = async (token, postId, content) => {
+    try {
+        return await bookLinkAxios.post(
+            `/comment`,
+            { postId: postId, content: content },
+            config(token),
+        )
+    } catch (error) {
+        return error.response
+    }
+}
