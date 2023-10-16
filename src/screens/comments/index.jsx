@@ -44,7 +44,7 @@ const CommentsScreen = ({ showToast }) => {
     const getPostData = async () => {
         //Está puesto en 1 para mockearlo
         const response = await getPostInfo(token, 1)
-        console.log(response)
+
         if (response.status === 200) {
             //mock likes and dislikes
             const likes = ["1", "2", "3", "4", "10", "11", "12"]
@@ -163,6 +163,7 @@ const CommentsScreen = ({ showToast }) => {
                             username={item.userId}
                             commentDate={item.createdDate}
                             className="smaller-comments"
+                            owner={item.userId == id}
                         />
                     </div>
                 ))}
