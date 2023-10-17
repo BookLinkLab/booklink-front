@@ -166,9 +166,25 @@ export const getPostInfo = async (token, postId) => {
     }
 }
 
-export const deletePost = async (token, id) => {
+export const getPosts = async (token, forumId) => {
     try {
-        return await bookLinkAxios.delete(`/post/${id}`, config(token))
+        return await bookLinkAxios.get(`/post/forum/${forumId}`, config(token))
+    } catch (error) {
+        return error.response
+    }
+}
+
+export const likePost = async (token, postId) => {
+    try {
+        return await bookLinkAxios.post(`/post/${postId}/toggle-like`, undefined, config(token))
+    } catch (error) {
+        return error.response
+    }
+}
+
+export const dislikePost = async (token, postId) => {
+    try {
+        return await bookLinkAxios.post(`/post/${postId}/toggle-dislike`, undefined, config(token))
     } catch (error) {
         return error.response
     }

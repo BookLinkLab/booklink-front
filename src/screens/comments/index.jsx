@@ -6,7 +6,7 @@ import React, { useEffect, useState } from "react"
 import LikeButton from "../../components/LikeButton"
 import DislikeButton from "../../components/DislikeButton"
 import ChevronLeft from "../../assets/icons/chevronLeft"
-import { deletePost, getForum, getPostInfo } from "../../service/apis"
+import { getForum, getPostInfo, likePost, deletePost } from "../../service/apis"
 import { useCurrentUser } from "../../hooks/useCurrentUser"
 import withToast from "../../hoc/withToast"
 import Modal from "../../components/Modal"
@@ -14,7 +14,7 @@ import Modal from "../../components/Modal"
 const CommentsScreen = ({ showToast }) => {
     const { token, id } = useCurrentUser()
     const navigate = useNavigate()
-    const { commentId } = useParams()
+    const { commentId, postId } = useParams()
     const { forumId } = useParams()
     const [loading, setLoading] = useState(false)
     const [forum, setForum] = useState({})
