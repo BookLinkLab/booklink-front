@@ -3,17 +3,15 @@ import { useNavigate, useParams } from "react-router-dom"
 import Comment from "../../components/Comment"
 import AddPost from "../../components/AddPost"
 import React, { useEffect, useState } from "react"
-import LikeButton from "../../components/LikeButton"
-import DislikeButton from "../../components/DislikeButton"
 import ChevronLeft from "../../assets/icons/chevronLeft"
-import { getForum, getPostInfo } from "../../service/apis"
+import { getForum, getPostInfo, likePost } from "../../service/apis"
 import { useCurrentUser } from "../../hooks/useCurrentUser"
 import withToast from "../../hoc/withToast"
 
 const CommentsScreen = ({ showToast }) => {
     const { token, id } = useCurrentUser()
     const navigate = useNavigate()
-    const { commentId } = useParams()
+    const { postId } = useParams()
     const { forumId } = useParams()
     const [loading, setLoading] = useState(false)
     const [forum, setForum] = useState({})
@@ -62,6 +60,7 @@ const CommentsScreen = ({ showToast }) => {
             navigate(`*`)
         }
     }
+
     useEffect(() => {
         setLoading(true)
         getPostData().then(() => {})
