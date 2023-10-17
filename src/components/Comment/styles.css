@@ -44,3 +44,9 @@
 .underlined {
     text-decoration-line: underline;
 }
+
+.like-dislike-div {
+    display: flex;
+    align-items: flex-start;
+    gap: 24px;
+}
