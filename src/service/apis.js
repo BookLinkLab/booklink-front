@@ -150,9 +150,38 @@ export const addPostToForum = async (token, forumId, content) => {
     }
 }
 
+
 export const updateComment = async (token, id, content) => {
     try {
         return await bookLinkAxios.patch(`/comment/${id}`, { content }, config(token))
+
+export const getPostInfo = async (token, postId) => {
+    try {
+        return await bookLinkAxios.get(`/post/${postId}`, config(token))
+    } catch (error) {
+        return error.response
+    }
+}
+
+export const getPosts = async (token, forumId) => {
+    try {
+        return await bookLinkAxios.get(`/post/forum/${forumId}`, config(token))
+    } catch (error) {
+        return error.response
+    }
+}
+
+export const likePost = async (token, postId) => {
+    try {
+        return await bookLinkAxios.post(`/post/${postId}/toggle-like`, undefined, config(token))
+    } catch (error) {
+        return error.response
+    }
+}
+
+export const dislikePost = async (token, postId) => {
+    try {
+        return await bookLinkAxios.post(`/post/${postId}/toggle-dislike`, undefined, config(token))
     } catch (error) {
         return error.response
     }

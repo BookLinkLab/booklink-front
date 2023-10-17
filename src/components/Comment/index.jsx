@@ -1,14 +1,36 @@
 import "./styles.css"
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { Ellipse } from "../../assets/icons/ellipse"
 import "moment/locale/es"
 import withToast from "../../hoc/withToast"
-import Moment from "react-moment"
-import Modal from "../Modal"
 import TextInputModal from "../TextInputModal"
 import { updateComment } from "../../service/apis"
+import Moment from "react-moment"
+import Modal from "../Modal"
+import { useNavigate } from "react-router-dom"
+import { useCurrentUser } from "../../hooks/useCurrentUser"
+import DislikeButton from "../../components/DislikeButton/index"
+import LikeButton from "../../components/LikeButton/index"
+import { dislikePost, likePost } from "../../service/apis"
+import withToast from "../../hoc/withToast"
 
-const Comment = ({ username, commentDate, commentText, commentsAmount, token, id, showToast }) => {
+const Comment = ({
+    username,
+    commentDate,
+    commentText,
+    commentsAmount,
+    className,
+    owner,
+    isLiked,
+    isDisliked,
+    likeAmt,
+    dislikeAmt,
+    showToast,
+    isPost,
+    id,
+}) => {
+    const postId = 1
+    const navigate = useNavigate()
     const [openModal, setOpenModal] = useState(false)
     const deleteComment = () => {}
     const [showModal, setShowModal] = useState(false)
@@ -24,6 +46,45 @@ const Comment = ({ username, commentDate, commentText, commentsAmount, token, id
             showToast("Comentario editado correctamente", "success")
         } catch (error) {
             showToast("Error al editar el comentario", "error")
+        }
+    }
+
+    const { token } = useCurrentUser()
+    const [loading, setLoading] = useState(false)
+
+    const handleLike = async () => {
+        if (isPost) {
+            try {
+                setLoading(true)
+                const response = await likePost(token, id)
+                if (response.status === 200) {
+                    showToast(response.data, "success")
+                } else {
+                    showToast(response.data, "error")
+                }
+            } finally {
+                setLoading(false)
+            }
+        } else {
+            // Manejar "like" en comentarios
+        }
+    }
+
+    const handleDislike = async () => {
+        if (isPost) {
+            try {
+                setLoading(true)
+                const response = await dislikePost(token, id)
+                if (response.status === 200) {
+                    showToast(response.data, "success")
+                } else {
+                    showToast(response.data, "error")
+                }
+            } finally {
+                setLoading(false)
+            }
+        } else {
+            // Manejar "dislike" en comentarios
         }
     }
 
@@ -43,7 +104,7 @@ const Comment = ({ username, commentDate, commentText, commentsAmount, token, id
                     secondButtonAction={deleteComment}
                 />
             )}
-            <div className={"comment-main-div"}>
+            <div className={`comment-main-div ${className ?? ""}`}>
                 <img src={require("../../assets/images/profile.png")} alt="Profile" />
                 <div className={"comment-sub-div"}>
                     <div className={"comment-sub-div-2"}>
@@ -72,18 +133,51 @@ const Comment = ({ username, commentDate, commentText, commentsAmount, token, id
                             >
                                 Editar
                             </button>
+                            {owner && (
+                                <>
+                                    <button
+                                        onClick={() => {
+                                            setOpenModal(true)
+                                        }}
+                                        className={"comment-profile-buttons body2"}
+                                    >
+                                        Eliminar
+                                    </button>
+                                    <button
+                                        onClick={() => {
+                                            console.log("editing")
+                                        }}
+                                        className={"comment-profile-buttons body2 underlined"}
+                                    >
+                                        Editar
+                                    </button>
+                                </>
+                            )}
                         </div>
                         <p className={"body1"}>{commentText}</p>
                         <button
                             onClick={() => {
-                                console.log("commenting")
+                                navigate(`post/${postId}`)
                             }}
                             className={"comment-profile-buttons body2 underlined"}
                         >
                             {commentsAmount} Comentarios
                         </button>
                     </div>
-                    {/*Traer componente de chulo*/}
+                    {!owner && (
+                        <div className="like-dislike-div">
+                            <LikeButton
+                                initialLiked={isLiked}
+                                likeAmount={likeAmt}
+                                onClick={() => handleLike(id)}
+                            />
+                            <DislikeButton
+                                initialDisliked={isDisliked}
+                                dislikeAmount={dislikeAmt}
+                                onCLick={() => handleDislike(id)}
+                            />
+                        </div>
+                    )}
                 </div>
                 {showModal && (
                     <TextInputModal
