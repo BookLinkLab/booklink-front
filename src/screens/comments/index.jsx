@@ -124,6 +124,7 @@ const CommentsScreen = ({ showToast }) => {
                         likeAmt={postInfo.likes.length}
                         dislikeAmt={postInfo.dislikes.length}
                         handleDelete={handleDelete}
+                        comments={postInfo.comments}
                     ></Comment>
                 </div>
                 {comments.map((item) => (

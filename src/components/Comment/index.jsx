@@ -1,11 +1,9 @@
 import "./styles.css"
-import React, { useState, useEffect } from "react"
+import React, { useState } from "react"
 import { Ellipse } from "../../assets/icons/ellipse"
 import "moment/locale/es"
 import Moment from "react-moment"
-import Modal from "../Modal"
 import { useNavigate, useParams } from "react-router-dom"
-import { useCurrentUser } from "../../hooks/useCurrentUser"
 import DislikeButton from "../../components/DislikeButton/index"
 import LikeButton from "../../components/LikeButton/index"
 
@@ -23,8 +21,7 @@ const Comment = ({
     dislikeAmt,
 }) => {
     const navigate = useNavigate()
-    const [openModal, setOpenModal] = useState(false)
-    const commentId = useParams()
+    const { commentId } = useParams()
 
     return (
         <>
