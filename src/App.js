@@ -54,10 +54,7 @@ function App({ showToast }) {
                 </Route>
                 <Route path={"/forum/:forumId"} element={<PrivateRoute />}>
                     <Route path={"/forum/:forumId"} element={<Forum />} />
-                    <Route
-                        path={"/forum/:forumId/comment/:commentId"}
-                        element={<CommentsScreen />}
-                    />
+                    <Route path={"/forum/:forumId/post/:postId"} element={<CommentsScreen />} />
                 </Route>
                 <Route path={"/editForum/:forumId"} element={<PrivateRoute />}>
                     <Route
