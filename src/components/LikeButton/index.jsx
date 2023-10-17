@@ -5,16 +5,16 @@ import "./styles.css"
 const LikeButton = ({ initialLiked, likeAmount, onClick }) => {
     const [liked, setLiked] = useState(initialLiked)
 
-    // const likeButtonAction = () => {
-    //     setLiked(!liked)
-    // }
+    const likeButtonAction = () => {
+        setLiked(!liked)
+    }
 
     useEffect(() => {
         setLiked(initialLiked)
     }, [initialLiked])
 
     return (
-        <div className="likeButtonContainer">
+        <div className="likeButtonContainer" onClick={likeButtonAction}>
             <button className={"likeButton " + (liked && "liked")} onClick={onClick}>
                 <ThumbUp width={16} height={16} color={liked ? "#70BE7C" : "#747F86"} />
             </button>
