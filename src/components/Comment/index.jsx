@@ -5,7 +5,6 @@ import "moment/locale/es"
 import Moment from "react-moment"
 import Modal from "../Modal"
 import { useNavigate } from "react-router-dom"
-import { useCurrentUser } from "../../hooks/useCurrentUser"
 import DislikeButton from "../../components/DislikeButton/index"
 import LikeButton from "../../components/LikeButton/index"
 
@@ -23,26 +22,10 @@ const Comment = ({
 }) => {
     const commentId = 1
     const navigate = useNavigate()
-
     const [openModal, setOpenModal] = useState(false)
-    const deleteComment = () => {}
 
     return (
         <>
-            {!!openModal && (
-                <Modal
-                    className={"delete-comment-modal"}
-                    showModal={!!openModal}
-                    setShowModal={setOpenModal}
-                    firstButtonText={"Cancelar"}
-                    title={"Eliminar Comentario"}
-                    subtitle={"¿Estás seguro que deseas eliminar este comentario?"}
-                    secondButtonText={"Eliminar"}
-                    handleOnClose={() => setOpenModal(undefined)}
-                    firstButtonAction={() => setOpenModal(undefined)}
-                    secondButtonAction={deleteComment}
-                />
-            )}
             <div className={`comment-main-div ${className ?? ""}`}>
                 <img src={require("../../assets/images/profile.png")} alt="Profile" />
                 <div className={"comment-sub-div"}>

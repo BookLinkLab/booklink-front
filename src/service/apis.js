@@ -157,3 +157,11 @@ export const getPostInfo = async (token, postId) => {
         return error.response
     }
 }
+
+export const deletePost = async (token, id) => {
+    try {
+        return await bookLinkAxios.delete(`/post/${id}`, config(token))
+    } catch (error) {
+        return error.response
+    }
+}

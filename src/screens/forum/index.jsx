@@ -57,7 +57,7 @@ const Forum = ({ showToast }) => {
                 title={forum.title}
                 description={forum.description}
                 image={forum.img}
-                owner={forum.ownerId == id}
+                owner={forum.ownerId === id}
                 amtOfUsers={forum.members}
                 tags={forum.tags}
                 isMember={forum.searcherIsMember}

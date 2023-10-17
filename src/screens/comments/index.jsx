@@ -6,9 +6,10 @@ import React, { useEffect, useState } from "react"
 import LikeButton from "../../components/LikeButton"
 import DislikeButton from "../../components/DislikeButton"
 import ChevronLeft from "../../assets/icons/chevronLeft"
-import { getForum, getPostInfo } from "../../service/apis"
+import { deletePost, getForum, getPostInfo } from "../../service/apis"
 import { useCurrentUser } from "../../hooks/useCurrentUser"
 import withToast from "../../hoc/withToast"
+import Modal from "../../components/Modal"
 
 const CommentsScreen = ({ showToast }) => {
     const { token, id } = useCurrentUser()
@@ -17,6 +18,7 @@ const CommentsScreen = ({ showToast }) => {
     const { forumId } = useParams()
     const [loading, setLoading] = useState(false)
     const [forum, setForum] = useState({})
+    const [openModal, setOpenModal] = useState(false)
     const [postInfo, setPostInfo] = useState({
         content: "",
         username: "",
@@ -69,6 +71,16 @@ const CommentsScreen = ({ showToast }) => {
             setLoading(false)
         })
     }, [])
+    const handleDelete = async () => {
+        setOpenModal(true)
+        try {
+            const response = await deletePost(token, commentId)
+            showToast(response.data, "success")
+            console.log()
+        } catch (error) {
+            showToast(error.response, "error")
+        }
+    }
 
     const comment2 = {
         username: "pepe",
@@ -123,6 +135,20 @@ const CommentsScreen = ({ showToast }) => {
                 <img className="forumImage" src={forum.img} alt="header-forum" />
                 <h6 className="bold forum-title">{forum.title}</h6>
             </div>
+            {!!openModal && (
+                <Modal
+                    className={"delete-comment-modal"}
+                    showModal={!!openModal}
+                    setShowModal={setOpenModal}
+                    firstButtonText={"Cancelar"}
+                    title={"Eliminar Comentario"}
+                    subtitle={"¿Estás seguro que deseas eliminar este comentario?"}
+                    secondButtonText={"Eliminar"}
+                    handleOnClose={() => setOpenModal(undefined)}
+                    firstButtonAction={() => setOpenModal(undefined)}
+                    secondButtonAction={handleDelete}
+                />
+            )}
             <div className="commentContainer">
                 <div className="mainComment">
                     <Comment
