@@ -4,7 +4,7 @@ import Comment from "../../components/Comment"
 import AddPost from "../../components/AddPost"
 import React, { useEffect, useState } from "react"
 import ChevronLeft from "../../assets/icons/chevronLeft"
-import { deletePost, getForum, getPostInfo } from "../../service/apis"
+import { deletePost, getForum, getPostInfo, likePost} from "../../service/apis"
 import { useCurrentUser } from "../../hooks/useCurrentUser"
 import withToast from "../../hoc/withToast"
 import Modal from "../../components/Modal"
@@ -12,7 +12,7 @@ import Modal from "../../components/Modal"
 const CommentsScreen = ({ showToast }) => {
     const { token, id } = useCurrentUser()
     const navigate = useNavigate()
-    const { commentId } = useParams()
+    const { postId } = useParams()
     const { forumId } = useParams()
     const [loading, setLoading] = useState(false)
     const [forum, setForum] = useState({})

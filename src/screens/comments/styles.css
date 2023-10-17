@@ -43,3 +43,12 @@
 .add-post-style {
     margin-bottom: 32px;
 }
+
+.postsContainer {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    margin-top: 30px;
+}
