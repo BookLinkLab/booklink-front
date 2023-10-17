@@ -176,7 +176,7 @@ export const likePost = async (token, postId) => {
 
 export const dislikePost = async (token, postId) => {
     try {
-        return await bookLinkAxios.delete(`/post/${postId}/toggle-dislike`, config(token))
+        return await bookLinkAxios.post(`/post/${postId}/toggle-dislike`, undefined, config(token))
     } catch (error) {
         return error.response
     }
