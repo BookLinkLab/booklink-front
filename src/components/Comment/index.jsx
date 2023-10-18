@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom"
 import { useCurrentUser } from "../../hooks/useCurrentUser"
 import DislikeButton from "../../components/DislikeButton/index"
 import LikeButton from "../../components/LikeButton/index"
-import { dislikePost, likePost, deleteComment } from "../../service/apis"
+import { dislikePost, likePost, deletePost } from "../../service/apis"
 import withToast from "../../hoc/withToast"
 
 const Comment = ({
@@ -25,6 +25,7 @@ const Comment = ({
     showToast,
     isPost,
     id,
+    refresh,
 }) => {
     const postId = 1
     const navigate = useNavigate()
@@ -32,12 +33,13 @@ const Comment = ({
     const { token } = useCurrentUser()
     const [loading, setLoading] = useState(false)
 
-    const handleDeleteComment = async () => {
+    const handleDeletePost = async () => {
         try {
             setLoading(true)
-            const response = await deleteComment(token, id)
+            const response = await deletePost(token, id)
             if (response.status === 200) {
                 showToast(response.data, "success")
+                setOpenModal(false)
             } else {
                 showToast(response.data, "error")
             }
@@ -95,7 +97,7 @@ const Comment = ({
                     secondButtonText={"Eliminar"}
                     handleOnClose={() => setOpenModal(undefined)}
                     firstButtonAction={() => setOpenModal(undefined)}
-                    secondButtonAction={deleteComment}
+                    secondButtonAction={handleDeletePost}
                 />
             )}
             <div className={`comment-main-div ${className ?? ""}`}>

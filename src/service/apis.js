@@ -182,6 +182,6 @@ export const dislikePost = async (token, postId) => {
     }
 }
 
-export const deleteComment = async (token, id) => {
-    return await bookLinkAxios.delete(`/comment/${id}`, config(token))
+export const deletePost = async (token, id) => {
+    return await bookLinkAxios.delete(`/post/${id}`, config(token))
 }
