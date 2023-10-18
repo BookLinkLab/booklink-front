@@ -92,7 +92,7 @@ const Forum = ({ showToast }) => {
                     <Comment
                         commentText={post.content}
                         username={post.username}
-                        commentDate={post.createdDate}
+                        commentDate={post.date}
                         isPost={true}
                         owner={post.user.id == id}
                         id={post.id}
