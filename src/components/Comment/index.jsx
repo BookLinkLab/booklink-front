@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom"
 import { useCurrentUser } from "../../hooks/useCurrentUser"
 import DislikeButton from "../../components/DislikeButton/index"
 import LikeButton from "../../components/LikeButton/index"
-import { dislikePost, likePost } from "../../service/apis"
+import { dislikePost, likePost, deletePost } from "../../service/apis"
 import withToast from "../../hoc/withToast"
 
 const Comment = ({
@@ -25,15 +25,29 @@ const Comment = ({
     showToast,
     isPost,
     id,
+    refresh,
 }) => {
     const postId = 1
     const navigate = useNavigate()
-
     const [openModal, setOpenModal] = useState(false)
-    const deleteComment = () => {}
-
     const { token } = useCurrentUser()
     const [loading, setLoading] = useState(false)
+
+    const handleDeletePost = async () => {
+        try {
+            setLoading(true)
+            const response = await deletePost(token, id)
+            if (response.status === 200) {
+                showToast(response.data, "success")
+                setOpenModal(false)
+                refresh()
+            } else {
+                showToast(response.data, "error")
+            }
+        } finally {
+            setLoading(false)
+        }
+    }
 
     const handleLike = async () => {
         if (isPost) {
@@ -84,7 +98,7 @@ const Comment = ({
                     secondButtonText={"Eliminar"}
                     handleOnClose={() => setOpenModal(undefined)}
                     firstButtonAction={() => setOpenModal(undefined)}
-                    secondButtonAction={deleteComment}
+                    secondButtonAction={handleDeletePost}
                 />
             )}
             <div className={`comment-main-div ${className ?? ""}`}>

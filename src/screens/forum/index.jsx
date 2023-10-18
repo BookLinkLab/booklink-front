@@ -8,6 +8,7 @@ import AddPost from "../../components/AddPost"
 import "./styles.css"
 import { getForum, addPostToForum, getPosts } from "../../service/apis"
 import Comment from "../../components/Comment"
+import { date } from "yup"
 
 const Forum = ({ showToast }) => {
     const { forumId } = useParams()
@@ -56,7 +57,7 @@ const Forum = ({ showToast }) => {
     const getPostsData = async () => {
         const response = await getPosts(token, forumId)
         if (response.status === 200) {
-            setPosts(response.data)
+            setPosts(response.data.reverse())
         } else {
             showToast(response.data, "error")
             navigate("/home")
@@ -81,18 +82,20 @@ const Forum = ({ showToast }) => {
                 <AddPost
                     textFieldPlaceholder={"Comparte tus ideas"}
                     onClick={handleAddPost}
-                    buttonText={"Crear publicacion"}
-                    onSubmit={(comment) => handleAddPost(comment)}
+                    buttonText={"Crear publicación"}
+                    onSubmit={(comment) => handleAddPost(comment).then(getPostsData)}
                 />
             </div>
             <div className="postsContainer">
                 {posts.map((post) => (
                     <Comment
                         commentText={post.content}
-                        username={post.username}
-                        commentDate={post.createdDate}
+                        username={post.user.username}
+                        commentDate={post.date}
                         isPost={true}
+                        owner={post.user.id == id}
                         id={post.id}
+                        refresh={getPostsData}
                     />
                 ))}
             </div>
