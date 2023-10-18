@@ -52,7 +52,6 @@ const Forum = ({ showToast }) => {
         getPostsData().then()
         setLoading(false)
     }, [forumId, posts.length])
-
     const getPostsData = async () => {
         const response = await getPosts(token, forumId)
         if (response.status === 200) {
@@ -86,15 +85,16 @@ const Forum = ({ showToast }) => {
                 />
             </div>
             <div className="postsContainer">
-                {posts.map((post) => (
-                    <Comment
-                        commentText={post.content}
-                        username={post.username}
-                        commentDate={post.createdDate}
-                        isPost={true}
-                        id={post.id}
-                    />
-                ))}
+                {id === forum.ownerId &&
+                    posts.map((post) => (
+                        <Comment
+                            commentText={post.content}
+                            username={post.username}
+                            commentDate={post.createdDate}
+                            isPost={true}
+                            id={post.id}
+                        />
+                    ))}
             </div>
         </>
     )

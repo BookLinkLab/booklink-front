@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react"
 import { Ellipse } from "../../assets/icons/ellipse"
 import "moment/locale/es"
 import Moment from "react-moment"
-import Modal from "../Modal"
+import { useCurrentUser } from "../../hooks/useCurrentUser"
 import { useNavigate } from "react-router-dom"
 import DislikeButton from "../../components/DislikeButton/index"
 import LikeButton from "../../components/LikeButton/index"
@@ -25,10 +25,8 @@ const Comment = ({
     isPost,
     id,
 }) => {
-    const postId = 1
     const navigate = useNavigate()
     const [openModal, setOpenModal] = useState(false)
-
     const { token } = useCurrentUser()
     const [loading, setLoading] = useState(false)
 
