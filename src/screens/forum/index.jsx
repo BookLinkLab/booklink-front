@@ -83,7 +83,7 @@ const Forum = ({ showToast }) => {
                 <AddPost
                     textFieldPlaceholder={"Comparte tus ideas"}
                     onClick={handleAddPost}
-                    buttonText={"Crear publicacion"}
+                    buttonText={"Crear publicación"}
                     onSubmit={(comment) => handleAddPost(comment)}
                 />
             </div>
@@ -94,7 +94,9 @@ const Forum = ({ showToast }) => {
                         username={post.username}
                         commentDate={post.createdDate}
                         isPost={true}
+                        owner={post.user.id == id}
                         id={post.id}
+                        refresh={getForumData}
                     />
                 ))}
             </div>
