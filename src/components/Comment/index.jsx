@@ -40,6 +40,7 @@ const Comment = ({
             if (response.status === 200) {
                 showToast(response.data, "success")
                 setOpenModal(false)
+                refresh()
             } else {
                 showToast(response.data, "error")
             }

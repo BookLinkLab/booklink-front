@@ -84,7 +84,7 @@ const Forum = ({ showToast }) => {
                     textFieldPlaceholder={"Comparte tus ideas"}
                     onClick={handleAddPost}
                     buttonText={"Crear publicación"}
-                    onSubmit={(comment) => handleAddPost(comment)}
+                    onSubmit={(comment) => handleAddPost(comment).then(getPostsData)}
                 />
             </div>
             <div className="postsContainer">
@@ -96,7 +96,7 @@ const Forum = ({ showToast }) => {
                         isPost={true}
                         owner={post.user.id == id}
                         id={post.id}
-                        refresh={getForumData}
+                        refresh={getPostsData}
                     />
                 ))}
             </div>
