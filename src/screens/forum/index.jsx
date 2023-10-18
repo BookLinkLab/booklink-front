@@ -58,7 +58,7 @@ const Forum = ({ showToast }) => {
     const getPostsData = async () => {
         const response = await getPosts(token, forumId)
         if (response.status === 200) {
-            setPosts(response.data)
+            setPosts(response.data.reverse())
         } else {
             showToast(response.data, "error")
             navigate("/home")
