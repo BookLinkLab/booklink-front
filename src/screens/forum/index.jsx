@@ -8,6 +8,7 @@ import AddPost from "../../components/AddPost"
 import "./styles.css"
 import { getForum, addPostToForum, getPosts } from "../../service/apis"
 import Comment from "../../components/Comment"
+import { date } from "yup"
 
 const Forum = ({ showToast }) => {
     const { forumId } = useParams()
@@ -95,6 +96,15 @@ const Forum = ({ showToast }) => {
                         id={post.id}
                     />
                 ))}
+            </div>
+            <div>
+                <Comment
+                    commentDate={new date()}
+                    commentText="Hola"
+                    commentsAmount={2}
+                    username={"lele"}
+                    owner={true}
+                ></Comment>
             </div>
         </>
     )
