@@ -91,7 +91,7 @@ const Forum = ({ showToast }) => {
                 {posts.map((post) => (
                     <Comment
                         commentText={post.content}
-                        username={post.username}
+                        username={post.user.username}
                         commentDate={post.date}
                         isPost={true}
                         owner={post.user.id == id}
