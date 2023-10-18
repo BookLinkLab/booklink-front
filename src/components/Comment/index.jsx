@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom"
 import { useCurrentUser } from "../../hooks/useCurrentUser"
 import DislikeButton from "../../components/DislikeButton/index"
 import LikeButton from "../../components/LikeButton/index"
-import { dislikePost, likePost } from "../../service/apis"
+import { dislikePost, likePost, deleteComment } from "../../service/apis"
 import withToast from "../../hoc/withToast"
 
 const Comment = ({
@@ -28,12 +28,23 @@ const Comment = ({
 }) => {
     const postId = 1
     const navigate = useNavigate()
-
     const [openModal, setOpenModal] = useState(false)
-    const deleteComment = () => {}
-
     const { token } = useCurrentUser()
     const [loading, setLoading] = useState(false)
+
+    const handleDeleteComment = async () => {
+        try {
+            setLoading(true)
+            const response = await deleteComment(token, id)
+            if (response.status === 200) {
+                showToast(response.data, "success")
+            } else {
+                showToast(response.data, "error")
+            }
+        } finally {
+            setLoading(false)
+        }
+    }
 
     const handleLike = async () => {
         if (isPost) {

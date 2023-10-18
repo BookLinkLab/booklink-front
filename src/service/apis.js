@@ -190,3 +190,7 @@ export const dislikePost = async (token, postId) => {
         return error.response
     }
 }
+
+export const deleteComment = async (token, id) => {
+    return await bookLinkAxios.delete(`/comment/${id}`, config(token))
+}
