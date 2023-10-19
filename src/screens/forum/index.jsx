@@ -6,7 +6,9 @@ import withToast from "../../hoc/withToast"
 import Loader from "../../components/Loader"
 import AddPost from "../../components/AddPost"
 import "./styles.css"
-import { getForum, leaveForum, addPostToForum } from "../../service/apis"
+import { getForum, addPostToForum, getPosts, leaveForum } from "../../service/apis"
+import Comment from "../../components/Comment"
+import { date } from "yup"
 import LikeButton from "../../components/LikeButton"
 import DislikeButton from "../../components/DislikeButton"
 import Button from "../../components/Button"
@@ -19,7 +21,7 @@ const Forum = ({ showToast }) => {
     const [loading, setLoading] = useState(false)
     const [forum, setForum] = useState({})
     const [comment, setComment] = useState("")
-
+    const [posts, setPosts] = useState([])
     useEffect(() => {
         setLoading(true)
         getForumData().then()
@@ -50,6 +52,22 @@ const Forum = ({ showToast }) => {
         }
     }
 
+    useEffect(() => {
+        setLoading(true)
+        getPostsData().then()
+        setLoading(false)
+    }, [forumId, posts.length])
+
+    const getPostsData = async () => {
+        const response = await getPosts(token, forumId)
+        if (response.status === 200) {
+            setPosts(response.data.reverse())
+        } else {
+            showToast(response.data, "error")
+            navigate("/home")
+        }
+    }
+
     return (
         <>
             <Loader open={loading} />
@@ -58,7 +76,7 @@ const Forum = ({ showToast }) => {
                 title={forum.title}
                 description={forum.description}
                 image={forum.img}
-                owner={forum.ownerId === id}
+                owner={forum.ownerId == id}
                 amtOfUsers={forum.members}
                 tags={forum.tags}
                 isMember={forum.searcherIsMember}
@@ -68,9 +86,22 @@ const Forum = ({ showToast }) => {
                 <AddPost
                     textFieldPlaceholder={"Comparte tus ideas"}
                     onClick={handleAddPost}
-                    buttonText={"Crear publicacion"}
-                    onSubmit={(comment) => handleAddPost(comment)}
+                    buttonText={"Crear publicación"}
+                    onSubmit={(comment) => handleAddPost(comment).then(getPostsData)}
                 />
+            </div>
+            <div className="postsContainer">
+                {posts.map((post) => (
+                    <Comment
+                        commentText={post.content}
+                        username={post.user.username}
+                        commentDate={post.date}
+                        isPost={true}
+                        owner={post.user.id == id}
+                        id={post.id}
+                        refresh={getPostsData}
+                    />
+                ))}
             </div>
         </>
     )
