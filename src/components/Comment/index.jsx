@@ -43,7 +43,8 @@ const Comment = ({
 
     const handleUpdateComment = async (updatedCommentText) => {
         try {
-            const updatedComment = await updateComment(token, id, updatedCommentText)
+            await updateComment(token, id, updatedCommentText)
+            refresh()
             showToast("Comentario editado correctamente", "success")
         } catch (error) {
             showToast("Error al editar el comentario", "error")
@@ -141,7 +142,7 @@ const Comment = ({
                                     </button>
                                     <button
                                         onClick={() => {
-                                            console.log("editing")
+                                            setShowModal(true)
                                         }}
                                         className={"comment-profile-buttons body2 underlined"}
                                     >
@@ -149,7 +150,6 @@ const Comment = ({
                                     </button>
                                 </>
                             )}
-                            >>>>>>>>> Temporary merge branch 2
                         </div>
                         <p className={"body1"}>{commentText}</p>
                         <button
