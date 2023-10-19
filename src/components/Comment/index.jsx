@@ -153,7 +153,7 @@ const Comment = ({
                         <p className={"body1"}>{commentText}</p>
                         <button
                             onClick={() => {
-                                navigate(`post/${postId}`)
+                                navigate(`post/${id}`)
                             }}
                             className={"comment-profile-buttons body2 underlined"}
                         >

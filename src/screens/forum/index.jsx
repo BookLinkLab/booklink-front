@@ -83,7 +83,7 @@ const Forum = ({ showToast }) => {
                 isMember={forum.searcherIsMember}
                 setForumData={setForum}
             />
-            {id === forum.searcherIsMember && (
+            {forum.searcherIsMember && (
                 <>
                     <div className="addPostContainer">
                         <AddPost
@@ -94,17 +94,18 @@ const Forum = ({ showToast }) => {
                         />
                     </div>
                     <div className="postsContainer">
-                        posts.map((post) => (
-                        <Comment
-                            commentText={post.content}
-                            username={post.user.username}
-                            commentDate={post.date}
-                            isPost={true}
-                            owner={post.user.id === id}
-                            id={post.id}
-                            refresh={getPostsData}
-                            key={post.id}
-                        />
+                        {posts.map((post) => (
+                            <Comment
+                                commentText={post.content}
+                                username={post.user.username}
+                                commentDate={post.date}
+                                isPost={true}
+                                owner={post.user.id === id}
+                                id={post.id}
+                                refresh={getPostsData}
+                                key={post.id}
+                            />
+                        ))}
                     </div>
                 </>
             )}
