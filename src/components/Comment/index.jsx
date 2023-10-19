@@ -4,6 +4,8 @@ import { Ellipse } from "../../assets/icons/ellipse"
 import "moment/locale/es"
 import Moment from "react-moment"
 import Modal from "../Modal"
+import TextInputModal from "../TextInputModal"
+import { updateComment } from "../../service/apis"
 import { useNavigate } from "react-router-dom"
 import { useCurrentUser } from "../../hooks/useCurrentUser"
 import DislikeButton from "../../components/DislikeButton/index"
@@ -30,9 +32,24 @@ const Comment = ({
     const postId = 1
     const navigate = useNavigate()
     const [openModal, setOpenModal] = useState(false)
+    const [showModal, setShowModal] = useState(false)
+    const [updateValue, setUpdateValue] = useState(commentText)
     const { token } = useCurrentUser()
     const [loading, setLoading] = useState(false)
 
+    const handleInputChange = (value) => {
+        setUpdateValue(value)
+    }
+
+    const handleUpdateComment = async (updatedCommentText) => {
+        try {
+            await updateComment(token, id, updatedCommentText)
+            refresh()
+            showToast("Comentario editado correctamente", "success")
+        } catch (error) {
+            showToast("Error al editar el comentario", "error")
+        }
+    }
     const handleDeletePost = async () => {
         try {
             setLoading(true)
@@ -86,7 +103,7 @@ const Comment = ({
     }
 
     return (
-        <>
+        <div>
             {!!openModal && (
                 <Modal
                     className={"delete-comment-modal"}
@@ -125,7 +142,7 @@ const Comment = ({
                                     </button>
                                     <button
                                         onClick={() => {
-                                            console.log("editing")
+                                            setShowModal(true)
                                         }}
                                         className={"comment-profile-buttons body2 underlined"}
                                     >
@@ -144,7 +161,6 @@ const Comment = ({
                             {commentsAmount} Comentarios
                         </button>
                     </div>
-
                     {!owner && (
                         <div className="like-dislike-div">
                             <LikeButton
@@ -160,8 +176,25 @@ const Comment = ({
                         </div>
                     )}
                 </div>
+                {showModal && (
+                    <TextInputModal
+                        title={"Actualizar Comentario."}
+                        firstButton="Cancelar"
+                        secondButton="Actualizar"
+                        firstButtonAction={() => {
+                            setShowModal(false)
+                            setUpdateValue(commentText)
+                        }}
+                        secondButtonAction={() => {
+                            handleUpdateComment(updateValue)
+                            setShowModal(false)
+                        }}
+                        initialValue={updateValue}
+                        handleInputChange={handleInputChange}
+                    ></TextInputModal>
+                )}
             </div>
-        </>
+        </div>
     )
 }
 export default withToast(Comment)

@@ -6,9 +6,13 @@ import withToast from "../../hoc/withToast"
 import Loader from "../../components/Loader"
 import AddPost from "../../components/AddPost"
 import "./styles.css"
-import { getForum, addPostToForum, getPosts } from "../../service/apis"
-import Comment from "../../components/Comment"
 import { date } from "yup"
+import { getForum, leaveForum, addPostToForum, getPosts } from "../../service/apis"
+import LikeButton from "../../components/LikeButton"
+import DislikeButton from "../../components/DislikeButton"
+import Button from "../../components/Button"
+import TextInputModal from "../../components/TextInputModal"
+import Comment from "../../components/Comment"
 
 const Forum = ({ showToast }) => {
     const { forumId } = useParams()
@@ -17,6 +21,7 @@ const Forum = ({ showToast }) => {
     const [loading, setLoading] = useState(false)
     const [forum, setForum] = useState({})
     const [posts, setPosts] = useState([])
+    const [comment, setComment] = useState("")
 
     useEffect(() => {
         setLoading(true)
@@ -96,6 +101,7 @@ const Forum = ({ showToast }) => {
                         owner={post.user.id == id}
                         id={post.id}
                         refresh={getPostsData}
+                        key={post.id}
                     />
                 ))}
             </div>
