@@ -11,8 +11,7 @@ import withToast from "../../hoc/withToast"
 const CommentsScreen = ({ showToast }) => {
     const { token, id } = useCurrentUser()
     const navigate = useNavigate()
-    const { postId } = useParams()
-    const { forumId } = useParams()
+    const { postId, forumId } = useParams()
     const [loading, setLoading] = useState(false)
     const [forum, setForum] = useState({})
     const [postInfo, setPostInfo] = useState({
@@ -69,52 +68,6 @@ const CommentsScreen = ({ showToast }) => {
         })
     }, [])
 
-    const comment2 = {
-        username: "pepe",
-        commentDate: "10/2/90",
-        commentText: "hjsdbfnejsdabnfdmsbf dmsnfb dmfbajhdmsbj",
-    }
-
-    const comment3 = {
-        username: "jnflkasnfd",
-        commentDate: "10/2/90",
-        commentText:
-            "Lorem ipsum dolor sit amet consectetur. Quisque quis sed scelerisque quam praesent. Pulvinar aaa s hendrerit at ut arcu cursus dignissim diam vitae gravida. Nulla lectus viverra vitae nulla. Rhoncus pulvinar tortor aliquam et ut sit molestie quam. Tortor viverra porttitor aenean integer eget. Iaculis venenatis vel egestas non natoque ipsum consequat. Pulvinar ante malesuada non ornare.",
-    }
-
-    const comment4 = {
-        username: "jnflkasnfd",
-        commentDate: "10/2/90",
-        commentText:
-            "Lorem ipsum dolor sit amet consectetur. Quisque quis sed scelerisque quam praesent. Pulvinar aaa s hendrerit at ut arcu cursus dignissim diam vitae gravida. Nulla lectus viverra vitae nulla. Rhoncus pulvinar tortor aliquam et ut sit molestie quam. Tortor viverra porttitor aenean integer eget. Iaculis venenatis vel egestas non natoque ipsum consequat. Pulvinar ante malesuada non ornare.",
-    }
-
-    const comment5 = {
-        username: "jnflkasnfd",
-        commentDate: "10/2/90",
-        commentText:
-            "Lorem ipsum dolor sit amet consectetur. Quisque quis sed scelerisque quam praesent. Pulvinar aaa s hendrerit at ut arcu cursus dignissim diam vitae gravida. Nulla lectus viverra vitae nulla. Rhoncus pulvinar tortor aliquam et ut sit molestie quam. Tortor viverra porttitor aenean integer eget. Iaculis venenatis vel egestas non natoque ipsum consequat. Pulvinar ante malesuada non ornare.",
-    }
-
-    const comment6 = {
-        username: "jnflkasnfd",
-        commentDate: "10/2/90",
-        commentText:
-            "Lorem ipsum dolor sit amet consectetur. Quisque quis sed scelerisque quam praesent. Pulvinar aaa s hendrerit at ut arcu cursus dignissim diam vitae gravida. Nulla lectus viverra vitae nulla. Rhoncus pulvinar tortor aliquam et ut sit molestie quam. Tortor viverra porttitor aenean integer eget. Iaculis venenatis vel egestas non natoque ipsum consequat. Pulvinar ante malesuada non ornare.",
-    }
-
-    const comments = [comment2, comment3, comment4, comment5, comment6]
-
-    /* TODO : bring comments del back con el commentId y datos del foro (imagen y nombre) con el forumId */
-
-    const comment = {
-        username: "valentina",
-        commentDate: "10/2/90",
-        commentText:
-            "Lorem ipsum dolor sit amet consectetur. Quisque quis sed scelerisque quam praesent. Pulvinar hendrerit at ut arcu cursus dignissim diam vitae gravida. Nulla lectus viverra vitae nulla. Rhoncus pulvinar tortor aliquam et ut sit molestie quam. Tortor viverra porttitor aenean integer eget. Iaculis venenatis vel egestas non natoque ipsum consequat. Pulvinar ante malesuada non ornare.",
-        commentsAmount: "10",
-    }
-
     return (
         <>
             <div className="forum-name-img">
@@ -136,7 +89,7 @@ const CommentsScreen = ({ showToast }) => {
                         dislikeAmt={postInfo.dislikes.length}
                     ></Comment>
                 </div>
-                {comments.map((item) => (
+                {postInfo.comments.map((item) => (
                     <div className="commentsOfComment">
                         <Comment
                             commentText={item.commentText}
