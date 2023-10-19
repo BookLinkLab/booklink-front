@@ -18,6 +18,7 @@ const Forum = ({ showToast }) => {
     const [loading, setLoading] = useState(false)
     const [forum, setForum] = useState({})
     const [posts, setPosts] = useState([])
+    const [comment, setComment] = useState("")
 
     useEffect(() => {
         setLoading(true)
@@ -97,6 +98,7 @@ const Forum = ({ showToast }) => {
                         owner={post.user.id == id}
                         id={post.id}
                         refresh={getPostsData}
+                        key={post.id}
                     />
                 ))}
             </div>
