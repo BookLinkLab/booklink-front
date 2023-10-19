@@ -4,15 +4,15 @@ import Comment from "../../components/Comment"
 import AddPost from "../../components/AddPost"
 import React, { useEffect, useState } from "react"
 import ChevronLeft from "../../assets/icons/chevronLeft"
-import { getForum, getPostInfo, likePost } from "../../service/apis"
+import { getForum, getPostInfo, likePost, postComment } from "../../service/apis"
 import { useCurrentUser } from "../../hooks/useCurrentUser"
 import withToast from "../../hoc/withToast"
 
 const CommentsScreen = ({ showToast }) => {
     const { token, id } = useCurrentUser()
     const navigate = useNavigate()
-    const { postId } = useParams()
-    const { forumId } = useParams()
+    const { forumId, commentId } = useParams()
+    const [addedComment, setAddComment] = useState(false)
     const [loading, setLoading] = useState(false)
     const [forum, setForum] = useState({})
     const [postInfo, setPostInfo] = useState({
@@ -60,14 +60,13 @@ const CommentsScreen = ({ showToast }) => {
             navigate(`*`)
         }
     }
-
     useEffect(() => {
         setLoading(true)
         getPostData().then(() => {})
         getForumData().then(() => {
             setLoading(false)
         })
-    }, [])
+    }, [addedComment])
 
     const comment2 = {
         username: "pepe",
@@ -115,6 +114,22 @@ const CommentsScreen = ({ showToast }) => {
         commentsAmount: "10",
     }
 
+    const handlePostComment = (content) => {
+        setLoading(true)
+        postComment(token, 1, content)
+            .then((response) => {
+                if (response.status === 201) {
+                    showToast(`Se agregó el siguiente comentario: "${content}"`, "success")
+                } else {
+                    showToast(`No se agregó el siguiente comentario: "${content}"`, "error")
+                }
+            })
+            .finally(() => {
+                setLoading(false)
+                setAddComment(!addedComment)
+            })
+    }
+
     return (
         <>
             <div className="forum-name-img">
@@ -134,21 +149,29 @@ const CommentsScreen = ({ showToast }) => {
                         isDisliked={postInfo.isDisliked}
                         likeAmt={postInfo.likes.length}
                         dislikeAmt={postInfo.dislikes.length}
+                        forumOwner={forum.ownerId === id}
                     ></Comment>
                 </div>
-                {comments.map((item) => (
+                {postInfo.comments.map((item) => (
                     <div className="commentsOfComment">
                         <Comment
-                            commentText={item.commentText}
-                            username={item.username}
-                            commentDate={item.commentDate}
+                            commentText={item.content}
+                            username={item.userId}
+                            commentDate={item.createdDate}
                             className="smaller-comments"
+                            owner={item.userId == id}
+                            id={item.id}
+                            forumOwner={forum.ownerId === id}
                         />
                     </div>
                 ))}
             </div>
             <div className="add-post-style">
-                <AddPost buttonText={"Comentar"} textFieldPlaceholder={"Comparte tus ideas..."} />
+                <AddPost
+                    buttonText={"Comentar"}
+                    textFieldPlaceholder={"Comparte tus ideas..."}
+                    onSubmit={(comment) => handlePostComment(comment)}
+                />
             </div>
         </>
     )
