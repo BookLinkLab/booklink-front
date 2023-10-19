@@ -4,7 +4,7 @@ import Comment from "../../components/Comment"
 import AddPost from "../../components/AddPost"
 import React, { useEffect, useState } from "react"
 import ChevronLeft from "../../assets/icons/chevronLeft"
-import { deletePost, getForum, getPostInfo, likePost} from "../../service/apis"
+import { deletePost, getForum, getPostInfo, likePost } from "../../service/apis"
 import { useCurrentUser } from "../../hooks/useCurrentUser"
 import withToast from "../../hoc/withToast"
 import Modal from "../../components/Modal"
@@ -50,7 +50,7 @@ const CommentsScreen = ({ showToast }) => {
     const handleDelete = async () => {
         setOpenModal(true)
         try {
-            const response = await deletePost(token, commentId)
+            const response = await deletePost(token, id)
             showToast(response.data, "success")
             console.log()
         } catch (error) {
@@ -123,18 +123,15 @@ const CommentsScreen = ({ showToast }) => {
                         isDisliked={postInfo.isDisliked}
                         likeAmt={postInfo.likes.length}
                         dislikeAmt={postInfo.dislikes.length}
-                        handleDelete={handleDelete}
-                        comments={postInfo.comments}
                     ></Comment>
                 </div>
-                {comments.map((item) => (
+                {postInfo.comments.map((item) => (
                     <div className="commentsOfComment">
                         <Comment
                             commentText={item.commentText}
                             username={item.username}
                             commentDate={item.commentDate}
                             className="smaller-comments"
-                            handleDelete={handleDelete}
                         />
                     </div>
                 ))}
