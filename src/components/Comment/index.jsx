@@ -149,6 +149,7 @@ const Comment = ({
                                     </button>
                                 </>
                             )}
+                            >>>>>>>>> Temporary merge branch 2
                         </div>
                         <p className={"body1"}>{commentText}</p>
                         <button
