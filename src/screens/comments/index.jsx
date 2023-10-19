@@ -159,10 +159,11 @@ const CommentsScreen = ({ showToast }) => {
                     <div className="commentsOfComment">
                         <Comment
                             commentText={item.content}
-                            username={item.userId}
+                            username={item.username}
                             commentDate={item.createdDate}
                             className="smaller-comments"
                             owner={item.userId == id}
+                            id={item.id}
                         />
                     </div>
                 ))}
