@@ -158,6 +158,14 @@ export const addPostToForum = async (token, forumId, content) => {
     }
 }
 
+export const updateComment = async (token, id, content) => {
+    try {
+        return await bookLinkAxios.patch(`/post/${id}`, { content }, config(token))
+    } catch (error) {
+        return error.response
+    }
+}
+
 export const getPostInfo = async (token, postId) => {
     try {
         return await bookLinkAxios.get(`/post/${postId}`, config(token))
@@ -188,4 +196,8 @@ export const dislikePost = async (token, postId) => {
     } catch (error) {
         return error.response
     }
+}
+
+export const deletePost = async (token, id) => {
+    return await bookLinkAxios.delete(`/post/${id}`, config(token))
 }

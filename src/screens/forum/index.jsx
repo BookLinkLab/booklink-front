@@ -6,7 +6,12 @@ import withToast from "../../hoc/withToast"
 import Loader from "../../components/Loader"
 import AddPost from "../../components/AddPost"
 import "./styles.css"
-import { getForum, addPostToForum, getPosts } from "../../service/apis"
+import { date } from "yup"
+import { getForum, leaveForum, addPostToForum, getPosts } from "../../service/apis"
+import LikeButton from "../../components/LikeButton"
+import DislikeButton from "../../components/DislikeButton"
+import Button from "../../components/Button"
+import TextInputModal from "../../components/TextInputModal"
 import Comment from "../../components/Comment"
 
 const Forum = ({ showToast }) => {
@@ -16,6 +21,7 @@ const Forum = ({ showToast }) => {
     const [loading, setLoading] = useState(false)
     const [forum, setForum] = useState({})
     const [posts, setPosts] = useState([])
+    const [comment, setComment] = useState("")
 
     useEffect(() => {
         setLoading(true)
@@ -56,7 +62,7 @@ const Forum = ({ showToast }) => {
     const getPostsData = async () => {
         const response = await getPosts(token, forumId)
         if (response.status === 200) {
-            setPosts(response.data)
+            setPosts(response.data.reverse())
         } else {
             showToast(response.data, "error")
             navigate("/home")
@@ -81,18 +87,21 @@ const Forum = ({ showToast }) => {
                 <AddPost
                     textFieldPlaceholder={"Comparte tus ideas"}
                     onClick={handleAddPost}
-                    buttonText={"Crear publicacion"}
-                    onSubmit={(comment) => handleAddPost(comment)}
+                    buttonText={"Crear publicación"}
+                    onSubmit={(comment) => handleAddPost(comment).then(getPostsData)}
                 />
             </div>
             <div className="postsContainer">
                 {posts.map((post) => (
                     <Comment
                         commentText={post.content}
-                        username={post.username}
-                        commentDate={post.createdDate}
+                        username={post.user.username}
+                        commentDate={post.date}
                         isPost={true}
+                        owner={post.user.id == id}
                         id={post.id}
+                        refresh={getPostsData}
+                        key={post.id}
                     />
                 ))}
             </div>
