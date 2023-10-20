@@ -62,6 +62,7 @@ const Forum = ({ showToast }) => {
     const getPostsData = async () => {
         const response = await getPosts(token, forumId)
         if (response.status === 200) {
+            console.log(response.data)
             setPosts(response.data.reverse())
         } else {
             showToast(response.data, "error")
@@ -97,11 +98,13 @@ const Forum = ({ showToast }) => {
                         commentText={post.content}
                         username={post.user.username}
                         commentDate={post.date}
-                        isPost={true}
+                        isPost
                         owner={post.user.id == id}
                         id={post.id}
                         refresh={getPostsData}
                         key={post.id}
+                        isRedirectionable
+                        commentsAmount={post.commentsCount}
                     />
                 ))}
             </div>

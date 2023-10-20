@@ -38,8 +38,7 @@ const CommentsScreen = ({ showToast }) => {
     }
 
     const getPostData = async () => {
-        //Está puesto en 1 para mockearlo
-        const response = await getPostInfo(token, 1)
+        const response = await getPostInfo(token, postId)
         if (response.status === 200) {
             //mock likes and dislikes
             const likes = ["1", "2", "3", "4", "10", "11", "12"]
@@ -55,9 +54,10 @@ const CommentsScreen = ({ showToast }) => {
                 isLiked: likes.includes(id),
                 isDisliked: dislikes.includes(id),
             }
+            console.log(response.data)
             setPostInfo(newPostInfo)
         } else {
-            navigate(`*`)
+            navigate("/not-found")
         }
     }
 
@@ -122,6 +122,7 @@ const CommentsScreen = ({ showToast }) => {
                 <img className="forumImage" src={forum.img} alt="header-forum" />
                 <h6 className="bold forum-title">{forum.title}</h6>
             </div>
+            {console.log(postInfo)}
             <div className="commentContainer">
                 <div className="mainComment">
                     <Comment
@@ -134,6 +135,8 @@ const CommentsScreen = ({ showToast }) => {
                         isDisliked={postInfo.isDisliked}
                         likeAmt={postInfo.likes.length}
                         dislikeAmt={postInfo.dislikes.length}
+                        isPost
+                        updatedDate={postInfo.updatedDate}
                     ></Comment>
                 </div>
                 {comments.map((item) => (
