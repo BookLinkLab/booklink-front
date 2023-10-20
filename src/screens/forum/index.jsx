@@ -13,8 +13,6 @@ import DislikeButton from "../../components/DislikeButton"
 import Button from "../../components/Button"
 import TextInputModal from "../../components/TextInputModal"
 import Comment from "../../components/Comment"
-import Button from "../../components/Button"
-import TextInputModal from "../../components/TextInputModal"
 
 const Forum = ({ showToast }) => {
     const { forumId } = useParams()
