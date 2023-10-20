@@ -4,7 +4,7 @@ import Comment from "../../components/Comment"
 import AddPost from "../../components/AddPost"
 import React, { useEffect, useState } from "react"
 import ChevronLeft from "../../assets/icons/chevronLeft"
-import { getForum, getPostInfo, likePost } from "../../service/apis"
+import { getForum, getPostInfo, likePost, updateComment } from "../../service/apis"
 import { useCurrentUser } from "../../hooks/useCurrentUser"
 import withToast from "../../hoc/withToast"
 
@@ -139,10 +139,12 @@ const CommentsScreen = ({ showToast }) => {
                 {comments.map((item) => (
                     <div className="commentsOfComment">
                         <Comment
+                            isComment={true}
                             commentText={item.commentText}
                             username={item.username}
                             commentDate={item.commentDate}
                             className="smaller-comments"
+                            owner={item.userId == id}
                         />
                     </div>
                 ))}
