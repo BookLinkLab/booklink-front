@@ -5,7 +5,7 @@ import "moment/locale/es"
 import Moment from "react-moment"
 import Modal from "../Modal"
 import TextInputModal from "../TextInputModal"
-import { updateComment } from "../../service/apis"
+import { updatePost } from "../../service/apis"
 import { useNavigate } from "react-router-dom"
 import { useCurrentUser } from "../../hooks/useCurrentUser"
 import DislikeButton from "../../components/DislikeButton/index"
@@ -41,13 +41,13 @@ const Comment = ({
         setUpdateValue(value)
     }
 
-    const handleUpdateComment = async (updatedCommentText) => {
+    const handleUpdatePost = async (updatedPostText) => {
         try {
-            await updateComment(token, id, updatedCommentText)
+            await updatePost(token, id, updatedPostText)
             refresh()
-            showToast("Comentario editado correctamente", "success")
+            showToast("Posteo editado correctamente", "success")
         } catch (error) {
-            showToast("Error al editar el comentario", "error")
+            showToast("Error al editar el posteo", "error")
         }
     }
     const handleDeletePost = async () => {
@@ -186,7 +186,7 @@ const Comment = ({
                             setUpdateValue(commentText)
                         }}
                         secondButtonAction={() => {
-                            handleUpdateComment(updateValue)
+                            handleUpdatePost(updateValue)
                             setShowModal(false)
                         }}
                         initialValue={updateValue}
