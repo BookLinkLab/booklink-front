@@ -26,11 +26,19 @@ const TextInputModal = ({
                                     handleInputChange(e.target.value)
                                 }}
                             ></textarea>
+                            {!values.updatedComment.trim() && (
+                                <small className="body3 smallTextField">
+                                    {"El contenido del comentario no puede ser vacío"}
+                                </small>
+                            )}
                             <div className="modal-buttons">
                                 <Button onClick={firstButtonAction} variant="outlined">
                                     {firstButton}
                                 </Button>
-                                <Button onClick={secondButtonAction} disabled={!dirty}>
+                                <Button
+                                    onClick={secondButtonAction}
+                                    disabled={!dirty || !values.updatedComment.trim()}
+                                >
                                     {secondButton}
                                 </Button>
                             </div>
