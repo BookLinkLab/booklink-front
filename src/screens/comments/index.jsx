@@ -72,75 +72,16 @@ const CommentsScreen = ({ showToast }) => {
         })
     }, [addedComment])
 
-    const comment2 = {
-        username: "pepe",
-        commentDate: "10/2/90",
-        commentText: "hjsdbfnejsdabnfdmsbf dmsnfb dmfbajhdmsbj",
-    }
-
-    const comment3 = {
-        username: "jnflkasnfd",
-        commentDate: "10/2/90",
-        commentText:
-            "Lorem ipsum dolor sit amet consectetur. Quisque quis sed scelerisque quam praesent. Pulvinar aaa s hendrerit at ut arcu cursus dignissim diam vitae gravida. Nulla lectus viverra vitae nulla. Rhoncus pulvinar tortor aliquam et ut sit molestie quam. Tortor viverra porttitor aenean integer eget. Iaculis venenatis vel egestas non natoque ipsum consequat. Pulvinar ante malesuada non ornare.",
-    }
-
-    const comment4 = {
-        username: "jnflkasnfd",
-        commentDate: "10/2/90",
-        commentText:
-            "Lorem ipsum dolor sit amet consectetur. Quisque quis sed scelerisque quam praesent. Pulvinar aaa s hendrerit at ut arcu cursus dignissim diam vitae gravida. Nulla lectus viverra vitae nulla. Rhoncus pulvinar tortor aliquam et ut sit molestie quam. Tortor viverra porttitor aenean integer eget. Iaculis venenatis vel egestas non natoque ipsum consequat. Pulvinar ante malesuada non ornare.",
-    }
-
-    const comment5 = {
-        username: "jnflkasnfd",
-        commentDate: "10/2/90",
-        commentText:
-            "Lorem ipsum dolor sit amet consectetur. Quisque quis sed scelerisque quam praesent. Pulvinar aaa s hendrerit at ut arcu cursus dignissim diam vitae gravida. Nulla lectus viverra vitae nulla. Rhoncus pulvinar tortor aliquam et ut sit molestie quam. Tortor viverra porttitor aenean integer eget. Iaculis venenatis vel egestas non natoque ipsum consequat. Pulvinar ante malesuada non ornare.",
-    }
-
-    const comment6 = {
-        username: "jnflkasnfd",
-        commentDate: "10/2/90",
-        commentText:
-            "Lorem ipsum dolor sit amet consectetur. Quisque quis sed scelerisque quam praesent. Pulvinar aaa s hendrerit at ut arcu cursus dignissim diam vitae gravida. Nulla lectus viverra vitae nulla. Rhoncus pulvinar tortor aliquam et ut sit molestie quam. Tortor viverra porttitor aenean integer eget. Iaculis venenatis vel egestas non natoque ipsum consequat. Pulvinar ante malesuada non ornare.",
-    }
-
-    const comments = [comment2, comment3, comment4, comment5, comment6]
-
-    /* TODO : bring comments del back con el commentId y datos del foro (imagen y nombre) con el forumId */
-
-    const comment = {
-        username: "valentina",
-        commentDate: "10/2/90",
-        commentText:
-            "Lorem ipsum dolor sit amet consectetur. Quisque quis sed scelerisque quam praesent. Pulvinar hendrerit at ut arcu cursus dignissim diam vitae gravida. Nulla lectus viverra vitae nulla. Rhoncus pulvinar tortor aliquam et ut sit molestie quam. Tortor viverra porttitor aenean integer eget. Iaculis venenatis vel egestas non natoque ipsum consequat. Pulvinar ante malesuada non ornare.",
-        commentsAmount: "10",
-    }
-
-    const handlePostComment = (content) => {
-        setLoading(true)
-        postComment(token, 1, content)
-            .then((response) => {
-                if (response.status === 201) {
-                    showToast(`Se agregó el siguiente comentario: "${content}"`, "success")
-                } else {
-                    showToast(`No se agregó el siguiente comentario: "${content}"`, "error")
-                }
-            })
-            .finally(() => {
-                setLoading(false)
-                setAddComment(!addedComment)
-            })
-    }
-
     return (
-        <>
-            <div className="forum-name-img">
-                <ChevronLeft onClick={() => navigate(`/forum/${forumId}`)} />
-                <img className="forumImage" src={forum.img} alt="header-forum" />
-                <h6 className="bold forum-title">{forum.title}</h6>
+        <div className="main-container">
+            <div className="title-img-container">
+                <div className="forum-name-img">
+                    <ChevronLeft onClick={() => navigate(`/forum/${forumId}`)} />
+                    <img className="forumSmallImage" src={forum.img} alt="header-forum" />
+                    <h6 className="bold forum-title">{forum.title}</h6>
+                </div>
             </div>
+
             <div className="commentContainer">
                 <div className="mainComment">
                     <Comment
@@ -175,7 +116,7 @@ const CommentsScreen = ({ showToast }) => {
                     onSubmit={(comment) => handlePostComment(comment)}
                 />
             </div>
-        </>
+        </div>
     )
 }
 

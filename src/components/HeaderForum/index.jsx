@@ -96,7 +96,7 @@ const HeaderForum = ({
         <>
             <Loader open={loading} />
             <div className="headerForum">
-                <img className="forumImage" src={image} alt="header-forum" />
+                <img className="forumMainImage" src={image} alt="header-forum" />
                 <div className="forumHeaders">
                     <h4 className="header">{title}</h4>
                     <div className="description">
