@@ -72,6 +72,22 @@ const CommentsScreen = ({ showToast }) => {
         })
     }, [addedComment])
 
+    const handlePostComment = (content) => {
+        setLoading(true)
+        postComment(token, 1, content)
+            .then((response) => {
+                if (response.status === 201) {
+                    showToast(`Se agregó el siguiente comentario: "${content}"`, "success")
+                } else {
+                    showToast(`No se agregó el siguiente comentario: "${content}"`, "error")
+                }
+            })
+            .finally(() => {
+                setLoading(false)
+                setAddComment(!addedComment)
+            })
+    }
+
     return (
         <div className="main-container">
             <div className="title-img-container">
