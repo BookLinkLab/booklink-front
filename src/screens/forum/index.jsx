@@ -62,7 +62,6 @@ const Forum = ({ showToast }) => {
     const getPostsData = async () => {
         const response = await getPosts(token, forumId)
         if (response.status === 200) {
-            console.log(response.data)
             setPosts(response.data.reverse())
         } else {
             showToast(response.data, "error")
@@ -105,6 +104,9 @@ const Forum = ({ showToast }) => {
                         key={post.id}
                         isRedirectionable
                         commentsAmount={post.commentsCount}
+                        updatedDate={post.updatedDate}
+                        likeAmt={post.likes.length}
+                        dislikeAmt={post.dislikes.length}
                     />
                 ))}
             </div>
