@@ -40,11 +40,17 @@ const Comment = ({
 
     const handleUpdateComment = async (updatedCommentText) => {
         try {
-            await updateComment(token, id, updatedCommentText)
-            refresh()
-            showToast("Comentario editado correctamente", "success")
-        } catch (error) {
-            showToast("Error al editar el comentario", "error")
+            setLoading(true)
+            const response = await updateComment(token, id, updatedCommentText)
+            if (response.status === 200) {
+                showToast(response.data, "success")
+                setOpenModal(false)
+                refresh()
+            } else {
+                showToast(response.data, "error")
+            }
+        } finally {
+            setLoading(false)
         }
     }
 
