@@ -4,7 +4,7 @@ import Comment from "../../components/Comment"
 import AddPost from "../../components/AddPost"
 import React, { useEffect, useState } from "react"
 import ChevronLeft from "../../assets/icons/chevronLeft"
-import { getForum, getPostInfo, likePost } from "../../service/apis"
+import { getForum, getPostInfo } from "../../service/apis"
 import { useCurrentUser } from "../../hooks/useCurrentUser"
 import withToast from "../../hoc/withToast"
 
@@ -37,22 +37,19 @@ const CommentsScreen = ({ showToast }) => {
     }
 
     const getPostData = async () => {
-        //Está puesto en 1 para mockearlo
-        const response = await getPostInfo(token, 1)
+        const response = await getPostInfo(token, postId)
         if (response.status === 200) {
             //mock likes and dislikes
-            const likes = ["1", "2", "3", "4", "10", "11", "12"]
-            const dislikes = ["5", "6", "7", "8", "10"]
             const newPostInfo = {
                 content: response.data.content,
                 username: response.data.user.username,
                 user_id: response.data.user.id,
                 createdDate: response.data.createdDate,
                 comments: response.data.comments,
-                likes: likes,
-                dislikes: dislikes,
-                isLiked: likes.includes(id),
-                isDisliked: dislikes.includes(id),
+                likes: response.data.likes || [], // Use an empty array if likes is undefined
+                dislikes: response.data.dislikes || [],
+                isLiked: (response.data.likes || []).includes(id),
+                isDisliked: (response.data.dislikes || []).includes(id),
             }
             setPostInfo(newPostInfo)
         } else {
@@ -77,7 +74,6 @@ const CommentsScreen = ({ showToast }) => {
                     <h6 className="bold forum-title">{forum.title}</h6>
                 </div>
             </div>
-
             <div className="commentContainer">
                 <div className="mainComment">
                     <Comment

@@ -1,5 +1,5 @@
 import "./styles.css"
-import React, { useState, useEffect } from "react"
+import React, { useState } from "react"
 import { Ellipse } from "../../assets/icons/ellipse"
 import "moment/locale/es"
 import Moment from "react-moment"
@@ -29,7 +29,6 @@ const Comment = ({
     id,
     refresh,
 }) => {
-    const postId = 1
     const navigate = useNavigate()
     const [openModal, setOpenModal] = useState(false)
     const [showModal, setShowModal] = useState(false)
@@ -154,7 +153,7 @@ const Comment = ({
                         <p className={"body1"}>{commentText}</p>
                         <button
                             onClick={() => {
-                                navigate(`post/${postId}`)
+                                navigate(`post/${id}`)
                             }}
                             className={"comment-profile-buttons body2 underlined"}
                         >
