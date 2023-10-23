@@ -100,8 +100,12 @@ const Forum = ({ showToast }) => {
                         isPost={true}
                         owner={post.user.id == id}
                         id={post.id}
-                        refresh={getPostsData}
+                        refresh={() => getPostsData()}
                         key={post.id}
+                        likeAmt={post.likes.length}
+                        dislikeAmt={post.dislikes.length}
+                        isLiked={post.likes.includes(parseInt(id))}
+                        isDisliked={post.dislikes.includes(parseInt(id))}
                     />
                 ))}
             </div>
