@@ -69,12 +69,15 @@ const CommentsScreen = ({ showToast }) => {
     }, [])
 
     return (
-        <>
-            <div className="forum-name-img">
-                <ChevronLeft onClick={() => navigate(`/forum/${forumId}`)} />
-                <img className="forumImage" src={forum.img} alt="header-forum" />
-                <h6 className="bold forum-title">{forum.title}</h6>
+        <div className="main-container">
+            <div className="title-img-container">
+                <div className="forum-name-img">
+                    <ChevronLeft onClick={() => navigate(`/forum/${forumId}`)} />
+                    <img className="forumSmallImage" src={forum.img} alt="header-forum" />
+                    <h6 className="bold forum-title">{forum.title}</h6>
+                </div>
             </div>
+
             <div className="commentContainer">
                 <div className="mainComment">
                     <Comment
@@ -103,7 +106,7 @@ const CommentsScreen = ({ showToast }) => {
             <div className="add-post-style">
                 <AddPost buttonText={"Comentar"} textFieldPlaceholder={"Comparte tus ideas..."} />
             </div>
-        </>
+        </div>
     )
 }
 
