@@ -34,13 +34,6 @@
     flex-direction: row;
     gap: 16px;
 }
-.comment-profile-buttons {
-    appearance: none;
-    background-color: transparent;
-    border: none;
-    color: var(--primary-500);
-    line-height: normal;
-}
 .underlined {
     text-decoration-line: underline;
 }
@@ -49,4 +42,13 @@
     display: flex;
     align-items: flex-start;
     gap: 24px;
+}
+
+.comment-profile-buttons {
+    appearance: none;
+    background-color: transparent;
+    border: none;
+    color: var(--primary-500);
+    line-height: normal;
+    padding: 1px 0 !important;
 }

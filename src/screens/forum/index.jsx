@@ -97,11 +97,16 @@ const Forum = ({ showToast }) => {
                         commentText={post.content}
                         username={post.user.username}
                         commentDate={post.date}
-                        isPost={true}
+                        isPost
                         owner={post.user.id == id}
                         id={post.id}
                         refresh={getPostsData}
                         key={post.id}
+                        isRedirectionable
+                        commentsAmount={post.commentsCount}
+                        updatedDate={post.updatedDate}
+                        likeAmt={post.likes.length}
+                        dislikeAmt={post.dislikes.length}
                         forumOwner={forumId == id}
                     />
                 ))}

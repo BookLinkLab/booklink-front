@@ -39,7 +39,6 @@ const CommentsScreen = ({ showToast }) => {
     }
 
     const getPostData = async () => {
-        //Está puesto en 1 para mockearlo
         const response = await getPostInfo(token, postId)
         if (response.status === 200) {
             //mock likes and dislikes
@@ -58,7 +57,7 @@ const CommentsScreen = ({ showToast }) => {
             }
             setPostInfo(newPostInfo)
         } else {
-            navigate(`*`)
+            navigate("/not-found")
         }
     }
 
@@ -108,6 +107,8 @@ const CommentsScreen = ({ showToast }) => {
                         isDisliked={postInfo.isDisliked}
                         likeAmt={postInfo.likes.length}
                         dislikeAmt={postInfo.dislikes.length}
+                        isPost
+                        updatedDate={postInfo.updatedDate}
                         forumOwner={forum.ownerId === id}
                     ></Comment>
                 </div>
