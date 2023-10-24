@@ -6,7 +6,12 @@ import withToast from "../../hoc/withToast"
 import Loader from "../../components/Loader"
 import AddPost from "../../components/AddPost"
 import "./styles.css"
-import { getForum, addPostToForum, getPosts } from "../../service/apis"
+import { date } from "yup"
+import { getForum, leaveForum, addPostToForum, getPosts } from "../../service/apis"
+import LikeButton from "../../components/LikeButton"
+import DislikeButton from "../../components/DislikeButton"
+import Button from "../../components/Button"
+import TextInputModal from "../../components/TextInputModal"
 import Comment from "../../components/Comment"
 
 const Forum = ({ showToast }) => {
@@ -16,6 +21,7 @@ const Forum = ({ showToast }) => {
     const [loading, setLoading] = useState(false)
     const [forum, setForum] = useState({})
     const [posts, setPosts] = useState([])
+    const [comment, setComment] = useState("")
 
     useEffect(() => {
         setLoading(true)
@@ -83,7 +89,7 @@ const Forum = ({ showToast }) => {
                         <AddPost
                             textFieldPlaceholder={"Comparte tus ideas"}
                             onClick={handleAddPost}
-                            buttonText={"Crear publicacion"}
+                            buttonText={"Crear publicación"}
                             onSubmit={(comment) => handleAddPost(comment).then(getPostsData)}
                         />
                     </div>
@@ -93,11 +99,16 @@ const Forum = ({ showToast }) => {
                                 commentText={post.content}
                                 username={post.user.username}
                                 commentDate={post.date}
-                                isPost={true}
-                                owner={post.user.id === id}
+                                isPost
+                                owner={post.user.id == id}
                                 id={post.id}
                                 refresh={getPostsData}
                                 key={post.id}
+                                isRedirectionable
+                                commentsAmount={post.commentsCount}
+                                updatedDate={post.updatedDate}
+                                likeAmt={post.likes.length}
+                                dislikeAmt={post.dislikes.length}
                                 forumOwner={forumId == id}
                             />
                         ))}
