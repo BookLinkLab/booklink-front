@@ -11,8 +11,7 @@ import withToast from "../../hoc/withToast"
 const CommentsScreen = ({ showToast }) => {
     const { token, id } = useCurrentUser()
     const navigate = useNavigate()
-    const { postId } = useParams()
-    const { forumId } = useParams()
+    const { forumId, postId } = useParams()
     const [addedComment, setAddComment] = useState(false)
     const [loading, setLoading] = useState(false)
     const [forum, setForum] = useState({})
@@ -75,7 +74,6 @@ const CommentsScreen = ({ showToast }) => {
         setLoading(true)
         postComment(token, postId, content)
             .then((response) => {
-                console.log(response)
                 if (response.status === 201) {
                     showToast("El comentario se agregó correctamente", "success")
                 } else {
