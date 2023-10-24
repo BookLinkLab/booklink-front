@@ -4,18 +4,19 @@ import Comment from "../../components/Comment"
 import AddPost from "../../components/AddPost"
 import React, { useEffect, useState } from "react"
 import ChevronLeft from "../../assets/icons/chevronLeft"
-import { getForum, getPostInfo, likePost, postComment } from "../../service/apis"
+import { getForum, getPostInfo, postComment, likePost } from "../../service/apis"
 import { useCurrentUser } from "../../hooks/useCurrentUser"
 import withToast from "../../hoc/withToast"
 
 const CommentsScreen = ({ showToast }) => {
     const { token, id } = useCurrentUser()
     const navigate = useNavigate()
-    const { forumId } = useParams()
     const { postId } = useParams()
+    const { forumId } = useParams()
     const [addedComment, setAddComment] = useState(false)
     const [loading, setLoading] = useState(false)
     const [forum, setForum] = useState({})
+
     const [postInfo, setPostInfo] = useState({
         content: "",
         username: "",

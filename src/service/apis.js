@@ -186,6 +186,18 @@ export const getPostInfo = async (token, postId) => {
     }
 }
 
+export const postComment = async (token, postId, content) => {
+    try {
+        return await bookLinkAxios.post(
+            `/comment`,
+            { postId: postId, content: content },
+            config(token),
+        )
+    } catch (error) {
+        return error.response
+    }
+}
+
 export const getPosts = async (token, forumId) => {
     try {
         return await bookLinkAxios.get(`/post/forum/${forumId}`, config(token))
