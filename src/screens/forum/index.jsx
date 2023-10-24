@@ -6,7 +6,12 @@ import withToast from "../../hoc/withToast"
 import Loader from "../../components/Loader"
 import AddPost from "../../components/AddPost"
 import "./styles.css"
-import { getForum, addPostToForum, getPosts } from "../../service/apis"
+import { date } from "yup"
+import { getForum, leaveForum, addPostToForum, getPosts } from "../../service/apis"
+import LikeButton from "../../components/LikeButton"
+import DislikeButton from "../../components/DislikeButton"
+import Button from "../../components/Button"
+import TextInputModal from "../../components/TextInputModal"
 import Comment from "../../components/Comment"
 
 const Forum = ({ showToast }) => {
@@ -78,33 +83,34 @@ const Forum = ({ showToast }) => {
                 isMember={forum.searcherIsMember}
                 setForumData={setForum}
             />
-            {forum.searcherIsMember && (
-                <>
-                    <div className="addPostContainer">
-                        <AddPost
-                            textFieldPlaceholder={"Comparte tus ideas"}
-                            onClick={handleAddPost}
-                            buttonText={"Crear publicacion"}
-                            onSubmit={(comment) => handleAddPost(comment)}
-                        />
-                    </div>
-                    <div className="postsContainer">
-                        {posts.map((post) => (
-                            <Comment
-                                commentText={post.content}
-                                username={post.user.username}
-                                commentDate={post.date}
-                                isPost={true}
-                                owner={post.user.id === id}
-                                id={post.id}
-                                refresh={getPostsData}
-                                key={post.id}
-                                forumOwner={forumId == id}
-                            />
-                        ))}
-                    </div>
-                </>
-            )}
+            <div className="addPostContainer">
+                <AddPost
+                    textFieldPlaceholder={"Comparte tus ideas"}
+                    onClick={handleAddPost}
+                    buttonText={"Crear publicación"}
+                    onSubmit={(comment) => handleAddPost(comment).then(getPostsData)}
+                />
+            </div>
+            <div className="postsContainer">
+                {posts.map((post) => (
+                    <Comment
+                        commentText={post.content}
+                        username={post.user.username}
+                        commentDate={post.date}
+                        isPost
+                        owner={post.user.id == id}
+                        id={post.id}
+                        refresh={getPostsData}
+                        key={post.id}
+                        isRedirectionable
+                        commentsAmount={post.commentsCount}
+                        updatedDate={post.updatedDate}
+                        likeAmt={post.likes.length}
+                        dislikeAmt={post.dislikes.length}
+                        forumOwner={forumId == id}
+                    />
+                ))}
+            </div>
         </>
     )
 }
