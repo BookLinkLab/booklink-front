@@ -154,7 +154,7 @@ const Comment = ({
                                 </button>
                             )}
                         </div>
-                        <p className={"body1"}>{commentText}</p>
+                        <p className={"body2"}>{commentText}</p>
                         {isPost ? (
                             isRedirectionable ? (
                                 <button
@@ -165,7 +165,7 @@ const Comment = ({
                                     {commentsAmount != 1 ? "Comentarios" : "Comentario"}{" "}
                                 </button>
                             ) : (
-                                <p className="body1 bold">
+                                <p className="body2 bold">
                                     {commentsAmount}{" "}
                                     {commentsAmount != 1 ? "Comentarios" : "Comentario"}
                                 </p>
