@@ -107,6 +107,7 @@ const Forum = ({ showToast }) => {
                         updatedDate={post.updatedDate}
                         likeAmt={post.likes.length}
                         dislikeAmt={post.dislikes.length}
+                        forumOwner={forumId == id}
                     />
                 ))}
             </div>

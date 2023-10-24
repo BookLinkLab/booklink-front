@@ -158,6 +158,26 @@ export const updateComment = async (token, id, content) => {
     }
 }
 
+export const postComment = async (token, postId, content) => {
+    try {
+        return await bookLinkAxios.post(
+            `/comment`,
+            { postId: postId, content: content },
+            config(token),
+        )
+    } catch (error) {
+        return error.response
+    }
+}
+
+export const deleteComment = async (token, commentId) => {
+    try {
+        return await bookLinkAxios.delete(`/comment/${commentId}`, config(token))
+    } catch (error) {
+        return error.response
+    }
+}
+
 export const getPostInfo = async (token, postId) => {
     try {
         return await bookLinkAxios.get(`/post/${postId}`, config(token))
