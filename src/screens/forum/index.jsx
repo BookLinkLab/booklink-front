@@ -102,6 +102,7 @@ const Forum = ({ showToast }) => {
                         id={post.id}
                         refresh={getPostsData}
                         key={post.id}
+                        forumOwner={forumId == id}
                     />
                 ))}
             </div>

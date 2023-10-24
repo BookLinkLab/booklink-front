@@ -19,6 +19,7 @@ const Comment = ({
     commentText,
     commentsAmount,
     className,
+    forumOwner,
     owner,
     isLiked,
     isDisliked,
@@ -130,25 +131,25 @@ const Comment = ({
                                     {new Date(commentDate)}
                                 </Moment>
                             </div>
+                            {(owner || forumOwner) && (
+                                <button
+                                    onClick={() => {
+                                        setOpenModal(true)
+                                    }}
+                                    className={"comment-profile-buttons body2"}
+                                >
+                                    Eliminar
+                                </button>
+                            )}
                             {owner && (
-                                <>
-                                    <button
-                                        onClick={() => {
-                                            setOpenModal(true)
-                                        }}
-                                        className={"comment-profile-buttons body2"}
-                                    >
-                                        Eliminar
-                                    </button>
-                                    <button
-                                        onClick={() => {
-                                            setShowModal(true)
-                                        }}
-                                        className={"comment-profile-buttons body2 underlined"}
-                                    >
-                                        Editar
-                                    </button>
-                                </>
+                                <button
+                                    onClick={() => {
+                                        setShowModal(true)
+                                    }}
+                                    className={"comment-profile-buttons body2 underlined"}
+                                >
+                                    Editar
+                                </button>
                             )}
                         </div>
                         <p className={"body1"}>{commentText}</p>

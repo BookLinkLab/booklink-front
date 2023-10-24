@@ -11,8 +11,7 @@ import withToast from "../../hoc/withToast"
 const CommentsScreen = ({ showToast }) => {
     const { token, id } = useCurrentUser()
     const navigate = useNavigate()
-    const { postId } = useParams()
-    const { forumId } = useParams()
+    const { forumId, postId } = useParams()
     const [addedComment, setAddComment] = useState(false)
     const [loading, setLoading] = useState(false)
     const [forum, setForum] = useState({})
@@ -41,8 +40,7 @@ const CommentsScreen = ({ showToast }) => {
 
     const getPostData = async () => {
         //Está puesto en 1 para mockearlo
-        const response = await getPostInfo(token, 1)
-
+        const response = await getPostInfo(token, postId)
         if (response.status === 200) {
             //mock likes and dislikes
             const likes = ["1", "2", "3", "4", "10", "11", "12"]
@@ -74,12 +72,12 @@ const CommentsScreen = ({ showToast }) => {
 
     const handlePostComment = (content) => {
         setLoading(true)
-        postComment(token, 1, content)
+        postComment(token, postId, content)
             .then((response) => {
                 if (response.status === 201) {
-                    showToast(`Se agregó el siguiente comentario: "${content}"`, "success")
+                    showToast("El comentario se agregó correctamente", "success")
                 } else {
-                    showToast(`No se agregó el siguiente comentario: "${content}"`, "error")
+                    showToast(response.data, "error")
                 }
             })
             .finally(() => {
@@ -110,17 +108,19 @@ const CommentsScreen = ({ showToast }) => {
                         isDisliked={postInfo.isDisliked}
                         likeAmt={postInfo.likes.length}
                         dislikeAmt={postInfo.dislikes.length}
+                        forumOwner={forum.ownerId === id}
                     ></Comment>
                 </div>
                 {postInfo.comments.map((item) => (
                     <div className="commentsOfComment">
                         <Comment
                             commentText={item.content}
-                            username={item.username}
+                            username={item.userId}
                             commentDate={item.createdDate}
                             className="smaller-comments"
                             owner={item.userId == id}
                             id={item.id}
+                            forumOwner={forum.ownerId === id}
                         />
                     </div>
                 ))}
