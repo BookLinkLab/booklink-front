@@ -6,12 +6,7 @@ import withToast from "../../hoc/withToast"
 import Loader from "../../components/Loader"
 import AddPost from "../../components/AddPost"
 import "./styles.css"
-import { date } from "yup"
-import { getForum, leaveForum, addPostToForum, getPosts } from "../../service/apis"
-import LikeButton from "../../components/LikeButton"
-import DislikeButton from "../../components/DislikeButton"
-import Button from "../../components/Button"
-import TextInputModal from "../../components/TextInputModal"
+import { getForum, addPostToForum, getPosts } from "../../service/apis"
 import Comment from "../../components/Comment"
 
 const Forum = ({ showToast }) => {
@@ -77,7 +72,7 @@ const Forum = ({ showToast }) => {
                 title={forum.title}
                 description={forum.description}
                 image={forum.img}
-                owner={forum.ownerId === id}
+                owner={forum.ownerId == id}
                 amtOfUsers={forum.members}
                 tags={forum.tags}
                 isMember={forum.searcherIsMember}
@@ -104,6 +99,7 @@ const Forum = ({ showToast }) => {
                                 id={post.id}
                                 refresh={getPostsData}
                                 key={post.id}
+                                forumOwner={forumId == id}
                             />
                         ))}
                     </div>
