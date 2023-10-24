@@ -71,7 +71,7 @@ const Forum = ({ showToast }) => {
                 title={forum.title}
                 description={forum.description}
                 image={forum.img}
-                owner={forum.ownerId === id}
+                owner={forum.ownerId == id}
                 amtOfUsers={forum.members}
                 tags={forum.tags}
                 isMember={forum.searcherIsMember}
@@ -98,6 +98,7 @@ const Forum = ({ showToast }) => {
                                 id={post.id}
                                 refresh={getPostsData}
                                 key={post.id}
+                                forumOwner={forumId == id}
                             />
                         ))}
                     </div>
