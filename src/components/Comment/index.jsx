@@ -19,6 +19,7 @@ const Comment = ({
     commentText,
     commentsAmount,
     className,
+    forumOwner,
     owner,
     isLiked,
     isDisliked,
@@ -29,8 +30,9 @@ const Comment = ({
     id,
     refresh,
     isComment,
+    isRedirectionable,
+    updatedDate,
 }) => {
-    const postId = 1
     const navigate = useNavigate()
     const [openModal, setOpenModal] = useState(false)
     const [showModal, setShowModal] = useState(false)
@@ -147,36 +149,47 @@ const Comment = ({
                                     {new Date(commentDate)}
                                 </Moment>
                             </div>
+                            {!updateValue ? "" : <p className="body2 bold">Editado</p>}
+                            {(owner || forumOwner) && (
+                                <button
+                                    onClick={() => {
+                                        setOpenModal(true)
+                                    }}
+                                    className={"comment-profile-buttons body2"}
+                                >
+                                    Eliminar
+                                </button>
+                            )}
                             {owner && (
-                                <>
-                                    <button
-                                        onClick={() => {
-                                            setOpenModal(true)
-                                        }}
-                                        className={"comment-profile-buttons body2"}
-                                    >
-                                        Eliminar
-                                    </button>
-                                    <button
-                                        onClick={() => {
-                                            setShowModal(true)
-                                        }}
-                                        className={"comment-profile-buttons body2 underlined"}
-                                    >
-                                        Editar
-                                    </button>
-                                </>
+                                <button
+                                    onClick={() => {
+                                        setShowModal(true)
+                                    }}
+                                    className={"comment-profile-buttons body2 underlined"}
+                                >
+                                    Editar
+                                </button>
                             )}
                         </div>
-                        <p className={"body1"}>{commentText}</p>
-                        <button
-                            onClick={() => {
-                                navigate(`post/${postId}`)
-                            }}
-                            className={"comment-profile-buttons body2 underlined"}
-                        >
-                            {commentsAmount} Comentarios
-                        </button>
+                        <p className={"body2"}>{commentText}</p>
+                        {isPost ? (
+                            isRedirectionable ? (
+                                <button
+                                    onClick={() => navigate(`post/${id}`)}
+                                    className="comment-profile-buttons body2 underlined"
+                                >
+                                    {commentsAmount}{" "}
+                                    {commentsAmount != 1 ? "Comentarios" : "Comentario"}{" "}
+                                </button>
+                            ) : (
+                                <p className="body2 bold">
+                                    {commentsAmount}{" "}
+                                    {commentsAmount != 1 ? "Comentarios" : "Comentario"}
+                                </p>
+                            )
+                        ) : (
+                            ""
+                        )}
                     </div>
                     {!owner && (
                         <div className="like-dislike-div">

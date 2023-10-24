@@ -4,17 +4,18 @@ import Comment from "../../components/Comment"
 import AddPost from "../../components/AddPost"
 import React, { useEffect, useState } from "react"
 import ChevronLeft from "../../assets/icons/chevronLeft"
-import { getForum, getPostInfo, likePost, updateComment } from "../../service/apis"
+import { getForum, getPostInfo, likePost, updateComment, postComment } from "../../service/apis"
 import { useCurrentUser } from "../../hooks/useCurrentUser"
 import withToast from "../../hoc/withToast"
 
 const CommentsScreen = ({ showToast }) => {
     const { token, id } = useCurrentUser()
     const navigate = useNavigate()
-    const { postId } = useParams()
-    const { forumId } = useParams()
+    const { forumId, postId } = useParams()
+    const [addedComment, setAddComment] = useState(false)
     const [loading, setLoading] = useState(false)
     const [forum, setForum] = useState({})
+
     const [postInfo, setPostInfo] = useState({
         content: "",
         username: "",
@@ -38,8 +39,7 @@ const CommentsScreen = ({ showToast }) => {
     }
 
     const getPostData = async () => {
-        //Está puesto en 1 para mockearlo
-        const response = await getPostInfo(token, 1)
+        const response = await getPostInfo(token, postId)
         if (response.status === 200) {
             //mock likes and dislikes
             const likes = ["1", "2", "3", "4", "10", "11", "12"]
@@ -57,7 +57,7 @@ const CommentsScreen = ({ showToast }) => {
             }
             setPostInfo(newPostInfo)
         } else {
-            navigate(`*`)
+            navigate("/not-found")
         }
     }
 
@@ -67,61 +67,34 @@ const CommentsScreen = ({ showToast }) => {
         getForumData().then(() => {
             setLoading(false)
         })
-    }, [])
+    }, [addedComment])
 
-    const comment2 = {
-        username: "pepe",
-        commentDate: "10/2/90",
-        commentText: "hjsdbfnejsdabnfdmsbf dmsnfb dmfbajhdmsbj",
-    }
-
-    const comment3 = {
-        username: "jnflkasnfd",
-        commentDate: "10/2/90",
-        commentText:
-            "Lorem ipsum dolor sit amet consectetur. Quisque quis sed scelerisque quam praesent. Pulvinar aaa s hendrerit at ut arcu cursus dignissim diam vitae gravida. Nulla lectus viverra vitae nulla. Rhoncus pulvinar tortor aliquam et ut sit molestie quam. Tortor viverra porttitor aenean integer eget. Iaculis venenatis vel egestas non natoque ipsum consequat. Pulvinar ante malesuada non ornare.",
-    }
-
-    const comment4 = {
-        username: "jnflkasnfd",
-        commentDate: "10/2/90",
-        commentText:
-            "Lorem ipsum dolor sit amet consectetur. Quisque quis sed scelerisque quam praesent. Pulvinar aaa s hendrerit at ut arcu cursus dignissim diam vitae gravida. Nulla lectus viverra vitae nulla. Rhoncus pulvinar tortor aliquam et ut sit molestie quam. Tortor viverra porttitor aenean integer eget. Iaculis venenatis vel egestas non natoque ipsum consequat. Pulvinar ante malesuada non ornare.",
-    }
-
-    const comment5 = {
-        username: "jnflkasnfd",
-        commentDate: "10/2/90",
-        commentText:
-            "Lorem ipsum dolor sit amet consectetur. Quisque quis sed scelerisque quam praesent. Pulvinar aaa s hendrerit at ut arcu cursus dignissim diam vitae gravida. Nulla lectus viverra vitae nulla. Rhoncus pulvinar tortor aliquam et ut sit molestie quam. Tortor viverra porttitor aenean integer eget. Iaculis venenatis vel egestas non natoque ipsum consequat. Pulvinar ante malesuada non ornare.",
-    }
-
-    const comment6 = {
-        username: "jnflkasnfd",
-        commentDate: "10/2/90",
-        commentText:
-            "Lorem ipsum dolor sit amet consectetur. Quisque quis sed scelerisque quam praesent. Pulvinar aaa s hendrerit at ut arcu cursus dignissim diam vitae gravida. Nulla lectus viverra vitae nulla. Rhoncus pulvinar tortor aliquam et ut sit molestie quam. Tortor viverra porttitor aenean integer eget. Iaculis venenatis vel egestas non natoque ipsum consequat. Pulvinar ante malesuada non ornare.",
-    }
-
-    const comments = [comment2, comment3, comment4, comment5, comment6]
-
-    /* TODO : bring comments del back con el commentId y datos del foro (imagen y nombre) con el forumId */
-
-    const comment = {
-        username: "valentina",
-        commentDate: "10/2/90",
-        commentText:
-            "Lorem ipsum dolor sit amet consectetur. Quisque quis sed scelerisque quam praesent. Pulvinar hendrerit at ut arcu cursus dignissim diam vitae gravida. Nulla lectus viverra vitae nulla. Rhoncus pulvinar tortor aliquam et ut sit molestie quam. Tortor viverra porttitor aenean integer eget. Iaculis venenatis vel egestas non natoque ipsum consequat. Pulvinar ante malesuada non ornare.",
-        commentsAmount: "10",
+    const handlePostComment = (content) => {
+        setLoading(true)
+        postComment(token, postId, content)
+            .then((response) => {
+                if (response.status === 201) {
+                    showToast("El comentario se agregó correctamente", "success")
+                } else {
+                    showToast(response.data, "error")
+                }
+            })
+            .finally(() => {
+                setLoading(false)
+                setAddComment(!addedComment)
+            })
     }
 
     return (
-        <>
-            <div className="forum-name-img">
-                <ChevronLeft onClick={() => navigate(`/forum/${forumId}`)} />
-                <img className="forumImage" src={forum.img} alt="header-forum" />
-                <h6 className="bold forum-title">{forum.title}</h6>
+        <div className="main-container">
+            <div className="title-img-container">
+                <div className="forum-name-img">
+                    <ChevronLeft onClick={() => navigate(`/forum/${forumId}`)} />
+                    <img className="forumSmallImage" src={forum.img} alt="header-forum" />
+                    <h6 className="bold forum-title">{forum.title}</h6>
+                </div>
             </div>
+
             <div className="commentContainer">
                 <div className="mainComment">
                     <Comment
@@ -134,9 +107,12 @@ const CommentsScreen = ({ showToast }) => {
                         isDisliked={postInfo.isDisliked}
                         likeAmt={postInfo.likes.length}
                         dislikeAmt={postInfo.dislikes.length}
+                        isPost
+                        updatedDate={postInfo.updatedDate}
+                        forumOwner={forum.ownerId === id}
                     ></Comment>
                 </div>
-                {comments.map((item) => (
+                {postInfo.comments.map((item) => (
                     <div className="commentsOfComment">
                         <Comment
                             isComment={true}
@@ -145,14 +121,20 @@ const CommentsScreen = ({ showToast }) => {
                             commentDate={item.commentDate}
                             className="smaller-comments"
                             owner={item.userId == id}
+                            id={item.id}
+                            forumOwner={forum.ownerId === id}
                         />
                     </div>
                 ))}
             </div>
             <div className="add-post-style">
-                <AddPost buttonText={"Comentar"} textFieldPlaceholder={"Comparte tus ideas..."} />
+                <AddPost
+                    buttonText={"Comentar"}
+                    textFieldPlaceholder={"Comparte tus ideas..."}
+                    onSubmit={(comment) => handlePostComment(comment)}
+                />
             </div>
-        </>
+        </div>
     )
 }
 
