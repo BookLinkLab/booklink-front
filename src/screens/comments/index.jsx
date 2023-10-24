@@ -60,7 +60,6 @@ const CommentsScreen = ({ showToast }) => {
             navigate(`*`)
         }
     }
-
     useEffect(() => {
         setLoading(true)
         getPostData().then(() => {})
@@ -78,7 +77,6 @@ const CommentsScreen = ({ showToast }) => {
                     <h6 className="bold forum-title">{forum.title}</h6>
                 </div>
             </div>
-
             <div className="commentContainer">
                 <div className="mainComment">
                     <Comment
