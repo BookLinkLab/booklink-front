@@ -15,7 +15,6 @@ const CommentsScreen = ({ showToast }) => {
     const [addedComment, setAddComment] = useState(false)
     const [loading, setLoading] = useState(false)
     const [forum, setForum] = useState({})
-
     const [postInfo, setPostInfo] = useState({
         content: "",
         username: "",
@@ -41,7 +40,6 @@ const CommentsScreen = ({ showToast }) => {
     const getPostData = async () => {
         const response = await getPostInfo(token, postId)
         if (response.status === 200) {
-            //mock likes and dislikes
             const newPostInfo = {
                 content: response.data.content,
                 username: response.data.user.username,
@@ -55,7 +53,7 @@ const CommentsScreen = ({ showToast }) => {
             }
             setPostInfo(newPostInfo)
         } else {
-            navigate(`*`)
+            navigate("/not-found")
         }
     }
 
@@ -92,7 +90,6 @@ const CommentsScreen = ({ showToast }) => {
                     <h6 className="bold forum-title">{forum.title}</h6>
                 </div>
             </div>
-
             <div className="commentContainer">
                 <div className="mainComment">
                     <Comment
@@ -123,7 +120,7 @@ const CommentsScreen = ({ showToast }) => {
                             isLiked={item.likes.includes(parseInt(id))}
                             isDisliked={item.dislikes.includes(parseInt(id))}
                             id={item.id}
-                            owner={item.user_id === id}
+                            owner={item.userId == id}
                             refresh={() => getPostData()}
                             isPost={false}
                             forumOwner={forum.ownerId === id}

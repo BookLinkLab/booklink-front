@@ -1,5 +1,5 @@
 import "./styles.css"
-import React, { useState, useEffect } from "react"
+import React, { useState } from "react"
 import { Ellipse } from "../../assets/icons/ellipse"
 import "moment/locale/es"
 import Moment from "react-moment"
@@ -33,7 +33,6 @@ const Comment = ({
     isRedirectionable,
     updatedDate,
 }) => {
-    const postId = id
     const navigate = useNavigate()
     const [openModal, setOpenModal] = useState(false)
     const [showModal, setShowModal] = useState(false)
@@ -159,12 +158,12 @@ const Comment = ({
                                     className="comment-profile-buttons body2 underlined"
                                 >
                                     {commentsAmount}{" "}
-                                    {commentsAmount != 1 ? "Comentarios" : "Comentario"}{" "}
+                                    {commentsAmount !== 1 ? "Comentarios" : "Comentario"}{" "}
                                 </button>
                             ) : (
                                 <p className="body2 bold">
                                     {commentsAmount}{" "}
-                                    {commentsAmount != 1 ? "Comentarios" : "Comentario"}
+                                    {commentsAmount !== 1 ? "Comentarios" : "Comentario"}
                                 </p>
                             )
                         ) : (
