@@ -42,24 +42,23 @@ const CommentsScreen = ({ showToast }) => {
         const response = await getPostInfo(token, postId)
         if (response.status === 200) {
             //mock likes and dislikes
-            const likes = ["1", "2", "3", "4", "10", "11", "12"]
-            const dislikes = ["5", "6", "7", "8", "10"]
             const newPostInfo = {
                 content: response.data.content,
                 username: response.data.user.username,
                 user_id: response.data.user.id,
                 createdDate: response.data.createdDate,
                 comments: response.data.comments,
-                likes: likes,
-                dislikes: dislikes,
-                isLiked: likes.includes(id),
-                isDisliked: dislikes.includes(id),
+                likes: response.data.likes,
+                dislikes: response.data.dislikes,
+                isLiked: response.data.likes.includes(parseInt(id)),
+                isDisliked: response.data.dislikes.includes(parseInt(id)),
             }
             setPostInfo(newPostInfo)
         } else {
-            navigate("/not-found")
+            navigate(`*`)
         }
     }
+
     useEffect(() => {
         setLoading(true)
         getPostData().then(() => {})
@@ -93,6 +92,7 @@ const CommentsScreen = ({ showToast }) => {
                     <h6 className="bold forum-title">{forum.title}</h6>
                 </div>
             </div>
+
             <div className="commentContainer">
                 <div className="mainComment">
                     <Comment
@@ -105,7 +105,9 @@ const CommentsScreen = ({ showToast }) => {
                         isDisliked={postInfo.isDisliked}
                         likeAmt={postInfo.likes.length}
                         dislikeAmt={postInfo.dislikes.length}
-                        isPost
+                        isPost={true}
+                        id={postId}
+                        refresh={() => getPostData()}
                         updatedDate={postInfo.updatedDate}
                         forumOwner={forum.ownerId === id}
                     ></Comment>
@@ -114,12 +116,18 @@ const CommentsScreen = ({ showToast }) => {
                     <div className="commentsOfComment">
                         <Comment
                             commentText={item.content}
-                            username={item.userId}
+                            username={item.username}
                             commentDate={item.createdDate}
-                            className="smaller-comments"
-                            owner={item.userId == id}
+                            likeAmt={item.likes.length}
+                            dislikeAmt={item.dislikes.length}
+                            isLiked={item.likes.includes(parseInt(id))}
+                            isDisliked={item.dislikes.includes(parseInt(id))}
                             id={item.id}
+                            owner={item.user_id === id}
+                            refresh={() => getPostData()}
+                            isPost={false}
                             forumOwner={forum.ownerId === id}
+                            className="smaller-comments"
                         />
                     </div>
                 ))}
