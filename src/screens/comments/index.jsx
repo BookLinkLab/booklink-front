@@ -4,14 +4,14 @@ import Comment from "../../components/Comment"
 import AddPost from "../../components/AddPost"
 import React, { useEffect, useState } from "react"
 import ChevronLeft from "../../assets/icons/chevronLeft"
-import { getForum, getPostInfo, postComment } from "../../service/apis"
+import { getForum, getPostInfo, postComment, likePost } from "../../service/apis"
 import { useCurrentUser } from "../../hooks/useCurrentUser"
 import withToast from "../../hoc/withToast"
 
 const CommentsScreen = ({ showToast }) => {
     const { token, id } = useCurrentUser()
     const navigate = useNavigate()
-    const { postId, forumId } = useParams()
+    const { forumId, postId } = useParams()
     const [addedComment, setAddComment] = useState(false)
     const [loading, setLoading] = useState(false)
     const [forum, setForum] = useState({})
@@ -40,23 +40,23 @@ const CommentsScreen = ({ showToast }) => {
     const getPostData = async () => {
         const response = await getPostInfo(token, postId)
         if (response.status === 200) {
-            //mock likes and dislikes
             const newPostInfo = {
                 content: response.data.content,
                 username: response.data.user.username,
                 user_id: response.data.user.id,
                 createdDate: response.data.createdDate,
                 comments: response.data.comments,
-                likes: response.data.likes || [], // Use an empty array if likes is undefined
-                dislikes: response.data.dislikes || [],
-                isLiked: (response.data.likes || []).includes(id),
-                isDisliked: (response.data.dislikes || []).includes(id),
+                likes: response.data.likes,
+                dislikes: response.data.dislikes,
+                isLiked: response.data.likes.includes(parseInt(id)),
+                isDisliked: response.data.dislikes.includes(parseInt(id)),
             }
             setPostInfo(newPostInfo)
         } else {
             navigate("/not-found")
         }
     }
+
     useEffect(() => {
         setLoading(true)
         getPostData().then(() => {})
@@ -102,7 +102,9 @@ const CommentsScreen = ({ showToast }) => {
                         isDisliked={postInfo.isDisliked}
                         likeAmt={postInfo.likes.length}
                         dislikeAmt={postInfo.dislikes.length}
-                        isPost
+                        isPost={true}
+                        id={postId}
+                        refresh={() => getPostData()}
                         updatedDate={postInfo.updatedDate}
                         forumOwner={forum.ownerId === id}
                     ></Comment>
@@ -111,12 +113,18 @@ const CommentsScreen = ({ showToast }) => {
                     <div className="commentsOfComment">
                         <Comment
                             commentText={item.content}
-                            username={item.userId}
+                            username={item.username}
                             commentDate={item.createdDate}
-                            className="smaller-comments"
-                            owner={item.userId == id}
+                            likeAmt={item.likes.length}
+                            dislikeAmt={item.dislikes.length}
+                            isLiked={item.likes.includes(parseInt(id))}
+                            isDisliked={item.dislikes.includes(parseInt(id))}
                             id={item.id}
+                            owner={item.user_id === id}
+                            refresh={() => getPostData()}
+                            isPost={false}
                             forumOwner={forum.ownerId === id}
+                            className="smaller-comments"
                         />
                     </div>
                 ))}

@@ -99,10 +99,10 @@ const Forum = ({ showToast }) => {
                                 commentText={post.content}
                                 username={post.user.username}
                                 commentDate={post.date}
-                                isPost
+                                isPost={true}
                                 owner={post.user.id == id}
                                 id={post.id}
-                                refresh={getPostsData}
+                                refresh={() => getPostsData()}
                                 key={post.id}
                                 isRedirectionable
                                 commentsAmount={post.commentsCount}
@@ -110,6 +110,8 @@ const Forum = ({ showToast }) => {
                                 likeAmt={post.likes.length}
                                 dislikeAmt={post.dislikes.length}
                                 forumOwner={forumId == id}
+                                isLiked={post.likes.includes(parseInt(id))}
+                                isDisliked={post.dislikes.includes(parseInt(id))}
                             />
                         ))}
                     </div>
