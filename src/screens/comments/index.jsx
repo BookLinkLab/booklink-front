@@ -120,7 +120,7 @@ const CommentsScreen = ({ showToast }) => {
                             isLiked={item.likes.includes(parseInt(id))}
                             isDisliked={item.dislikes.includes(parseInt(id))}
                             id={item.id}
-                            owner={item.user_id === id}
+                            owner={item.userId == id}
                             refresh={() => getPostData()}
                             isPost={false}
                             forumOwner={forum.ownerId === id}
