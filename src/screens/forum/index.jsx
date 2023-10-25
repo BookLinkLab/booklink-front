@@ -83,34 +83,40 @@ const Forum = ({ showToast }) => {
                 isMember={forum.searcherIsMember}
                 setForumData={setForum}
             />
-            <div className="addPostContainer">
-                <AddPost
-                    textFieldPlaceholder={"Comparte tus ideas"}
-                    onClick={handleAddPost}
-                    buttonText={"Crear publicación"}
-                    onSubmit={(comment) => handleAddPost(comment).then(getPostsData)}
-                />
-            </div>
-            <div className="postsContainer">
-                {posts.map((post) => (
-                    <Comment
-                        commentText={post.content}
-                        username={post.user.username}
-                        commentDate={post.date}
-                        isPost
-                        owner={post.user.id == id}
-                        id={post.id}
-                        refresh={getPostsData}
-                        key={post.id}
-                        isRedirectionable
-                        commentsAmount={post.commentsCount}
-                        updatedDate={post.updatedDate}
-                        likeAmt={post.likes.length}
-                        dislikeAmt={post.dislikes.length}
-                        forumOwner={forumId == id}
-                    />
-                ))}
-            </div>
+            {forum.searcherIsMember && (
+                <>
+                    <div className="addPostContainer">
+                        <AddPost
+                            textFieldPlaceholder={"Comparte tus ideas"}
+                            onClick={handleAddPost}
+                            buttonText={"Crear publicación"}
+                            onSubmit={(comment) => handleAddPost(comment).then(getPostsData)}
+                        />
+                    </div>
+                    <div className="postsContainer">
+                        {posts.map((post) => (
+                            <Comment
+                                commentText={post.content}
+                                username={post.user.username}
+                                commentDate={post.date}
+                                isPost={true}
+                                owner={post.user.id == id}
+                                id={post.id}
+                                refresh={() => getPostsData()}
+                                key={post.id}
+                                isRedirectionable
+                                commentsAmount={post.commentsCount}
+                                updatedDate={post.updatedDate}
+                                likeAmt={post.likes.length}
+                                dislikeAmt={post.dislikes.length}
+                                forumOwner={forumId == id}
+                                isLiked={post.likes.includes(parseInt(id))}
+                                isDisliked={post.dislikes.includes(parseInt(id))}
+                            />
+                        ))}
+                    </div>
+                </>
+            )}
         </>
     )
 }

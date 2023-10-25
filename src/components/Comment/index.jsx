@@ -10,8 +10,9 @@ import { useNavigate } from "react-router-dom"
 import { useCurrentUser } from "../../hooks/useCurrentUser"
 import DislikeButton from "../../components/DislikeButton/index"
 import LikeButton from "../../components/LikeButton/index"
-import { dislikePost, likePost, deletePost } from "../../service/apis"
+import { dislikePost, likePost, deletePost, likeComment, dislikeComment } from "../../service/apis"
 import withToast from "../../hoc/withToast"
+import Loader from "../Loader"
 
 const Comment = ({
     username,
@@ -33,6 +34,7 @@ const Comment = ({
     isRedirectionable,
     updatedDate,
 }) => {
+    const postId = id
     const navigate = useNavigate()
     const [openModal, setOpenModal] = useState(false)
     const [showModal, setShowModal] = useState(false)
@@ -86,43 +88,38 @@ const Comment = ({
     }
 
     const handleLike = async () => {
-        if (isPost) {
-            try {
-                setLoading(true)
-                const response = await likePost(token, id)
-                if (response.status === 200) {
-                    showToast(response.data, "success")
-                } else {
-                    showToast(response.data, "error")
-                }
-            } finally {
-                setLoading(false)
+        try {
+            setLoading(true)
+            const response = isPost ? await likePost(token, id) : await likeComment(token, id)
+            if (response.status === 200) {
+                showToast(response.data, "success")
+                refresh()
+            } else {
+                showToast(response.data, "error")
             }
-        } else {
-            // Manejar "like" en comentarios
+        } finally {
+            setLoading(false)
         }
     }
 
     const handleDislike = async () => {
-        if (isPost) {
-            try {
-                setLoading(true)
-                const response = await dislikePost(token, id)
-                if (response.status === 200) {
-                    showToast(response.data, "success")
-                } else {
-                    showToast(response.data, "error")
-                }
-            } finally {
-                setLoading(false)
+        try {
+            setLoading(true)
+            const response = isPost ? await dislikePost(token, id) : await dislikeComment(token, id)
+            if (response.status === 200) {
+                showToast(response.data, "success")
+                refresh()
+            } else {
+                showToast(response.data, "error")
             }
-        } else {
-            // Manejar "dislike" en comentarios
+        } finally {
+            setLoading(false)
         }
     }
 
     return (
         <div>
+            <Loader open={loading} />
             {!!openModal && (
                 <Modal
                     className={"delete-comment-modal"}

@@ -217,6 +217,27 @@ export const deletePost = async (token, id) => {
 export const updateComment = async (token, id, content) => {
     try {
         return await bookLinkAxios.patch(`/comment/${id}`, { content }, config(token))
+
+export const likeComment = async (token, commentId) => {
+    try {
+        return await bookLinkAxios.post(
+            `/comment/${commentId}/toggle-like`,
+            undefined,
+            config(token),
+        )
+    } catch (error) {
+        return error.response
+    }
+}
+
+export const dislikeComment = async (token, commentId) => {
+    try {
+        return await bookLinkAxios.post(
+            `/comment/${commentId}/toggle-dislike`,
+            undefined,
+            config(token),
+        )
+
     } catch (error) {
         return error.response
     }
