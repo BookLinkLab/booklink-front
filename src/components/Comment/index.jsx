@@ -1,5 +1,5 @@
 import "./styles.css"
-import React, { useState, useEffect } from "react"
+import React, { useState } from "react"
 import { Ellipse } from "../../assets/icons/ellipse"
 import "moment/locale/es"
 import Moment from "react-moment"
@@ -10,8 +10,9 @@ import { useNavigate } from "react-router-dom"
 import { useCurrentUser } from "../../hooks/useCurrentUser"
 import DislikeButton from "../../components/DislikeButton/index"
 import LikeButton from "../../components/LikeButton/index"
-import { dislikePost, likePost, deletePost } from "../../service/apis"
+import { dislikePost, likePost, deletePost, likeComment, dislikeComment } from "../../service/apis"
 import withToast from "../../hoc/withToast"
+import Loader from "../Loader"
 
 const Comment = ({
     username,
@@ -19,6 +20,7 @@ const Comment = ({
     commentText,
     commentsAmount,
     className,
+    forumOwner,
     owner,
     isLiked,
     isDisliked,
@@ -28,9 +30,9 @@ const Comment = ({
     isPost,
     id,
     refresh,
-    isComment,
+    isRedirectionable,
+    updatedDate,
 }) => {
-    const postId = 1
     const navigate = useNavigate()
     const [openModal, setOpenModal] = useState(false)
     const [showModal, setShowModal] = useState(false)
@@ -84,43 +86,38 @@ const Comment = ({
     }
 
     const handleLike = async () => {
-        if (isPost) {
-            try {
-                setLoading(true)
-                const response = await likePost(token, id)
-                if (response.status === 200) {
-                    showToast(response.data, "success")
-                } else {
-                    showToast(response.data, "error")
-                }
-            } finally {
-                setLoading(false)
+        try {
+            setLoading(true)
+            const response = isPost ? await likePost(token, id) : await likeComment(token, id)
+            if (response.status === 200) {
+                showToast(response.data, "success")
+                refresh()
+            } else {
+                showToast(response.data, "error")
             }
-        } else {
-            // Manejar "like" en comentarios
+        } finally {
+            setLoading(false)
         }
     }
 
     const handleDislike = async () => {
-        if (isPost) {
-            try {
-                setLoading(true)
-                const response = await dislikePost(token, id)
-                if (response.status === 200) {
-                    showToast(response.data, "success")
-                } else {
-                    showToast(response.data, "error")
-                }
-            } finally {
-                setLoading(false)
+        try {
+            setLoading(true)
+            const response = isPost ? await dislikePost(token, id) : await dislikeComment(token, id)
+            if (response.status === 200) {
+                showToast(response.data, "success")
+                refresh()
+            } else {
+                showToast(response.data, "error")
             }
-        } else {
-            // Manejar "dislike" en comentarios
+        } finally {
+            setLoading(false)
         }
     }
 
     return (
         <div>
+            <Loader open={loading} />
             {!!openModal && (
                 <Modal
                     className={"delete-comment-modal"}
@@ -147,36 +144,47 @@ const Comment = ({
                                     {new Date(commentDate)}
                                 </Moment>
                             </div>
+                            {!updateValue ? "" : <p className="body2 bold">Editado</p>}
+                            {(owner || forumOwner) && (
+                                <button
+                                    onClick={() => {
+                                        setOpenModal(true)
+                                    }}
+                                    className={"comment-profile-buttons body2"}
+                                >
+                                    Eliminar
+                                </button>
+                            )}
                             {owner && (
-                                <>
-                                    <button
-                                        onClick={() => {
-                                            setOpenModal(true)
-                                        }}
-                                        className={"comment-profile-buttons body2"}
-                                    >
-                                        Eliminar
-                                    </button>
-                                    <button
-                                        onClick={() => {
-                                            setShowModal(true)
-                                        }}
-                                        className={"comment-profile-buttons body2 underlined"}
-                                    >
-                                        Editar
-                                    </button>
-                                </>
+                                <button
+                                    onClick={() => {
+                                        setShowModal(true)
+                                    }}
+                                    className={"comment-profile-buttons body2 underlined"}
+                                >
+                                    Editar
+                                </button>
                             )}
                         </div>
-                        <p className={"body1"}>{commentText}</p>
-                        <button
-                            onClick={() => {
-                                navigate(`post/${postId}`)
-                            }}
-                            className={"comment-profile-buttons body2 underlined"}
-                        >
-                            {commentsAmount} Comentarios
-                        </button>
+                        <p className={"body2"}>{commentText}</p>
+                        {isPost ? (
+                            isRedirectionable ? (
+                                <button
+                                    onClick={() => navigate(`post/${id}`)}
+                                    className="comment-profile-buttons body2 underlined"
+                                >
+                                    {commentsAmount}{" "}
+                                    {commentsAmount !== 1 ? "Comentarios" : "Comentario"}{" "}
+                                </button>
+                            ) : (
+                                <p className="body2 bold">
+                                    {commentsAmount}{" "}
+                                    {commentsAmount !== 1 ? "Comentarios" : "Comentario"}
+                                </p>
+                            )
+                        ) : (
+                            ""
+                        )}
                     </div>
                     {!owner && (
                         <div className="like-dislike-div">
@@ -203,7 +211,7 @@ const Comment = ({
                             setUpdateValue(commentText)
                         }}
                         secondButtonAction={() => {
-                            isComment
+                            !isPost
                                 ? handleUpdateComment(updateValue)
                                 : handleUpdatePost(updateValue)
                             setShowModal(false)
