@@ -141,3 +141,99 @@ export const joinForum = async (token, id) => {
 export const deleteForum = async (token, id) => {
     return await bookLinkAxios.delete(`/forum/${id}`, config(token))
 }
+
+export const addPostToForum = async (token, forumId, content) => {
+    try {
+        return await bookLinkAxios.post(`/post`, { forumId, content }, config(token))
+    } catch (error) {
+        return error.response
+    }
+}
+
+export const updateComment = async (token, id, content) => {
+    try {
+        return await bookLinkAxios.patch(`/post/${id}`, { content }, config(token))
+    } catch (error) {
+        return error.response
+    }
+}
+
+export const postComment = async (token, postId, content) => {
+    try {
+        return await bookLinkAxios.post(
+            `/comment`,
+            { postId: postId, content: content },
+            config(token),
+        )
+    } catch (error) {
+        return error.response
+    }
+}
+
+export const deleteComment = async (token, commentId) => {
+    try {
+        return await bookLinkAxios.delete(`/comment/${commentId}`, config(token))
+    } catch (error) {
+        return error.response
+    }
+}
+
+export const getPostInfo = async (token, postId) => {
+    try {
+        return await bookLinkAxios.get(`/post/${postId}`, config(token))
+    } catch (error) {
+        return error.response
+    }
+}
+
+export const getPosts = async (token, forumId) => {
+    try {
+        return await bookLinkAxios.get(`/post/forum/${forumId}`, config(token))
+    } catch (error) {
+        return error.response
+    }
+}
+
+export const likePost = async (token, postId) => {
+    try {
+        return await bookLinkAxios.post(`/post/${postId}/toggle-like`, undefined, config(token))
+    } catch (error) {
+        return error.response
+    }
+}
+
+export const dislikePost = async (token, postId) => {
+    try {
+        return await bookLinkAxios.post(`/post/${postId}/toggle-dislike`, undefined, config(token))
+    } catch (error) {
+        return error.response
+    }
+}
+
+export const deletePost = async (token, id) => {
+    return await bookLinkAxios.delete(`/post/${id}`, config(token))
+}
+
+export const likeComment = async (token, commentId) => {
+    try {
+        return await bookLinkAxios.post(
+            `/comment/${commentId}/toggle-like`,
+            undefined,
+            config(token),
+        )
+    } catch (error) {
+        return error.response
+    }
+}
+
+export const dislikeComment = async (token, commentId) => {
+    try {
+        return await bookLinkAxios.post(
+            `/comment/${commentId}/toggle-dislike`,
+            undefined,
+            config(token),
+        )
+    } catch (error) {
+        return error.response
+    }
+}

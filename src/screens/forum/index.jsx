@@ -4,7 +4,15 @@ import { useCurrentUser } from "../../hooks/useCurrentUser"
 import { useNavigate, useParams } from "react-router-dom"
 import withToast from "../../hoc/withToast"
 import Loader from "../../components/Loader"
-import { getForum, leaveForum } from "../../service/apis"
+import AddPost from "../../components/AddPost"
+import "./styles.css"
+import { date } from "yup"
+import { getForum, addPostToForum, getPosts } from "../../service/apis"
+import LikeButton from "../../components/LikeButton"
+import DislikeButton from "../../components/DislikeButton"
+import Button from "../../components/Button"
+import TextInputModal from "../../components/TextInputModal"
+import Comment from "../../components/Comment"
 
 const Forum = ({ showToast }) => {
     const { forumId } = useParams()
@@ -12,6 +20,8 @@ const Forum = ({ showToast }) => {
     const navigate = useNavigate()
     const [loading, setLoading] = useState(false)
     const [forum, setForum] = useState({})
+    const [posts, setPosts] = useState([])
+    const [comment, setComment] = useState("")
 
     useEffect(() => {
         setLoading(true)
@@ -25,6 +35,36 @@ const Forum = ({ showToast }) => {
             setForum(response.data)
         } else {
             showToast("Error al cargar el foro", "error")
+            navigate("/home")
+        }
+    }
+
+    const handleAddPost = async (content) => {
+        try {
+            setLoading(true)
+            const response = await addPostToForum(token, forumId, content)
+            if (response.status === 200) {
+                showToast(response.data, "success")
+            } else {
+                showToast(response.data, "error")
+            }
+        } finally {
+            setLoading(false)
+        }
+    }
+
+    useEffect(() => {
+        setLoading(true)
+        getPostsData().then()
+        setLoading(false)
+    }, [forumId, posts.length])
+
+    const getPostsData = async () => {
+        const response = await getPosts(token, forumId)
+        if (response.status === 200) {
+            setPosts(response.data.reverse())
+        } else {
+            showToast(response.data, "error")
             navigate("/home")
         }
     }
@@ -43,6 +83,40 @@ const Forum = ({ showToast }) => {
                 isMember={forum.searcherIsMember}
                 setForumData={setForum}
             />
+            {forum.searcherIsMember && (
+                <>
+                    <div className="addPostContainer">
+                        <AddPost
+                            textFieldPlaceholder={"Comparte tus ideas"}
+                            onClick={handleAddPost}
+                            buttonText={"Crear publicación"}
+                            onSubmit={(comment) => handleAddPost(comment).then(getPostsData)}
+                        />
+                    </div>
+                    <div className="postsContainer">
+                        {posts.map((post) => (
+                            <Comment
+                                commentText={post.content}
+                                username={post.user.username}
+                                commentDate={post.date}
+                                isPost={true}
+                                owner={post.user.id == id}
+                                id={post.id}
+                                refresh={() => getPostsData()}
+                                key={post.id}
+                                isRedirectionable
+                                commentsAmount={post.commentsCount}
+                                updatedDate={post.updatedDate}
+                                likeAmt={post.likes.length}
+                                dislikeAmt={post.dislikes.length}
+                                forumOwner={forumId == id}
+                                isLiked={post.likes.includes(parseInt(id))}
+                                isDisliked={post.dislikes.includes(parseInt(id))}
+                            />
+                        ))}
+                    </div>
+                </>
+            )}
         </>
     )
 }
