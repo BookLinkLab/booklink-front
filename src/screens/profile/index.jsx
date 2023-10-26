@@ -146,7 +146,7 @@ const ProfileScreen = ({ showToast }) => {
                                     key={info.id}
                                     id={info.id}
                                     text={info.name}
-                                    members={info.members.length}
+                                    members={info.membersCount}
                                     chips={info.tags}
                                     image={info.img}
                                     joined={true}
@@ -170,7 +170,7 @@ const ProfileScreen = ({ showToast }) => {
                                     key={info.id}
                                     id={info.id}
                                     text={info.name}
-                                    members={info.members.length}
+                                    members={info.membersCount}
                                     chips={info.tags}
                                     image={info.img}
                                     joined={true}
