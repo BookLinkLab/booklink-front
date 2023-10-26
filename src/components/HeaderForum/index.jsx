@@ -145,6 +145,7 @@ const HeaderForum = ({
                 <>
                     {!!openModal && (
                         <Modal
+                            className={"abandon-forum-modal"}
                             showModal={!!openModal}
                             setShowModal={setOpenModal}
                             firstButtonText={"Cancelar"}
