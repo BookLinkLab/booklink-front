@@ -62,11 +62,17 @@ const Comment = ({
 
     const handleUpdatePost = async (updatedPostText) => {
         try {
-            await updatePost(token, id, updatedPostText)
-            refresh()
-            showToast("Posteo editado correctamente", "success")
-        } catch (error) {
-            showToast("Error al editar el posteo", "error")
+            setLoading(true)
+            const response = await updatePost(token, id, updatedPostText)
+            if (response.status === 200) {
+                showToast(response.data, "success")
+                setOpenModal(false)
+                refresh()
+            } else {
+                showToast(response.data, "error")
+            }
+        } finally {
+            setLoading(false)
         }
     }
     const handleDeletePost = async () => {
@@ -214,6 +220,7 @@ const Comment = ({
                             !isPost
                                 ? handleUpdateComment(updateValue)
                                 : handleUpdatePost(updateValue)
+
                             setShowModal(false)
                         }}
                         initialValue={updateValue}
