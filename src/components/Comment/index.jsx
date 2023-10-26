@@ -5,7 +5,7 @@ import "moment/locale/es"
 import Moment from "react-moment"
 import Modal from "../Modal"
 import TextInputModal from "../TextInputModal"
-import { updatePost } from "../../service/apis"
+import { updateComment, updatePost } from "../../service/apis"
 import { useNavigate } from "react-router-dom"
 import { useCurrentUser } from "../../hooks/useCurrentUser"
 import DislikeButton from "../../components/DislikeButton/index"
@@ -39,6 +39,22 @@ const Comment = ({
     const [updateValue, setUpdateValue] = useState(commentText)
     const { token } = useCurrentUser()
     const [loading, setLoading] = useState(false)
+
+    const handleUpdateComment = async (updatedCommentText) => {
+        try {
+            setLoading(true)
+            const response = await updateComment(token, id, updatedCommentText)
+            if (response.status === 200) {
+                showToast(response.data, "success")
+                setOpenModal(false)
+                refresh()
+            } else {
+                showToast(response.data, "error")
+            }
+        } finally {
+            setLoading(false)
+        }
+    }
 
     const handleInputChange = (value) => {
         setUpdateValue(value)
@@ -114,8 +130,8 @@ const Comment = ({
                     showModal={!!openModal}
                     setShowModal={setOpenModal}
                     firstButtonText={"Cancelar"}
-                    title={"Eliminar Comentario"}
-                    subtitle={"¿Estás seguro que deseas eliminar este comentario?"}
+                    title={"Eliminar publicación"}
+                    subtitle={"¿Estás seguro que deseas eliminar esta publicación?"}
                     secondButtonText={"Eliminar"}
                     handleOnClose={() => setOpenModal(undefined)}
                     firstButtonAction={() => setOpenModal(undefined)}
@@ -193,7 +209,7 @@ const Comment = ({
                 </div>
                 {showModal && (
                     <TextInputModal
-                        title={"Actualizar Comentario."}
+                        title={"Actualizar publicación."}
                         firstButton="Cancelar"
                         secondButton="Actualizar"
                         firstButtonAction={() => {
@@ -201,7 +217,10 @@ const Comment = ({
                             setUpdateValue(commentText)
                         }}
                         secondButtonAction={() => {
-                            handleUpdatePost(updateValue)
+                            !isPost
+                                ? handleUpdateComment(updateValue)
+                                : handleUpdatePost(updateValue)
+
                             setShowModal(false)
                         }}
                         initialValue={updateValue}
