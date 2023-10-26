@@ -8,8 +8,14 @@ const config = (token) => ({
     },
 })
 
+const baseURL = "http://localhost:8080"
+
 const bookLinkAxios = axios.create({
-    baseURL: "http://localhost:8080",
+    baseURL,
+})
+
+const bookLinkAxiosPublic = axios.create({
+    baseURL,
 })
 
 bookLinkAxios.interceptors.response.use(
@@ -27,7 +33,10 @@ bookLinkAxios.interceptors.response.use(
 
 export const loginUser = async (email, password) => {
     try {
-        const response = await bookLinkAxios.post("/auth", { email: email, password: password })
+        const response = await bookLinkAxiosPublic.post("/auth", {
+            email: email,
+            password: password,
+        })
         return { status: response.status, token: response.data.token, id: response.data.user.id }
     } catch (error) {
         return {
@@ -45,7 +54,7 @@ export const registerUser = async (username, email, password) => {
         password: password,
     }
     try {
-        const resp = await bookLinkAxios.post("/user", user)
+        const resp = await bookLinkAxiosPublic.post("/user", user)
         return resp.data
     } catch (error) {
         return error.response
