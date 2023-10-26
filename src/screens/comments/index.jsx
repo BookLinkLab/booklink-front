@@ -125,6 +125,7 @@ const CommentsScreen = ({ showToast }) => {
                             refresh={() => getPostData()}
                             forumOwner={forum.ownerId == id}
                             className="smaller-comments"
+                            updatedDate={item.updatedDate}
                         />
                     </div>
                 ))}

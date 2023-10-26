@@ -157,7 +157,7 @@ const Comment = ({
                                     {new Date(commentDate)}
                                 </Moment>
                             </div>
-                            {!(updateValue == null) ? "" : <p className="body2 bold">Editado</p>}
+                            {updatedDate == null ? "" : <p className="body2 bold">Editado</p>}
                             {(owner || forumOwner) && (
                                 <button
                                     onClick={() => {
