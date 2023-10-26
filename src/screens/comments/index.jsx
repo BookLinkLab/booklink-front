@@ -123,7 +123,7 @@ const CommentsScreen = ({ showToast }) => {
                             id={item.id}
                             owner={item.userId == id}
                             refresh={() => getPostData()}
-                            forumOwner={forum.ownerId === id}
+                            forumOwner={forum.ownerId == id}
                             className="smaller-comments"
                         />
                     </div>
