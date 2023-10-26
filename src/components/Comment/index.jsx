@@ -10,7 +10,14 @@ import { useNavigate } from "react-router-dom"
 import { useCurrentUser } from "../../hooks/useCurrentUser"
 import DislikeButton from "../../components/DislikeButton/index"
 import LikeButton from "../../components/LikeButton/index"
-import { dislikePost, likePost, deletePost, likeComment, dislikeComment } from "../../service/apis"
+import {
+    dislikePost,
+    likePost,
+    deletePost,
+    likeComment,
+    dislikeComment,
+    deleteComment,
+} from "../../service/apis"
 import withToast from "../../hoc/withToast"
 import Loader from "../Loader"
 
@@ -56,7 +63,7 @@ const Comment = ({
     const handleDeletePost = async () => {
         try {
             setLoading(true)
-            const response = await deletePost(token, id)
+            const response = isPost ? await deletePost(token, id) : await deleteComment(token, id)
             if (response.status === 200) {
                 showToast(response.data, "success")
                 setOpenModal(false)
@@ -128,7 +135,7 @@ const Comment = ({
                                     {new Date(commentDate)}
                                 </Moment>
                             </div>
-                            {!updateValue ? "" : <p className="body2 bold">Editado</p>}
+                            {!(updateValue == null) ? "" : <p className="body2 bold">Editado</p>}
                             {(owner || forumOwner) && (
                                 <button
                                     onClick={() => {
