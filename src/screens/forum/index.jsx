@@ -78,6 +78,7 @@ const Forum = ({ showToast }) => {
                 description={forum.description}
                 image={forum.img}
                 owner={forum.ownerId == id}
+                forumOwner={forum.ownerId == id}
                 amtOfUsers={forum.members}
                 tags={forum.tags}
                 isMember={forum.searcherIsMember}
@@ -109,7 +110,7 @@ const Forum = ({ showToast }) => {
                                 updatedDate={post.updatedDate}
                                 likeAmt={post.likes.length}
                                 dislikeAmt={post.dislikes.length}
-                                forumOwner={forumId == id}
+                                forumOwner={forum.ownerId == id}
                                 isLiked={post.likes.includes(parseInt(id))}
                                 isDisliked={post.dislikes.includes(parseInt(id))}
                             />

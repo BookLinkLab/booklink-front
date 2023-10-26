@@ -5,12 +5,19 @@ import "moment/locale/es"
 import Moment from "react-moment"
 import Modal from "../Modal"
 import TextInputModal from "../TextInputModal"
-import { updateComment } from "../../service/apis"
+import { updateComment, updatePost } from "../../service/apis"
 import { useNavigate } from "react-router-dom"
 import { useCurrentUser } from "../../hooks/useCurrentUser"
 import DislikeButton from "../../components/DislikeButton/index"
 import LikeButton from "../../components/LikeButton/index"
-import { dislikePost, likePost, deletePost, likeComment, dislikeComment } from "../../service/apis"
+import {
+    dislikePost,
+    likePost,
+    deletePost,
+    likeComment,
+    dislikeComment,
+    deleteComment,
+} from "../../service/apis"
 import withToast from "../../hoc/withToast"
 import Loader from "../Loader"
 
@@ -40,23 +47,45 @@ const Comment = ({
     const { token } = useCurrentUser()
     const [loading, setLoading] = useState(false)
 
+    const handleUpdateComment = async (updatedCommentText) => {
+        try {
+            setLoading(true)
+            const response = await updateComment(token, id, updatedCommentText)
+            if (response.status === 200) {
+                showToast(response.data, "success")
+                setOpenModal(false)
+                refresh()
+            } else {
+                showToast(response.data, "error")
+            }
+        } finally {
+            setLoading(false)
+        }
+    }
+
     const handleInputChange = (value) => {
         setUpdateValue(value)
     }
 
-    const handleUpdateComment = async (updatedCommentText) => {
+    const handleUpdatePost = async (updatedPostText) => {
         try {
-            await updateComment(token, id, updatedCommentText)
-            refresh()
-            showToast("Comentario editado correctamente", "success")
-        } catch (error) {
-            showToast("Error al editar el comentario", "error")
+            setLoading(true)
+            const response = await updatePost(token, id, updatedPostText)
+            if (response.status === 200) {
+                showToast(response.data, "success")
+                setOpenModal(false)
+                refresh()
+            } else {
+                showToast(response.data, "error")
+            }
+        } finally {
+            setLoading(false)
         }
     }
     const handleDeletePost = async () => {
         try {
             setLoading(true)
-            const response = await deletePost(token, id)
+            const response = isPost ? await deletePost(token, id) : await deleteComment(token, id)
             if (response.status === 200) {
                 showToast(response.data, "success")
                 setOpenModal(false)
@@ -108,8 +137,8 @@ const Comment = ({
                     showModal={!!openModal}
                     setShowModal={setOpenModal}
                     firstButtonText={"Cancelar"}
-                    title={"Eliminar Comentario"}
-                    subtitle={"¿Estás seguro que deseas eliminar este comentario?"}
+                    title={"Eliminar publicación"}
+                    subtitle={"¿Estás seguro que deseas eliminar esta publicación?"}
                     secondButtonText={"Eliminar"}
                     handleOnClose={() => setOpenModal(undefined)}
                     firstButtonAction={() => setOpenModal(undefined)}
@@ -128,7 +157,7 @@ const Comment = ({
                                     {new Date(commentDate)}
                                 </Moment>
                             </div>
-                            {!updateValue ? "" : <p className="body2 bold">Editado</p>}
+                            {!(updateValue == null) ? "" : <p className="body2 bold">Editado</p>}
                             {(owner || forumOwner) && (
                                 <button
                                     onClick={() => {
@@ -170,24 +199,22 @@ const Comment = ({
                             ""
                         )}
                     </div>
-                    {!owner && (
-                        <div className="like-dislike-div">
-                            <LikeButton
-                                initialLiked={isLiked}
-                                likeAmount={likeAmt}
-                                onClick={() => handleLike(id)}
-                            />
-                            <DislikeButton
-                                initialDisliked={isDisliked}
-                                dislikeAmount={dislikeAmt}
-                                onCLick={() => handleDislike(id)}
-                            />
-                        </div>
-                    )}
+                    <div className="like-dislike-div">
+                        <LikeButton
+                            initialLiked={isLiked}
+                            likeAmount={likeAmt}
+                            onClick={() => handleLike(id)}
+                        />
+                        <DislikeButton
+                            initialDisliked={isDisliked}
+                            dislikeAmount={dislikeAmt}
+                            onCLick={() => handleDislike(id)}
+                        />
+                    </div>
                 </div>
                 {showModal && (
                     <TextInputModal
-                        title={"Actualizar Comentario."}
+                        title={"Actualizar publicación."}
                         firstButton="Cancelar"
                         secondButton="Actualizar"
                         firstButtonAction={() => {
@@ -195,7 +222,10 @@ const Comment = ({
                             setUpdateValue(commentText)
                         }}
                         secondButtonAction={() => {
-                            handleUpdateComment(updateValue)
+                            !isPost
+                                ? handleUpdateComment(updateValue)
+                                : handleUpdatePost(updateValue)
+
                             setShowModal(false)
                         }}
                         initialValue={updateValue}

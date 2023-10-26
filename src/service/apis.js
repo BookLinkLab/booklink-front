@@ -150,7 +150,7 @@ export const addPostToForum = async (token, forumId, content) => {
     }
 }
 
-export const updateComment = async (token, id, content) => {
+export const updatePost = async (token, id, content) => {
     try {
         return await bookLinkAxios.patch(`/post/${id}`, { content }, config(token))
     } catch (error) {
@@ -233,6 +233,14 @@ export const dislikeComment = async (token, commentId) => {
             undefined,
             config(token),
         )
+    } catch (error) {
+        return error.response
+    }
+}
+
+export const updateComment = async (token, id, content) => {
+    try {
+        return await bookLinkAxios.patch(`/comment/${id}`, { content }, config(token))
     } catch (error) {
         return error.response
     }
