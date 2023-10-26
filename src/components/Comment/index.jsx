@@ -199,20 +199,18 @@ const Comment = ({
                             ""
                         )}
                     </div>
-                    {!owner && (
-                        <div className="like-dislike-div">
-                            <LikeButton
-                                initialLiked={isLiked}
-                                likeAmount={likeAmt}
-                                onClick={() => handleLike(id)}
-                            />
-                            <DislikeButton
-                                initialDisliked={isDisliked}
-                                dislikeAmount={dislikeAmt}
-                                onCLick={() => handleDislike(id)}
-                            />
-                        </div>
-                    )}
+                    <div className="like-dislike-div">
+                        <LikeButton
+                            initialLiked={isLiked}
+                            likeAmount={likeAmt}
+                            onClick={() => handleLike(id)}
+                        />
+                        <DislikeButton
+                            initialDisliked={isDisliked}
+                            dislikeAmount={dislikeAmt}
+                            onCLick={() => handleDislike(id)}
+                        />
+                    </div>
                 </div>
                 {showModal && (
                     <TextInputModal
