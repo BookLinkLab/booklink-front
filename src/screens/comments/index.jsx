@@ -4,7 +4,7 @@ import Comment from "../../components/Comment"
 import AddPost from "../../components/AddPost"
 import React, { useEffect, useState } from "react"
 import ChevronLeft from "../../assets/icons/chevronLeft"
-import { getForum, getPostInfo, postComment, likePost, updateComment } from "../../service/apis"
+import { getForum, getPostInfo, likePost, updateComment, postComment } from "../../service/apis"
 import { useCurrentUser } from "../../hooks/useCurrentUser"
 import withToast from "../../hoc/withToast"
 
