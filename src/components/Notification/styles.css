@@ -1,0 +1,24 @@
+.notificationContainer {
+    display: flex;
+    flex-direction: row;
+    width: 850px;
+    padding: 8px;
+    align-items: center;
+    border-radius: 12px;
+    height: 76px;
+    border: 1px solid #cbcfd3;
+}
+
+.notificationText {
+    display: flex;
+    flex-direction: column;
+    margin-left: 24px;
+    gap: 8px;
+}
+
+.forumImage {
+    width: 60px;
+    height: 60px;
+    flex-shrink: 0;
+    border-radius: 8px;
+}
