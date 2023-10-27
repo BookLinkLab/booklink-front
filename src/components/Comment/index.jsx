@@ -57,6 +57,7 @@ const Comment = ({
                 refresh()
             } else {
                 showToast(response.data, "error")
+                setUpdateValue(commentText)
             }
         } finally {
             setLoading(false)
@@ -77,6 +78,7 @@ const Comment = ({
                 refresh()
             } else {
                 showToast(response.data, "error")
+                setUpdateValue(commentText)
             }
         } finally {
             setLoading(false)
