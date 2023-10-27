@@ -14,7 +14,18 @@ const Notifications = () => {
                 <text className="title">Notificaciones</text>
                 <text className="body1">Configuracion</text>
             </div>
-            <Notification forumImg={forumImg} forumName={forumName} posterName={posterName} />
+            <Notification
+                forumImg={forumImg}
+                forumName={forumName}
+                posterName={posterName}
+                isSeen={true}
+            />
+            <Notification
+                forumImg={forumImg}
+                forumName={forumName}
+                posterName={posterName}
+                isSeen={false}
+            />
         </div>
     )
 }

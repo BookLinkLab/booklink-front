@@ -9,6 +9,10 @@
     border: 1px solid #cbcfd3;
 }
 
+.notificationContainer.seen {
+    background-color: #f2f2f2;
+}
+
 .notificationText {
     display: flex;
     flex-direction: column;
@@ -16,9 +20,35 @@
     gap: 8px;
 }
 
+.notificationText.seen {
+    color: #747f86;
+}
+
 .forumImage {
     width: 60px;
     height: 60px;
     flex-shrink: 0;
     border-radius: 8px;
+}
+
+.body1.bold {
+    font-weight: bold;
+}
+
+.body2 {
+    font-size: 14px;
+}
+
+.body1.bold.seen {
+    font-weight: bold;
+    color: #747f86;
+}
+
+.body1.seen {
+    color: #747f86;
+}
+
+.body2.seen {
+    font-size: 14px;
+    color: #747f86;
 }
