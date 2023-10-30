@@ -1,7 +1,7 @@
 import "./styles.css"
 import Switch from "@mui/material/Switch"
 
-const ForumNotificationsConfigCard = ({ img, name }) => {
+const ForumNotificationsConfigCard = ({ img, name, switchState }) => {
     return (
         <>
             <div className={"forum-notification-config-card-div-1"}>
@@ -11,7 +11,7 @@ const ForumNotificationsConfigCard = ({ img, name }) => {
                         <p className={"body1bold"}>{name}</p>
                     </div>
                 </div>
-                <Switch className={"switch"} />
+                <Switch className={"switch"} defaultChecked={switchState} />
             </div>
         </>
     )
