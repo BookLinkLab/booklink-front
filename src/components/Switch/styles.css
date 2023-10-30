@@ -1,0 +1,30 @@
+.slide-div {
+    display: inline-flex;
+    padding: 12px;
+    align-items: center;
+}
+.slide {
+    width: 34px;
+    height: 14px;
+    border-radius: 100px;
+    position: absolute;
+    transition: all 1s;
+}
+
+.knob {
+    display: inline-flex;
+    padding: 9px;
+    align-items: center;
+    position: relative;
+    transition: all 1s;
+    left: -12px;
+    right: 0;
+}
+
+.left {
+    left: 4px;
+}
+
+.right {
+    right: 13px;
+}
