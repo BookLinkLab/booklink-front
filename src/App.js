@@ -15,6 +15,7 @@ import EditForum from "./screens/editForum"
 import Forum from "./screens/forum"
 import withToast from "./hoc/withToast"
 import CommentsScreen from "./screens/comments"
+import SettingsScreen from "./screens/settings"
 
 function App({ showToast }) {
     const { token } = useCurrentUser()
@@ -63,6 +64,9 @@ function App({ showToast }) {
                     />
                 </Route>
                 {/* Not Found */}
+                <Route path={"/configuration"} element={<PrivateRoute />}>
+                    <Route path={"/configuration"} element={<SettingsScreen />} />
+                </Route>
                 <Route path="*" element={<NotFound />} />
             </Routes>
         </Router>
