@@ -30,8 +30,8 @@ const Login = ({ showToast }) => {
                         .email("El email no es válido"),
                     password: Yup.string().required("La contraseña es requerida"),
                 })}
-                validateOnChange={false} // Disable live validation on change
-                validateOnBlur={false} // Disable live validation on blur
+                validateOnChange={false}
+                validateOnBlur={false}
                 onSubmit={async (values) => {
                     const { email, password } = values
                     setLoading(true)
