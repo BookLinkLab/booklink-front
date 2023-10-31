@@ -7,6 +7,7 @@
     border-radius: 12px;
     height: 76px;
     border: 1px solid #cbcfd3;
+    cursor: pointer;
 }
 
 .notificationContainer.seen {
