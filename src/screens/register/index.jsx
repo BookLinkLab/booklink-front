@@ -22,7 +22,7 @@ const RegisterScreen = ({ showToast }) => {
         email: Yup.string()
             .email("Ingrese un email válido")
             .required("Este campo es requerido")
-            .matches(/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/),
+            .matches(/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zAZ0-9-]+(?:\.[a-zA-Z0-9-]+)*$/),
         password: Yup.string()
             .required("Este campo es requerido")
             .min(8, "Mínimo 8 caracteres")
@@ -51,6 +51,8 @@ const RegisterScreen = ({ showToast }) => {
                     confirmPassword: "",
                 }}
                 validationSchema={validateSchema}
+                validateOnChange={false}
+                validateOnBlur={false}
                 onSubmit={async ({ username, email, password }) => {
                     try {
                         setLoading(true)
@@ -98,10 +100,22 @@ const RegisterScreen = ({ showToast }) => {
                             />
                         </div>
                         <div className="button-container">
-                            <Button size="large" type={"submit"} disabled={!isValid}>
+                            <Button
+                                size="large"
+                                type="submit"
+                                onClick={() => {
+                                    if (isValid) {
+                                    } else {
+                                        showToast(
+                                            "Please fill in all required fields and fix any validation errors.",
+                                            "error",
+                                        )
+                                    }
+                                }}
+                            >
                                 Registrar
                             </Button>
-                            <Button variant={"ghost"} onClick={() => navigate("/login")}>
+                            <Button variant="ghost" onClick={() => navigate("/login")}>
                                 Tengo una cuenta
                             </Button>
                         </div>
