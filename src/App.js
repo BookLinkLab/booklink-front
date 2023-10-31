@@ -4,7 +4,7 @@ import "./App.css"
 import Login from "./screens/login/index.jsx"
 import Register from "./screens/register"
 import CreateForum from "./screens/createForum"
-import Notifications from "./screens/notifications/notifications"
+import Index from "./screens/notifications"
 import NotFound from "./screens/notFound"
 import ProfileScreen from "./screens/profile"
 import PrivateRoute from "./components/PrivateRoute"
@@ -44,7 +44,7 @@ function App({ showToast }) {
                     <Route path={"/createForum"} element={<CreateForum />} />
                 </Route>
                 <Route path={"/notifications"} element={<PrivateRoute />}>
-                    <Route path={"/notifications"} element={<Notifications />} />
+                    <Route path={"/notifications"} element={<Index />} />
                 </Route>
                 <Route path={"/profile"} element={<PrivateRoute />}>
                     <Route path={"/profile/:id"} element={<ProfileScreen />} />
