@@ -1,0 +1,26 @@
+.configuration-block-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 850px;
+    height: auto;
+    gap: 40px;
+    padding: 88px 331px;
+}
+
+.button-configuration-container {
+    width: 100%;
+    height: 39px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.configuration-title {
+}
+
+.configuration-map {
+}
+.config-card {
+    margin-bottom: 16px;
+}

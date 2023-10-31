@@ -25,6 +25,7 @@
 
 .forum-title {
     margin-left: 12px;
+    /*padding: 15px;             no está centrado, antes estaba*/
 }
 
 .commentContainer {
