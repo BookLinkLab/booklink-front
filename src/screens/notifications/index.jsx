@@ -1,15 +1,30 @@
 import Notification from "../../components/Notification"
-import React from "react"
+import React, { useState } from "react"
 import Background from "../../assets/images/background.png"
 import "./styles.css"
 import Button from "../../components/Button"
 import { useNavigate } from "react-router-dom"
+import withToast from "../../hoc/withToast"
 
-const Notifications = () => {
+const Notifications = ({ showToast }) => {
     const forumName = "Foro de prueba"
     const posterName = "Usuario de prueba"
     const forumImg = Background
     const navigate = useNavigate()
+    const [loading, setLoading] = useState(false)
+    const [notifications, setNotifications] = useState([])
+
+    const getNotifications = async () => {
+        setLoading(true)
+        const response = await getNotifications()
+        if (response.status === 200) {
+            setNotifications(response.data)
+            showToast(response.body, "success")
+        } else {
+            showToast(response.body, "error")
+        }
+        setLoading(false)
+    }
 
     return (
         <div className="notifications">
@@ -23,20 +38,16 @@ const Notifications = () => {
                     Configuración
                 </Button>
             </div>
-            <Notification
-                forumImg={forumImg}
-                forumName={forumName}
-                posterName={posterName}
-                isSeen={true}
-            />
-            <Notification
-                forumImg={forumImg}
-                forumName={forumName}
-                posterName={posterName}
-                isSeen={false}
-            />
+            {notifications.map((notification) => (
+                <Notification
+                    forumImg={notification.forumImg}
+                    forumName={notification.forumName}
+                    posterName={notification.posterName}
+                    isSeen={notification.isSeen}
+                />
+            ))}
         </div>
     )
 }
 
-export default Notifications
+export default withToast(Notifications)
