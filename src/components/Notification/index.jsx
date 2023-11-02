@@ -1,5 +1,7 @@
 import React from "react"
 import "./styles.css"
+import Button from "../Button"
+import "bootstrap-icons/font/bootstrap-icons.css"
 
 const Notification = ({ forumImg, forumName, posterName, isSeen = true }) => {
     const seenChecker = isSeen ? "notificationContainer seen" : "notificationContainer"
@@ -27,6 +29,11 @@ const Notification = ({ forumImg, forumName, posterName, isSeen = true }) => {
                     <span className={`body2 ${isSeen ? "seen" : ""}`}>
                         Haz click para ver la publicación
                     </span>
+                </div>
+                <div className="delete-button-style">
+                    <Button variant="ghost">
+                        <i class="bi bi-trash-fill red"></i>
+                    </Button>
                 </div>
             </div>
         </div>
