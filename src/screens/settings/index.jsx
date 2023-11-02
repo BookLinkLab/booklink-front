@@ -3,16 +3,29 @@ import React, { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import "./styles.css"
 import ForumNotificationsConfigCard from "../../components/ForumConfiguration"
+import Loader from "../../components/Loader"
+import withToast from "../../hoc/withToast"
 
-const SettingsScreen = () => {
+const SettingsScreen = ({ showToast }) => {
     const navigate = useNavigate()
-    const [forumCards, setForumCards] = useState([
-        { name: "Los tomadores del Olimpo", img: "", switchState: "on" },
-        { name: "Guerreros de Viento", img: "", switchState: "on" },
-        { name: "Los iluminados por el rayo", img: "", switchState: "off" },
-    ])
+    const [loading, setLoading] = useState(false)
+    const [forumCards, setForumCards] = useState([])
+
+    const getNotificationSettings = async () => {
+        setLoading(true)
+        const response = getNotificationSettings()
+        if (response.status === 200) {
+            setForumCards(response.data)
+            showToast(response.body, "success")
+        } else {
+            showToast(response.body, "error")
+        }
+        setLoading(false)
+    }
+
     return (
         <div className="configuration-block-container">
+            <Loader open={loading} />
             <div className="button-configuration-container">
                 <ChevronLeft onClick={() => navigate(`/notifications`)} />
                 <h3 className="bold configuration-title">Configuracion</h3>
@@ -31,4 +44,4 @@ const SettingsScreen = () => {
         </div>
     )
 }
-export default SettingsScreen
+export default withToast(SettingsScreen)
