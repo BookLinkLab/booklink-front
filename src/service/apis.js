@@ -254,3 +254,11 @@ export const updateComment = async (token, id, content) => {
         return error.response
     }
 }
+
+export const toggleNotifications = async (token, forumId) => {
+    try {
+        return await bookLinkAxios.post(`/notification/${forumId}/toggle`, config(token))
+    } catch (error) {
+        return error.response
+    }
+}
