@@ -1,10 +1,15 @@
-import React from "react"
+import React, { useState } from "react"
 import "./styles.css"
 import Button from "../Button"
 import "bootstrap-icons/font/bootstrap-icons.css"
+import Modal from "../Modal"
+import { deleteNotification } from "../../service/apis"
+import withToast from "../../hoc/withToast"
 
-const Notification = ({ forumImg, forumName, posterName, isSeen = true }) => {
+const Notification = ({ forumImg, forumName, posterName, isSeen = true, showToast }) => {
     const seenChecker = isSeen ? "notificationContainer seen" : "notificationContainer"
+    const [openModal, setOpenModal] = useState(false)
+    const [loading, setLoading] = useState(false)
 
     const handleClick = () => {
         if (!isSeen) {
@@ -12,6 +17,23 @@ const Notification = ({ forumImg, forumName, posterName, isSeen = true }) => {
         }
     }
 
+    const handleClickOnDeleteButton = () => {
+        setOpenModal(true)
+    }
+
+    const handleDeleteNotification = async () => {
+        setLoading(true)
+        try {
+            const response = await deleteNotification()
+            if (response.status === 200) {
+                showToast(response.data, "success")
+            } else {
+                showToast(response.data, "error")
+            }
+        } finally {
+            setLoading(false)
+        }
+    }
     return (
         <div className={seenChecker} onClick={handleClick}>
             <img className="forumImage" src={forumImg} alt="notification" />
@@ -31,13 +53,24 @@ const Notification = ({ forumImg, forumName, posterName, isSeen = true }) => {
                     </span>
                 </div>
                 <div className="delete-button-style">
-                    <Button variant="ghost">
+                    <Button variant="ghost" onClick={handleClickOnDeleteButton}>
                         <i class="bi bi-trash-fill red"></i>
                     </Button>
                 </div>
             </div>
+            {!!openModal && (
+                <Modal
+                    title="Eliminar notificación"
+                    subtitle="¿Estás seguro de que deseas eliminar esta notificación?"
+                    firstButtonText="Cancelar"
+                    firstButtonAction={() => setOpenModal(false)}
+                    secondButtonText="Eliminar"
+                    secondButtonAction={handleDeleteNotification}
+                    handleOnClose={() => setOpenModal(undefined)}
+                ></Modal>
+            )}
         </div>
     )
 }
 
-export default Notification
+export default withToast(Notification)
