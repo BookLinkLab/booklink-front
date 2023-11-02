@@ -5,6 +5,7 @@ import "./styles.css"
 import Button from "../../components/Button"
 import { useNavigate } from "react-router-dom"
 import withToast from "../../hoc/withToast"
+import Loader from "../../components/Loader"
 
 const Notifications = ({ showToast }) => {
     const forumName = "Foro de prueba"
@@ -28,6 +29,7 @@ const Notifications = ({ showToast }) => {
 
     return (
         <div className="notifications">
+            <Loader open={loading} />
             <div className="notificationsHeader">
                 <text className="title">Notificaciones</text>
                 <Button
