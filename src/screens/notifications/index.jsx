@@ -10,9 +10,6 @@ import { useCurrentUser } from "../../hooks/useCurrentUser"
 import { updateNotificationState } from "../../service/apis"
 
 const Notifications = ({ showToast }) => {
-    const forumName = "Foro de prueba"
-    const posterName = "Usuario de prueba"
-    const forumImg = Background
     const navigate = useNavigate()
     const [loading, setLoading] = useState(false)
     const [notifications, setNotifications] = useState([])
