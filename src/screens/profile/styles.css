@@ -57,3 +57,14 @@
 .mb-48 {
     margin-bottom: 48px;
 }
+
+.latestActivityHeader {
+    margin-bottom: 30px;
+    margin-top: 80px;
+}
+
+.latestActivity {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
