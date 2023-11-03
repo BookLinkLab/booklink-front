@@ -1,7 +1,7 @@
 import React from "react"
 import "./styles.css"
 
-const Notification = ({ forumImg, forumName, posterName, isSeen = true }) => {
+const Notification = ({ forumImg, forumName, posterName, isSeen = true, id, onClick }) => {
     const seenChecker = isSeen ? "notificationContainer seen" : "notificationContainer"
 
     const handleClick = () => {

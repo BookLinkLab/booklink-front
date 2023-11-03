@@ -262,3 +262,11 @@ export const getNotifications = async (token) => {
         return error.response
     }
 }
+
+export const updateNotificationState = async (token, id) => {
+    try {
+        return await bookLinkAxios.patch(`/notification/${id}`, undefined, config(token))
+    } catch (error) {
+        return error.response
+    }
+}
