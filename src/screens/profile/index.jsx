@@ -198,6 +198,7 @@ const ProfileScreen = ({ showToast }) => {
                         isSeen={false}
                         posterName={user.username}
                         forumName={post.forumName}
+                        forumImg={post.img}
                     />
                 ))}
             </div>
