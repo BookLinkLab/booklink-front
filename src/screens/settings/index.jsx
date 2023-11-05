@@ -1,26 +1,32 @@
 import ChevronLeft from "../../assets/icons/chevronLeft"
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import "./styles.css"
 import ForumNotificationsConfigCard from "../../components/ForumConfiguration"
 import Loader from "../../components/Loader"
 import withToast from "../../hoc/withToast"
+import { getNotificationSettings } from "../../service/apis"
+import { useCurrentUser } from "../../hooks/useCurrentUser"
 
 const SettingsScreen = ({ showToast }) => {
     const navigate = useNavigate()
+    const { token } = useCurrentUser()
     const [loading, setLoading] = useState(false)
     const [forumCards, setForumCards] = useState([])
 
-    const getNotificationSettings = async () => {
+    useEffect(() => {
         setLoading(true)
-        const response = getNotificationSettings()
+        handleGetNotificationSettings().then(setLoading(false))
+    }, [])
+
+    const handleGetNotificationSettings = async () => {
+        const response = getNotificationSettings(token)
         if (response.status === 200) {
             setForumCards(response.data)
             showToast(response.body, "success")
         } else {
             showToast(response.body, "error")
         }
-        setLoading(false)
     }
 
     return (
