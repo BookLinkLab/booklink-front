@@ -257,7 +257,7 @@ export const updateComment = async (token, id, content) => {
 
 export const getNotifications = async (token) => {
     try {
-        return await bookLinkAxios.get(`/notifications`, config(token))
+        return await bookLinkAxios.get(`/notification`, config(token))
     } catch (error) {
         return error.response
     }
