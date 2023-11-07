@@ -14,6 +14,7 @@
 
 .items-aligned {
     margin-left: 115px;
+    padding: 42px;
 }
 
 /*The width in this buttons is fixed for the figma */
@@ -56,4 +57,15 @@
 }
 .mb-48 {
     margin-bottom: 48px;
+}
+
+.latestActivityHeader {
+    margin-bottom: 32px;
+    margin-top: 80px;
+}
+
+.latestActivity {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
 }
