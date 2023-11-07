@@ -20,7 +20,7 @@ const SettingsScreen = ({ showToast }) => {
     }, [])
 
     const handleGetNotificationSettings = async () => {
-        const response = getNotificationSettings(token)
+        const response = await getNotificationSettings(token)
         if (response.status === 200) {
             setForumCards(response.data)
             showToast(response.body, "success")
@@ -40,9 +40,9 @@ const SettingsScreen = ({ showToast }) => {
                 {forumCards.map((card) => (
                     <div className="config-card">
                         <ForumNotificationsConfigCard
-                            name={card.name}
-                            img={card.img}
-                            switchState={card.switchState}
+                            name={card.forumName}
+                            img={card.forumImage}
+                            switchState={card.notification}
                         />
                     </div>
                 ))}
