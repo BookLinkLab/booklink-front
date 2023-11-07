@@ -1,9 +1,10 @@
 import React from "react"
 import "./styles.css"
 
-const Notification = ({ forumImg, forumName, posterName, isSeen = true }) => {
+const Notification = ({ forumImg, content, forumName, posterName, isSeen = true }) => {
     const seenChecker = isSeen ? "notificationContainer seen" : "notificationContainer"
-
+    const posterValue = posterName ?? content.match(/@(\w+)\s/)[1]
+    const forumValue = forumName ?? content.match(/"([^"]+)"/)[1]
     const handleClick = () => {
         if (!isSeen) {
             console.log("redirection")
@@ -16,12 +17,12 @@ const Notification = ({ forumImg, forumName, posterName, isSeen = true }) => {
             <div className="notificationText">
                 <div>
                     <text className={`body1 bold ${isSeen ? "seen" : ""}`}>
-                        {"@" + posterName + " "}
+                        {"@" + posterValue + " "}
                     </text>
                     <text className={`body1 ${isSeen ? "seen" : ""}`}>
                         creó una nueva publicación en
                     </text>
-                    <text className={`body1 ${isSeen ? "seen" : ""}`}> "{forumName}"!</text>
+                    <text className={`body1 ${isSeen ? "seen" : ""}`}> "{forumValue}"!</text>
                 </div>
                 <div>
                     <span className={`body2 ${isSeen ? "seen" : ""}`}>
