@@ -5,11 +5,14 @@ import "bootstrap-icons/font/bootstrap-icons.css"
 import Modal from "../Modal"
 import { deleteNotification } from "../../service/apis"
 import withToast from "../../hoc/withToast"
+import DeleteNotification from "../../assets/icons/deleteNotification"
+import { useCurrentUser } from "../../hooks/useCurrentUser"
 
-const Notification = ({ forumImg, forumName, posterName, isSeen = true, showToast }) => {
+const Notification = ({ forumImg, forumName, posterName, isSeen = true, showToast, id }) => {
     const seenChecker = isSeen ? "notificationContainer seen" : "notificationContainer"
     const [openModal, setOpenModal] = useState(false)
     const [loading, setLoading] = useState(false)
+    const { token } = useCurrentUser()
 
     const handleClick = () => {
         if (!isSeen) {
@@ -24,7 +27,7 @@ const Notification = ({ forumImg, forumName, posterName, isSeen = true, showToas
     const handleDeleteNotification = async () => {
         setLoading(true)
         try {
-            const response = await deleteNotification()
+            const response = await deleteNotification(token, id)
             if (response.status === 200) {
                 showToast(response.data, "success")
             } else {
@@ -54,12 +57,13 @@ const Notification = ({ forumImg, forumName, posterName, isSeen = true, showToas
                 </div>
                 <div className="delete-button-style">
                     <Button variant="ghost" onClick={handleClickOnDeleteButton}>
-                        <i class="bi bi-trash-fill red"></i>
+                        <DeleteNotification height={24} width={24}></DeleteNotification>
                     </Button>
                 </div>
             </div>
             {!!openModal && (
                 <Modal
+                    className="modal-width"
                     title="Eliminar notificación"
                     subtitle="¿Estás seguro de que deseas eliminar esta notificación?"
                     firstButtonText="Cancelar"

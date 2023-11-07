@@ -59,7 +59,6 @@
     position: absolute;
     right: 25px;
 }
-
-.red {
-    color: #ce4130;
+.modal-width .modal-main-div {
+    width: 344px;
 }
