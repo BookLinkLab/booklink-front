@@ -51,6 +51,8 @@ const RegisterScreen = ({ showToast }) => {
                     confirmPassword: "",
                 }}
                 validationSchema={validateSchema}
+                validateOnChange={false}
+                validateOnBlur={false}
                 onSubmit={async ({ username, email, password }) => {
                     try {
                         setLoading(true)
@@ -98,10 +100,10 @@ const RegisterScreen = ({ showToast }) => {
                             />
                         </div>
                         <div className="button-container">
-                            <Button size="large" type={"submit"} disabled={!isValid}>
+                            <Button size="large" type="submit">
                                 Registrar
                             </Button>
-                            <Button variant={"ghost"} onClick={() => navigate("/login")}>
+                            <Button variant="ghost" onClick={() => navigate("/login")}>
                                 Tengo una cuenta
                             </Button>
                         </div>
