@@ -18,6 +18,7 @@ const Notification = ({
     onClick,
     showToast,
     isProfile,
+    postId,
 }) => {
     const seenChecker = isSeen ? "notificationContainer seen" : "notificationContainer"
     const [openModal, setOpenModal] = useState(false)

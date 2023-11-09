@@ -93,6 +93,7 @@ const CommentsScreen = ({ showToast }) => {
             <div className="commentContainer">
                 <div className="mainComment">
                     <Comment
+                        userId={postInfo.user_id}
                         username={postInfo.username}
                         commentDate={postInfo.createdDate}
                         commentText={postInfo.content}
@@ -113,6 +114,7 @@ const CommentsScreen = ({ showToast }) => {
                     <div className="commentsOfComment">
                         <Comment
                             isPost={false}
+                            userId={item.userId}
                             commentText={item.content}
                             username={item.username}
                             commentDate={item.createdDate}
