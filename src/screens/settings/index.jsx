@@ -43,6 +43,7 @@ const SettingsScreen = ({ showToast }) => {
                             name={card.forumName}
                             img={card.forumImage}
                             switchState={card.notification}
+                            forumId={card.forumId}
                         />
                     </div>
                 ))}
