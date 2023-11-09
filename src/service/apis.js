@@ -255,6 +255,10 @@ export const updateComment = async (token, id, content) => {
     }
 }
 
+export const deleteNotification = async (token, id) => {
+    return await bookLinkAxios.delete(`/notification/${id}`, config(token))
+}
+
 export const getNotificationSettings = async (token) => {
     try {
         return await bookLinkAxios.get("/notification/configuration", config(token))

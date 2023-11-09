@@ -8,6 +8,7 @@
     height: 76px;
     border: 1px solid #cbcfd3;
     cursor: pointer;
+    position: relative;
 }
 
 .notificationContainer.seen {
@@ -52,4 +53,12 @@
 .body2.seen {
     font-size: 14px;
     color: #747f86;
+}
+
+.delete-button-style {
+    position: absolute;
+    right: 25px;
+}
+.modal-width .modal-main-div {
+    width: 344px;
 }
