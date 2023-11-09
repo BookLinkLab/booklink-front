@@ -62,7 +62,7 @@ const Notifications = ({ showToast }) => {
                     forumImg={notification.img}
                     content={notification.content}
                     isSeen={notification.seen}
-                    id={notification.id}
+                    id={notification.notificationid}
                     onClick={() => handleUpdateNotificationState(notification.id)}
                 />
             ))}
