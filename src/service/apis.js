@@ -281,7 +281,7 @@ export const updateNotificationState = async (token, id) => {
 
 export const toggleNotifications = async (token, forumId) => {
     try {
-        return await bookLinkAxios.post(`/notification/${forumId}/toggle`, config(token))
+        return await bookLinkAxios.post(`/notification/${forumId}/toggle`, undefined, config(token))
     } catch (error) {
         return error.response
     }
