@@ -11,6 +11,7 @@ import withToast from "../../hoc/withToast"
 import Loader from "../../components/Loader"
 import { useNavigate, useParams } from "react-router-dom"
 import Card from "../../components/Card"
+import Notification from "../../components/Notification"
 
 const ProfileScreen = ({ showToast }) => {
     const { id, token, logOutCurrentUser } = useCurrentUser()
@@ -20,6 +21,7 @@ const ProfileScreen = ({ showToast }) => {
     const navigate = useNavigate()
     const [forumsJoined, setForumsJoined] = useState([])
     const [myForums, setMyForums] = useState([])
+    const [latestPost, setLatestPosts] = useState([])
 
     useEffect(() => {
         setLoading(true)
@@ -29,6 +31,7 @@ const ProfileScreen = ({ showToast }) => {
                     setUser(response.data)
                     setForumsJoined(response.data.forumsJoined)
                     setMyForums(response.data.forumsCreated)
+                    setLatestPosts(response.data.latestPosts)
                 } else if (response.status === 400 || response.status === 404) navigate("/")
                 else showToast(response.data.message, "error")
             })
@@ -134,11 +137,11 @@ const ProfileScreen = ({ showToast }) => {
             )}
             <section>
                 <div className="forums-div">
-                    <h5 className="bold" style={{ marginTop: "32px" }}>
+                    <h4 className="bold" style={{ marginTop: "32px" }}>
                         {profileId === id
                             ? "Foros a los que pertenezco"
                             : "Foros a los que pertenece"}
-                    </h5>
+                    </h4>
                     {forumsJoined.length !== 0 ? (
                         <div className="cardsGrid">
                             {forumsJoined.map((info) => (
@@ -162,7 +165,7 @@ const ProfileScreen = ({ showToast }) => {
                     )}
                 </div>
                 <div className="forums-div mb-48">
-                    <h5 className="bold m-85">{profileId === id ? "Mis foros" : "Sus foros"}</h5>
+                    <h4 className="bold m-85">{profileId === id ? "Mis foros" : "Sus foros"}</h4>
                     {myForums.length !== 0 ? (
                         <div className="cardsGrid">
                             {myForums.map((info) => (
@@ -186,6 +189,20 @@ const ProfileScreen = ({ showToast }) => {
                     )}
                 </div>
             </section>
+            <div className="latestActivity">
+                <h4 className="latestActivityHeader bold">Ultima actividad</h4>
+                {latestPost.map((post) => (
+                    //falta agregar la foto del foro, falta que el back me lo pase
+
+                    <Notification
+                        isSeen={false}
+                        authorName={user.username}
+                        forumName={post.forumName}
+                        forumImg={post.img}
+                        content={post.content}
+                    />
+                ))}
+            </div>
         </div>
     )
 }

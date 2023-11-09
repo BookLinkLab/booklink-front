@@ -1,18 +1,37 @@
 import ChevronLeft from "../../assets/icons/chevronLeft"
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import "./styles.css"
 import ForumNotificationsConfigCard from "../../components/ForumConfiguration"
+import Loader from "../../components/Loader"
+import withToast from "../../hoc/withToast"
+import { getNotificationSettings } from "../../service/apis"
+import { useCurrentUser } from "../../hooks/useCurrentUser"
 
-const SettingsScreen = () => {
+const SettingsScreen = ({ showToast }) => {
     const navigate = useNavigate()
-    const [forumCards, setForumCards] = useState([
-        { name: "Los tomadores del Olimpo", img: "", switchState: "on" },
-        { name: "Guerreros de Viento", img: "", switchState: "on" },
-        { name: "Los iluminados por el rayo", img: "", switchState: "off" },
-    ])
+    const { token } = useCurrentUser()
+    const [loading, setLoading] = useState(false)
+    const [forumCards, setForumCards] = useState([])
+
+    useEffect(() => {
+        setLoading(true)
+        handleGetNotificationSettings().then(setLoading(false))
+    }, [])
+
+    const handleGetNotificationSettings = async () => {
+        const response = await getNotificationSettings(token)
+        if (response.status === 200) {
+            setForumCards(response.data)
+            showToast(response.body, "success")
+        } else {
+            showToast(response.body, "error")
+        }
+    }
+
     return (
         <div className="configuration-block-container">
+            <Loader open={loading} />
             <div className="button-configuration-container">
                 <ChevronLeft onClick={() => navigate(`/notifications`)} />
                 <h3 className="bold configuration-title">Configuracion</h3>
@@ -21,9 +40,10 @@ const SettingsScreen = () => {
                 {forumCards.map((card) => (
                     <div className="config-card">
                         <ForumNotificationsConfigCard
-                            name={card.name}
-                            img={card.img}
-                            switchState={card.switchState}
+                            name={card.forumName}
+                            img={card.forumImage}
+                            switchState={card.notification}
+                            forumId={card.forumId}
                         />
                     </div>
                 ))}
@@ -31,4 +51,4 @@ const SettingsScreen = () => {
         </div>
     )
 }
-export default SettingsScreen
+export default withToast(SettingsScreen)

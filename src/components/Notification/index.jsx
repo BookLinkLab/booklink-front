@@ -8,17 +8,20 @@ import withToast from "../../hoc/withToast"
 import DeleteNotification from "../../assets/icons/deleteNotification"
 import { useCurrentUser } from "../../hooks/useCurrentUser"
 
-const Notification = ({ forumImg, forumName, posterName, isSeen = true, showToast, id }) => {
+const Notification = ({
+    forumImg,
+    content,
+    forumName,
+    authorName,
+    isSeen = true,
+    id,
+    onClick,
+    showToast,
+}) => {
     const seenChecker = isSeen ? "notificationContainer seen" : "notificationContainer"
     const [openModal, setOpenModal] = useState(false)
     const [loading, setLoading] = useState(false)
     const { token } = useCurrentUser()
-
-    const handleClick = () => {
-        if (!isSeen) {
-            console.log("redirection")
-        }
-    }
 
     const handleClickOnDeleteButton = () => {
         setOpenModal(true)
@@ -38,16 +41,14 @@ const Notification = ({ forumImg, forumName, posterName, isSeen = true, showToas
         }
     }
     return (
-        <div className={seenChecker} onClick={handleClick}>
+        <div className={seenChecker} onClick={onClick}>
             <img className="forumImage" src={forumImg} alt="notification" />
             <div className="notificationText">
                 <div>
                     <text className={`body1 bold ${isSeen ? "seen" : ""}`}>
-                        {"@" + posterName + " "}
+                        {"@" + authorName + " "}
                     </text>
-                    <text className={`body1 ${isSeen ? "seen" : ""}`}>
-                        creó una nueva publicación en
-                    </text>
+                    <text className={`body1 ${isSeen ? "seen" : ""}`}>{content}</text>
                     <text className={`body1 ${isSeen ? "seen" : ""}`}> "{forumName}"!</text>
                 </div>
                 <div>
