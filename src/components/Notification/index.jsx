@@ -1,7 +1,7 @@
 import React from "react"
 import "./styles.css"
 
-const Notification = ({ forumImg, forumName, posterName, isSeen = true }) => {
+const Notification = ({ forumImg, content, forumName, authorName, isSeen = true }) => {
     const seenChecker = isSeen ? "notificationContainer seen" : "notificationContainer"
 
     const handleClick = () => {
@@ -16,11 +16,9 @@ const Notification = ({ forumImg, forumName, posterName, isSeen = true }) => {
             <div className="notificationText">
                 <div>
                     <text className={`body1 bold ${isSeen ? "seen" : ""}`}>
-                        {"@" + posterName + " "}
+                        {"@" + authorName + " "}
                     </text>
-                    <text className={`body1 ${isSeen ? "seen" : ""}`}>
-                        creó una nueva publicación en
-                    </text>
+                    <text className={`body1 ${isSeen ? "seen" : ""}`}>{content}</text>
                     <text className={`body1 ${isSeen ? "seen" : ""}`}> "{forumName}"!</text>
                 </div>
                 <div>

@@ -262,3 +262,11 @@ export const getNotificationSettings = async (token) => {
         return error.response
     }
 }
+
+export const getNotifications = async (token) => {
+    try {
+        return await bookLinkAxios.get(`/notification`, config(token))
+    } catch (error) {
+        return error.response
+    }
+}

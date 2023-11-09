@@ -196,9 +196,10 @@ const ProfileScreen = ({ showToast }) => {
 
                     <Notification
                         isSeen={false}
-                        posterName={user.username}
+                        authorName={user.username}
                         forumName={post.forumName}
                         forumImg={post.img}
+                        content={post.content}
                     />
                 ))}
             </div>
