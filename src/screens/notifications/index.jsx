@@ -9,6 +9,7 @@ import Loader from "../../components/Loader"
 import { useCurrentUser } from "../../hooks/useCurrentUser"
 import { updateNotificationState } from "../../service/apis"
 import { getNotifications } from "../../service/apis"
+import notification from "../../components/Notification"
 
 const Notifications = ({ showToast }) => {
     const { token } = useCurrentUser()
@@ -20,7 +21,7 @@ const Notifications = ({ showToast }) => {
         setLoading(true)
         handleGetNotifications().then()
         setLoading(false)
-    }, [])
+    }, [notifications.length])
 
     const handleGetNotifications = async () => {
         const response = await getNotifications(token)
@@ -36,8 +37,7 @@ const Notifications = ({ showToast }) => {
         setLoading(true)
         const response = await updateNotificationState(token, id)
         if (response.status === 200) {
-            setNotifications(response.data)
-            showToast(response.body, "success")
+            handleGetNotifications().then()
         } else {
             showToast(response.body, "error")
         }
@@ -59,7 +59,10 @@ const Notifications = ({ showToast }) => {
             </div>
             {notifications.map((notification) => (
                 <Notification
+                    isProfile={false}
+                    authorName={notification.authorName}
                     forumImg={notification.img}
+                    forumName={notification.forumName}
                     content={notification.content}
                     isSeen={notification.seen}
                     id={notification.notificationId}

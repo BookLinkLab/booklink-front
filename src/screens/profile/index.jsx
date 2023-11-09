@@ -191,10 +191,10 @@ const ProfileScreen = ({ showToast }) => {
             </section>
             <div className="latestActivity">
                 <h4 className="latestActivityHeader bold">Ultima actividad</h4>
-                {latestPost.map((post) => (
-                    //falta agregar la foto del foro, falta que el back me lo pase
-
+                {latestPost.map((post, index) => (
                     <Notification
+                        key={index}
+                        isProfile={true}
                         isSeen={false}
                         authorName={user.username}
                         forumName={post.forumName}

@@ -17,6 +17,7 @@ const Notification = ({
     id,
     onClick,
     showToast,
+    isProfile,
 }) => {
     const seenChecker = isSeen ? "notificationContainer seen" : "notificationContainer"
     const [openModal, setOpenModal] = useState(false)
@@ -38,8 +39,10 @@ const Notification = ({
             }
         } finally {
             setLoading(false)
+            setOpenModal(undefined)
         }
     }
+
     return (
         <div className={seenChecker} onClick={onClick}>
             <img className="forumImage" src={forumImg} alt="notification" />
@@ -56,11 +59,13 @@ const Notification = ({
                         Haz click para ver la publicación
                     </span>
                 </div>
-                <div className="delete-button-style">
-                    <Button variant="ghost" onClick={handleClickOnDeleteButton}>
-                        <DeleteNotification height={24} width={24}></DeleteNotification>
-                    </Button>
-                </div>
+                {!isProfile && (
+                    <div className="delete-button-style">
+                        <Button variant="ghost" onClick={handleClickOnDeleteButton}>
+                            <DeleteNotification height={24} width={24} />
+                        </Button>
+                    </div>
+                )}
             </div>
             {!!openModal && (
                 <Modal
@@ -68,7 +73,7 @@ const Notification = ({
                     title="Eliminar notificación"
                     subtitle="¿Estás seguro de que deseas eliminar esta notificación?"
                     firstButtonText="Cancelar"
-                    firstButtonAction={() => setOpenModal(false)}
+                    firstButtonAction={() => setOpenModal(undefined)}
                     secondButtonText="Eliminar"
                     secondButtonAction={handleDeleteNotification}
                     handleOnClose={() => setOpenModal(undefined)}
