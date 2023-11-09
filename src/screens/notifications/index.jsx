@@ -1,11 +1,13 @@
 import Notification from "../../components/Notification"
 import React, { useEffect, useState } from "react"
+import Background from "../../assets/images/background.png"
 import "./styles.css"
 import Button from "../../components/Button"
 import { useNavigate } from "react-router-dom"
 import withToast from "../../hoc/withToast"
 import Loader from "../../components/Loader"
 import { useCurrentUser } from "../../hooks/useCurrentUser"
+import { updateNotificationState } from "../../service/apis"
 import { getNotifications } from "../../service/apis"
 
 const Notifications = ({ showToast }) => {
@@ -30,6 +32,18 @@ const Notifications = ({ showToast }) => {
         }
     }
 
+    const handleUpdateNotificationState = async (id) => {
+        setLoading(true)
+        const response = await updateNotificationState(token, id)
+        if (response.status === 200) {
+            setNotifications(response.data)
+            showToast(response.body, "success")
+        } else {
+            showToast(response.body, "error")
+        }
+        setLoading(false)
+    }
+
     return (
         <div className="notifications">
             <Loader open={loading} />
@@ -48,6 +62,8 @@ const Notifications = ({ showToast }) => {
                     forumImg={notification.img}
                     content={notification.content}
                     isSeen={notification.seen}
+                    id={notification.notificationId}
+                    onClick={() => handleUpdateNotificationState(notification.notificationId)}
                 />
             ))}
         </div>
