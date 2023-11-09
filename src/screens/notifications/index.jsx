@@ -63,7 +63,7 @@ const Notifications = ({ showToast }) => {
                     content={notification.content}
                     isSeen={notification.seen}
                     id={notification.notificationid}
-                    onClick={() => handleUpdateNotificationState(notification.id)}
+                    onClick={() => handleUpdateNotificationState(notification.notificationid)}
                 />
             ))}
         </div>
