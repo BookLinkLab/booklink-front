@@ -30,6 +30,8 @@ const Login = ({ showToast }) => {
                         .email("El email no es válido"),
                     password: Yup.string().required("La contraseña es requerida"),
                 })}
+                validateOnChange={false}
+                validateOnBlur={false}
                 onSubmit={async (values) => {
                     const { email, password } = values
                     setLoading(true)
@@ -62,7 +64,7 @@ const Login = ({ showToast }) => {
                             <CustomTextField
                                 label="Contraseña"
                                 name="password"
-                                type="Password"
+                                type="password"
                                 placeholder="Password123"
                                 helpText=""
                             />

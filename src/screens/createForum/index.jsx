@@ -59,6 +59,8 @@ const CreateForum = ({ showToast }) => {
                     tags: [],
                 }}
                 validationSchema={validateSchema}
+                validateOnChange={false}
+                validateOnBlur={false}
                 onSubmit={async ({ name, description, img, tags }) => {
                     try {
                         setLoading(true)
@@ -74,37 +76,39 @@ const CreateForum = ({ showToast }) => {
                     }
                 }}
             >
-                <Form className="create-forum-container">
-                    <h3 className="bold" style={{ marginBottom: 60 }}>
-                        Crear Foro
-                    </h3>
-                    <CustomTextField
-                        label="Nombre"
-                        placeholder="Nombre de la comunidad"
-                        name="name"
-                    />
-                    <CustomTextField
-                        label="Link de la foto"
-                        placeholder="https://www.bookpedia.com/community"
-                        name="img"
-                    />
-                    <CustomTextField
-                        label="Descripción"
-                        placeholder="Lorem ipsum dolor sit amet consectetur..."
-                        name="description"
-                    />
-                    <Autocomplete
-                        label="Etiquetas"
-                        name="tags"
-                        placeholder="Accion, Harry Potter, Romance..."
-                        options={tagOptions}
-                        handleChange={onTagsChange}
-                        freeSolo={true}
-                    />
-                    <Button className="create-button" type="submit" size="medium">
-                        Crear
-                    </Button>
-                </Form>
+                {({ isValid }) => (
+                    <Form className="create-forum-container">
+                        <h3 className="bold" style={{ marginBottom: 60 }}>
+                            Crear Foro
+                        </h3>
+                        <CustomTextField
+                            label="Nombre"
+                            placeholder="Nombre de la comunidad"
+                            name="name"
+                        />
+                        <CustomTextField
+                            label="Link de la foto"
+                            placeholder="https://www.bookpedia.com/community"
+                            name="img"
+                        />
+                        <CustomTextField
+                            label="Descripción"
+                            placeholder="Lorem ipsum dolor sit amet consectetur..."
+                            name="description"
+                        />
+                        <Autocomplete
+                            label="Etiquetas"
+                            name="tags"
+                            placeholder="Accion, Harry Potter, Romance..."
+                            options={tagOptions}
+                            handleChange={onTagsChange}
+                            freeSolo={true}
+                        />
+                        <Button className="create-button" type="submit" size="medium">
+                            Crear
+                        </Button>
+                    </Form>
+                )}
             </Formik>
         </div>
     )
