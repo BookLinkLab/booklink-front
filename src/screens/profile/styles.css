@@ -14,6 +14,7 @@
 
 .items-aligned {
     margin-left: 115px;
+    padding: 42px;
 }
 
 /*The width in this buttons is fixed for the figma */
@@ -59,7 +60,7 @@
 }
 
 .latestActivityHeader {
-    margin-bottom: 30px;
+    margin-bottom: 32px;
     margin-top: 80px;
 }
 

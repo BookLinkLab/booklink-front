@@ -1,5 +1,5 @@
 import Notification from "../../components/Notification"
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import Background from "../../assets/images/background.png"
 import "./styles.css"
 import Button from "../../components/Button"
@@ -8,23 +8,28 @@ import withToast from "../../hoc/withToast"
 import Loader from "../../components/Loader"
 import { useCurrentUser } from "../../hooks/useCurrentUser"
 import { updateNotificationState } from "../../service/apis"
+import { getNotifications } from "../../service/apis"
 
 const Notifications = ({ showToast }) => {
+    const { token } = useCurrentUser()
     const navigate = useNavigate()
     const [loading, setLoading] = useState(false)
     const [notifications, setNotifications] = useState([])
-    const { token } = useCurrentUser()
 
-    const getNotifications = async () => {
+    useEffect(() => {
         setLoading(true)
-        const response = await getNotifications()
+        handleGetNotifications().then()
+        setLoading(false)
+    }, [])
+
+    const handleGetNotifications = async () => {
+        const response = await getNotifications(token)
         if (response.status === 200) {
             setNotifications(response.data)
             showToast(response.body, "success")
         } else {
             showToast(response.body, "error")
         }
-        setLoading(false)
     }
 
     const handleUpdateNotificationState = async (id) => {
@@ -54,10 +59,9 @@ const Notifications = ({ showToast }) => {
             </div>
             {notifications.map((notification) => (
                 <Notification
-                    forumImg={notification.forumImg}
-                    forumName={notification.forumName}
-                    posterName={notification.posterName}
-                    isSeen={notification.isSeen}
+                    forumImg={notification.img}
+                    content={notification.content}
+                    isSeen={notification.seen}
                     id={notification.id}
                     onClick={() => handleUpdateNotificationState(notification.id)}
                 />
