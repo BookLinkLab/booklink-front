@@ -9,7 +9,6 @@ import Loader from "../../components/Loader"
 import { useCurrentUser } from "../../hooks/useCurrentUser"
 import { updateNotificationState } from "../../service/apis"
 import { getNotifications } from "../../service/apis"
-import notification from "../../components/Notification"
 
 const Notifications = ({ showToast }) => {
     const { token } = useCurrentUser()
@@ -33,16 +32,19 @@ const Notifications = ({ showToast }) => {
         }
     }
 
-    const handleUpdateNotificationState = async (id) => {
+    const handleUpdateNotificationState = async (id, forumId, postId) => {
         setLoading(true)
         const response = await updateNotificationState(token, id)
         if (response.status === 200) {
             handleGetNotifications().then()
+            navigate(`/forum/${forumId}/post/${postId}`)
         } else {
             showToast(response.body, "error")
         }
         setLoading(false)
     }
+
+    console.log(notifications)
 
     return (
         <div className="notifications">
@@ -66,7 +68,13 @@ const Notifications = ({ showToast }) => {
                     content={notification.content}
                     isSeen={notification.seen}
                     id={notification.notificationId}
-                    onClick={() => handleUpdateNotificationState(notification.notificationId)}
+                    onClick={() =>
+                        handleUpdateNotificationState(
+                            notification.notificationId,
+                            notification.forumId,
+                            notification.postId,
+                        )
+                    }
                 />
             ))}
         </div>

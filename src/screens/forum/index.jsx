@@ -66,6 +66,7 @@ const Forum = ({ showToast }) => {
         }
     }
 
+    console.log(posts)
     return (
         <>
             <Loader open={loading} />
@@ -96,6 +97,7 @@ const Forum = ({ showToast }) => {
                             <Comment
                                 commentText={post.content}
                                 username={post.user.username}
+                                userId={post.user.id}
                                 commentDate={post.date}
                                 isPost={true}
                                 owner={post.user.id == id}

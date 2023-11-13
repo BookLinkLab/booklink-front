@@ -23,6 +23,7 @@ import Loader from "../Loader"
 
 const Comment = ({
     username,
+    userId,
     commentDate,
     commentText,
     commentsAmount,
@@ -148,7 +149,9 @@ const Comment = ({
                 />
             )}
             <div className={`comment-main-div ${className ?? ""}`}>
-                <img src={require("../../assets/images/profile.png")} alt="Profile" />
+                <div onClick={() => navigate(`/profile/${userId}`)}>
+                    <img src={require("../../assets/images/profile.png")} alt="Profile" />
+                </div>
                 <div className={"comment-sub-div"}>
                     <div className={"comment-sub-div-2"}>
                         <div className={"comment-time-div"}>
