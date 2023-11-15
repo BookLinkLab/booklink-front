@@ -31,7 +31,6 @@ const withToast = (Component) => (props) => {
     return (
         <>
             <Component {...props} showToast={showToast} />
-            <ToastContainer />
         </>
     )
 }
