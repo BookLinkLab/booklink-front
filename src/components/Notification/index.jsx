@@ -29,7 +29,8 @@ const Notification = ({
         setOpenModal(true)
     }
 
-    const handleDeleteNotification = async () => {
+    const handleDeleteNotification = async (event) => {
+        event.stopPropagation()
         setLoading(true)
         try {
             const response = await deleteNotification(token, id)
