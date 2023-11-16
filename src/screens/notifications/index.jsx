@@ -44,8 +44,6 @@ const Notifications = ({ showToast }) => {
         setLoading(false)
     }
 
-    console.log(notifications)
-
     return (
         <div className="notifications">
             <Loader open={loading} />
@@ -67,6 +65,7 @@ const Notifications = ({ showToast }) => {
                     forumName={notification.forumName}
                     content={notification.content}
                     isSeen={notification.seen}
+                    refetch={handleGetNotifications}
                     id={notification.notificationId}
                     onClick={() =>
                         handleUpdateNotificationState(

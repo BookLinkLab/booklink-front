@@ -66,7 +66,6 @@ const Forum = ({ showToast }) => {
         }
     }
 
-    console.log(posts)
     return (
         <>
             <Loader open={loading} />

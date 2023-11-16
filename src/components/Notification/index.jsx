@@ -19,21 +19,25 @@ const Notification = ({
     showToast,
     isProfile,
     postId,
+    refetch,
 }) => {
     const seenChecker = isSeen ? "notificationContainer seen" : "notificationContainer"
     const [openModal, setOpenModal] = useState(false)
     const [loading, setLoading] = useState(false)
     const { token } = useCurrentUser()
 
-    const handleClickOnDeleteButton = () => {
+    const handleClickOnDeleteButton = (event) => {
+        event.stopPropagation()
         setOpenModal(true)
     }
 
-    const handleDeleteNotification = async () => {
+    const handleDeleteNotification = async (event) => {
+        event.stopPropagation()
         setLoading(true)
         try {
             const response = await deleteNotification(token, id)
             if (response.status === 200) {
+                refetch && refetch()
                 showToast(response.data, "success")
             } else {
                 showToast(response.data, "error")
@@ -62,7 +66,10 @@ const Notification = ({
                 </div>
                 {!isProfile && (
                     <div className="delete-button-style">
-                        <Button variant="ghost" onClick={handleClickOnDeleteButton}>
+                        <Button
+                            variant="ghost"
+                            onClick={(event) => handleClickOnDeleteButton(event)}
+                        >
                             <DeleteNotification height={24} width={24} />
                         </Button>
                     </div>
@@ -76,8 +83,11 @@ const Notification = ({
                     firstButtonText="Cancelar"
                     firstButtonAction={() => setOpenModal(undefined)}
                     secondButtonText="Eliminar"
-                    secondButtonAction={handleDeleteNotification}
-                    handleOnClose={() => setOpenModal(undefined)}
+                    secondButtonAction={(event) => handleDeleteNotification(event)}
+                    handleOnClose={(event) => {
+                        event.stopPropagation()
+                        setOpenModal(undefined)
+                    }}
                 ></Modal>
             )}
         </div>
