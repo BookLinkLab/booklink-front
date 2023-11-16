@@ -12,6 +12,7 @@ import Loader from "../../components/Loader"
 import { useNavigate, useParams } from "react-router-dom"
 import Card from "../../components/Card"
 import Notification from "../../components/Notification"
+import { joinForum } from "../../service/apis"
 
 const ProfileScreen = ({ showToast }) => {
     const { id, token, logOutCurrentUser } = useCurrentUser()
@@ -81,6 +82,7 @@ const ProfileScreen = ({ showToast }) => {
         navigate("/login")
     }
 
+    console.log(forumsJoined)
     return (
         <div className="items-aligned">
             <Loader open={loading} />
@@ -153,6 +155,18 @@ const ProfileScreen = ({ showToast }) => {
                                     chips={info.tags}
                                     image={info.img}
                                     joined={info.searcherIsMember}
+                                    buttonAction={() => {
+                                        setLoading(true)
+                                        joinForum(token, info.id)
+                                            .then((response) => {
+                                                if (response.status === 200) {
+                                                    navigate(`/forum/${info.id}`)
+                                                } else {
+                                                    showToast(response.body, "error")
+                                                }
+                                            })
+                                            .finally(() => setLoading(false))
+                                    }}
                                 />
                             ))}
                         </div>
@@ -177,6 +191,18 @@ const ProfileScreen = ({ showToast }) => {
                                     chips={info.tags}
                                     image={info.img}
                                     joined={info.searcherIsMember}
+                                    buttonAction={() => {
+                                        setLoading(true)
+                                        joinForum(token, info.id)
+                                            .then((response) => {
+                                                if (response.status === 200) {
+                                                    navigate(`/forum/${info.id}`)
+                                                } else {
+                                                    showToast(response.body, "error")
+                                                }
+                                            })
+                                            .finally(() => setLoading(false))
+                                    }}
                                 />
                             ))}
                         </div>
