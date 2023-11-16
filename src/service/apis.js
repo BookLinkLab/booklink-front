@@ -254,3 +254,39 @@ export const updateComment = async (token, id, content) => {
         return error.response
     }
 }
+
+export const deleteNotification = async (token, id) => {
+    return await bookLinkAxios.delete(`/notification/${id}`, config(token))
+}
+
+export const getNotificationSettings = async (token) => {
+    try {
+        return await bookLinkAxios.get("/notification/configuration", config(token))
+    } catch (error) {
+        return error.response
+    }
+}
+
+export const getNotifications = async (token) => {
+    try {
+        return await bookLinkAxios.get(`/notification`, config(token))
+    } catch (error) {
+        return error.response
+    }
+}
+
+export const updateNotificationState = async (token, id) => {
+    try {
+        return await bookLinkAxios.patch(`/notification/${id}`, undefined, config(token))
+    } catch (error) {
+        return error.response
+    }
+}
+
+export const toggleNotifications = async (token, forumId) => {
+    try {
+        return await bookLinkAxios.post(`/notification/${forumId}/toggle`, undefined, config(token))
+    } catch (error) {
+        return error.response
+    }
+}

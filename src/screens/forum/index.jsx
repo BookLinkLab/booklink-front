@@ -6,13 +6,10 @@ import withToast from "../../hoc/withToast"
 import Loader from "../../components/Loader"
 import AddPost from "../../components/AddPost"
 import "./styles.css"
-import { date } from "yup"
 import { getForum, addPostToForum, getPosts } from "../../service/apis"
-import LikeButton from "../../components/LikeButton"
-import DislikeButton from "../../components/DislikeButton"
-import Button from "../../components/Button"
-import TextInputModal from "../../components/TextInputModal"
 import Comment from "../../components/Comment"
+import Notification from "../../components/Notification"
+import Background from "../../assets/images/background.png"
 
 const Forum = ({ showToast }) => {
     const { forumId } = useParams()
@@ -99,6 +96,7 @@ const Forum = ({ showToast }) => {
                             <Comment
                                 commentText={post.content}
                                 username={post.user.username}
+                                userId={post.user.id}
                                 commentDate={post.date}
                                 isPost={true}
                                 owner={post.user.id == id}
