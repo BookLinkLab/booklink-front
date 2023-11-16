@@ -25,12 +25,12 @@ const Notification = ({
     const [loading, setLoading] = useState(false)
     const { token } = useCurrentUser()
 
-    const handleClickOnDeleteButton = () => {
+    const handleClickOnDeleteButton = (event) => {
+        event.stopPropagation()
         setOpenModal(true)
     }
 
-    const handleDeleteNotification = async (event) => {
-        event.stopPropagation()
+    const handleDeleteNotification = async () => {
         setLoading(true)
         try {
             const response = await deleteNotification(token, id)
@@ -63,7 +63,10 @@ const Notification = ({
                 </div>
                 {!isProfile && (
                     <div className="delete-button-style">
-                        <Button variant="ghost" onClick={handleClickOnDeleteButton}>
+                        <Button
+                            variant="ghost"
+                            onClick={(event) => handleClickOnDeleteButton(event)}
+                        >
                             <DeleteNotification height={24} width={24} />
                         </Button>
                     </div>
