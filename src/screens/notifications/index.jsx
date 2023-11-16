@@ -44,8 +44,6 @@ const Notifications = ({ showToast }) => {
         setLoading(false)
     }
 
-    console.log(notifications)
-
     return (
         <div className="notifications">
             <Loader open={loading} />

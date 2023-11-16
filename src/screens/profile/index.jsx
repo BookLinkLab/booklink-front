@@ -27,7 +27,6 @@ const ProfileScreen = ({ showToast }) => {
         setLoading(true)
         getUser(profileId, token)
             .then((response) => {
-                console.log(response.data)
                 if (response.status === 200) {
                     setUser(response.data)
                     setForumsJoined(response.data.forumsJoined)
@@ -82,7 +81,6 @@ const ProfileScreen = ({ showToast }) => {
         navigate("/login")
     }
 
-    console.log(latestPost)
     return (
         <div className="items-aligned">
             <Loader open={loading} />
