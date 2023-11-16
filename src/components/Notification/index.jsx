@@ -46,7 +46,7 @@ const Notification = ({
     }
 
     return (
-        <div className={seenChecker} onClick={onClick}>
+        <div className={seenChecker} onClick={openModal ? undefined : onClick}>
             <img className="forumImage" src={forumImg} alt="notification" />
             <div className="notificationText">
                 <div>
