@@ -81,7 +81,10 @@ const Notification = ({
                     title="Eliminar notificación"
                     subtitle="¿Estás seguro de que deseas eliminar esta notificación?"
                     firstButtonText="Cancelar"
-                    firstButtonAction={() => setOpenModal(undefined)}
+                    firstButtonAction={(event) => {
+                        event.stopPropagation()
+                        setOpenModal(undefined)
+                    }}
                     secondButtonText="Eliminar"
                     secondButtonAction={(event) => handleDeleteNotification(event)}
                     handleOnClose={(event) => {
