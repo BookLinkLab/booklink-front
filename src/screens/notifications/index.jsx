@@ -54,7 +54,7 @@ const Notifications = ({ showToast }) => {
                     variant={"ghost"}
                     onClick={() => navigate("/configuration")}
                 >
-                    ConfiguraciÃ³n
+                    Configuración
                 </Button>
             </div>
             {notifications.map((notification) => (
