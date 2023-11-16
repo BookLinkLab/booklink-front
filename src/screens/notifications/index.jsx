@@ -54,7 +54,7 @@ const Notifications = ({ showToast }) => {
                     variant={"ghost"}
                     onClick={() => navigate("/configuration")}
                 >
-                    Configuración
+                    ConfiguraciÃ³n
                 </Button>
             </div>
             {notifications.map((notification) => (
@@ -65,6 +65,7 @@ const Notifications = ({ showToast }) => {
                     forumName={notification.forumName}
                     content={notification.content}
                     isSeen={notification.seen}
+                    refetch={handleGetNotifications}
                     id={notification.notificationId}
                     onClick={() =>
                         handleUpdateNotificationState(

@@ -19,6 +19,7 @@ const Notification = ({
     showToast,
     isProfile,
     postId,
+    refetch,
 }) => {
     const seenChecker = isSeen ? "notificationContainer seen" : "notificationContainer"
     const [openModal, setOpenModal] = useState(false)
@@ -30,11 +31,13 @@ const Notification = ({
         setOpenModal(true)
     }
 
-    const handleDeleteNotification = async () => {
+    const handleDeleteNotification = async (event) => {
+        event.stopPropagation()
         setLoading(true)
         try {
             const response = await deleteNotification(token, id)
             if (response.status === 200) {
+                refetch && refetch()
                 showToast(response.data, "success")
             } else {
                 showToast(response.data, "error")
@@ -46,7 +49,7 @@ const Notification = ({
     }
 
     return (
-        <div className={seenChecker} onClick={openModal ? undefined : onClick}>
+        <div className={seenChecker} onClick={onClick}>
             <img className="forumImage" src={forumImg} alt="notification" />
             <div className="notificationText">
                 <div>
@@ -80,8 +83,11 @@ const Notification = ({
                     firstButtonText="Cancelar"
                     firstButtonAction={() => setOpenModal(undefined)}
                     secondButtonText="Eliminar"
-                    secondButtonAction={handleDeleteNotification}
-                    handleOnClose={() => setOpenModal(undefined)}
+                    secondButtonAction={(event) => handleDeleteNotification(event)}
+                    handleOnClose={(event) => {
+                        event.stopPropagation()
+                        setOpenModal(undefined)
+                    }}
                 ></Modal>
             )}
         </div>
